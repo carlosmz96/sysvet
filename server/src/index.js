@@ -1,6 +1,6 @@
 // Importacion de librerias
 const express = require('express');
-const conexion = require('../database/database');
+const conexion = require('./database/db');
 
 // Inicializaciones
 const app = express();
