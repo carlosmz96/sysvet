@@ -1,5 +1,6 @@
 // Importacion de librerias
 const express = require('express');
+const conexion = require('../database/database');
 
 // Inicializaciones
 const app = express();
@@ -10,4 +11,5 @@ app.set('port', 3000);
 // Iniciar el servidor
 app.listen(app.get('port'), () => {
     console.log(`Servidor en el puerto ${app.get('port')}`);
+    conexion();
 })
