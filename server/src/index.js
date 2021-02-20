@@ -6,6 +6,7 @@ const { conexion } = require('./database/db');
 
 // Inicializaciones
 const app = express();
+const userRoutes = require('./routes/userRoutes');
 
 // Configuraciones
 app.set('port', process.env.PORT || 3000);
@@ -13,9 +14,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 // Rutas base
-app.get('/pruebas', function(req, res) {
-    res.status(200).send({message: 'Bienvenido a sysvet'});
-});
+app.use('/api', userRoutes);
 
 // Iniciar el servidor
 app.listen(app.get('port'), () => {
