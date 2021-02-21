@@ -1,6 +1,6 @@
 'use strict'
 
-const { DataTypes } = require('sequelize');
+const { DataTypes, Sequelize } = require('sequelize');
 const { sequelize } = require('../database/db');
 
 const Usuario = sequelize.define('Usuario', {
@@ -10,15 +10,15 @@ const Usuario = sequelize.define('Usuario', {
         primaryKey: true
     },
     nombre: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(25),
         allowNull: false
     },
     apellidos: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false
     },
     email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(60),
         allowNull: false,
         unique: true
     },
@@ -27,7 +27,7 @@ const Usuario = sequelize.define('Usuario', {
         allowNull: false
     },
     rol: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(13),
         allowNull: false
     },
     telefono: {
@@ -42,13 +42,21 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    mascotas: {
-        type: DataTypes.STRING,
+    fecha_modificacion: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: true
+    },
+    fecha_creacion: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false
     }
 },
 {
-    tableName: 'usuarios'
+    tableName: 'usuarios',
+    updatedAt: 'fecha_modificacion',
+    createdAt: 'fecha_creacion'
 });
 
 module.exports = Usuario;
