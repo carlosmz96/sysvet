@@ -84,14 +84,14 @@ async function iniciarSesion(req, res) {
 async function consultarUsuario(req, res) {
     const userDni = req.params.dni;
 
-    await Usuario.findOne({where: {dni: userDni}}).then(function(user){
-        if(!user) {
-            res.status(404).send({message: 'No se ha podido encontrar al usuario.'});
-        }else{
-            res.status(200).send({user});
+    await Usuario.findOne({ where: { dni: userDni } }).then(function (user) {
+        if (!user) {
+            res.status(404).send({ message: 'No se ha podido encontrar al usuario.' });
+        } else {
+            res.status(200).send({ user });
         }
     }).catch(() => {
-        res.status(500).send({message: 'Error al consultar el usuario.'});
+        res.status(500).send({ message: 'Error al consultar el usuario.' });
     });
 }
 
@@ -101,14 +101,14 @@ async function consultarUsuario(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function consultarUsuarios(req, res) {
-    await Usuario.findAll().then(function(users){
-        if(!users) {
-            res.status(404).send({message: 'No se ha podido encontrar la lista de usuarios.'});
-        }else{
-            res.status(200).send({users});
+    await Usuario.findAll().then(function (users) {
+        if (!users) {
+            res.status(404).send({ message: 'No se ha podido encontrar la lista de usuarios.' });
+        } else {
+            res.status(200).send({ users });
         }
     }).catch(() => {
-        res.status(500).send({message: 'Error al consultar la lista de usuarios.'});
+        res.status(500).send({ message: 'Error al consultar la lista de usuarios.' });
     });
 }
 
@@ -128,8 +128,7 @@ async function modificarUsuario(req, res) {
         pass: update.pass,
         rol: update.rol,
         telefono: update.telefono,
-        direccion: update.direccion,
-        imagen: update.imagen
+        direccion: update.direccion
     }, { where: { dni: userDni } }).then(function (userUpdated) {
         if (!userUpdated) {
             res.status(404).send({ message: 'No se ha podido actualizar el usuario.' });
@@ -160,11 +159,46 @@ async function bajaUsuario(req, res) {
     });
 }
 
+/**
+ * Método encargado de subir una foto de perfil para el usuario
+ * @param {*} req Consulta el archivo a subir como foto de perfil
+ * @param {*} res Respuesta generada tras la subida del archivo
+ */
+async function subirFotoPerfil(req, res) {
+    const userDni = req.params.dni;
+
+    if (req.file) {
+        const file_name = req.file.filename;
+        const file_ext = req.file.mimetype.substr(6);
+        // Si la extensión es una de estas, se sube
+        if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
+            await Usuario.update({
+                imagen: file_name
+            }, { where: { dni: userDni } }).then(function (userUpdated) {
+                if (!userUpdated) {
+                    res.status(404).send({ message: 'No se ha podido subir la foto de perfil del usuario.' });
+                } else {
+                    res.status(200).send({ user: userUpdated });
+                }
+            }).catch(() => {
+                res.status(500).send({ message: 'Error al subir la foto de perfil del usuario.' });
+            });
+        } else {
+            res.status(200).send({ message: 'Extensión de la imagen no válida.' });
+        }
+        // console.log(req.file);
+        // res.send('Se ha subido perfe');
+    } else {
+        res.status(200).send({ message: 'No se ha subido ninguna imagen.' });
+    }
+}
+
 module.exports = {
     altaUsuario,
     iniciarSesion,
     consultarUsuario,
     consultarUsuarios,
     modificarUsuario,
-    bajaUsuario
+    bajaUsuario,
+    subirFotoPerfil
 }
