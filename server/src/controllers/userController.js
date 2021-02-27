@@ -186,11 +186,30 @@ async function subirFotoPerfil(req, res) {
         } else {
             res.status(200).send({ message: 'Extensión de la imagen no válida.' });
         }
-        // console.log(req.file);
-        // res.send('Se ha subido perfe');
     } else {
         res.status(200).send({ message: 'No se ha subido ninguna imagen.' });
     }
+}
+
+/**
+ * Método encargado de eliminar la foto de perfil del usuario
+ * @param {*} req Consulta del dni del usuario
+ * @param {*} res Respuesta generada tras la acción
+ */
+async function eliminarFotoPerfil(req, res) {
+    const userDni = req.params.dni;
+
+    await Usuario.update({
+        imagen: null
+    }, { where: { dni: userDni } }).then(function (userUpdated) {
+        if (!userUpdated) {
+            res.status(404).send({ message: 'No se ha podido eliminar la foto de perfil del usuario.' });
+        } else {
+            res.status(200).send({ user: userUpdated });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al eliminar la foto de perfil del usuario.' });
+    });
 }
 
 module.exports = {
@@ -200,5 +219,6 @@ module.exports = {
     consultarUsuarios,
     modificarUsuario,
     bajaUsuario,
-    subirFotoPerfil
+    subirFotoPerfil,
+    eliminarFotoPerfil
 }
