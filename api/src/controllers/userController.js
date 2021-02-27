@@ -146,7 +146,7 @@ async function modificarUsuario(req, res) {
 /**
  * Método encargado de dar de baja a un usuario
  * @param {*} req Consulta del dni del usuario a eliminar
- * @param {*} res Respuesta generada tras la función
+ * @param {*} res Respuesta generada tras la baja del usuario
  */
 async function bajaUsuario(req, res) {
     const userDni = req.params.dni;
