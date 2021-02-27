@@ -1,9 +1,12 @@
 'use strict'
 
 // Importaciones
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario');
 const jwt = require('../services/jwt');
+const { EROFS } = require('constants');
 
 /**
  * Método encargado del registro de usuarios en BBDD
@@ -212,6 +215,25 @@ async function eliminarFotoPerfil(req, res) {
     });
 }
 
+/**
+ * Método encargado de obtener la foto de perfil del usuario
+ * @param {*} req Consulta la imagen de perfil del usuario
+ * @param {*} res Respuesta generada tras la consulta
+ */
+function obtenerFotoPerfil(req, res) {
+    const fotoPerfil = req.params.fotoPerfil;
+    const path_file = './src/public/images/'+fotoPerfil;
+
+    fs.stat(path_file, function(error) {
+        if(error) {
+            res.status(200).send({message: 'No existe la foto de perfil.'});
+            console.error(error);
+        }else{
+            res.sendFile(path.resolve(path_file));
+        }
+    });
+}
+
 module.exports = {
     altaUsuario,
     iniciarSesion,
@@ -220,5 +242,6 @@ module.exports = {
     modificarUsuario,
     bajaUsuario,
     subirFotoPerfil,
-    eliminarFotoPerfil
+    eliminarFotoPerfil,
+    obtenerFotoPerfil
 }
