@@ -38,7 +38,7 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    imagen: {
+    foto: {
         type: DataTypes.STRING,
         allowNull: true
     },

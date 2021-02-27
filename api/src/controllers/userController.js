@@ -176,7 +176,7 @@ async function subirFotoPerfil(req, res) {
         // Si la extensión es una de estas, se sube
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
             await Usuario.update({
-                imagen: file_name
+                foto: file_name
             }, { where: { dni: userDni } }).then(function (userUpdated) {
                 if (!userUpdated) {
                     res.status(404).send({ message: 'No se ha podido subir la foto de perfil del usuario.' });
@@ -187,10 +187,10 @@ async function subirFotoPerfil(req, res) {
                 res.status(500).send({ message: 'Error al subir la foto de perfil del usuario.' });
             });
         } else {
-            res.status(200).send({ message: 'Extensión de la imagen no válida.' });
+            res.status(200).send({ message: 'Extensión de la foto no válida.' });
         }
     } else {
-        res.status(200).send({ message: 'No se ha subido ninguna imagen.' });
+        res.status(200).send({ message: 'No se ha subido ninguna foto.' });
     }
 }
 
@@ -203,7 +203,7 @@ async function eliminarFotoPerfil(req, res) {
     const userDni = req.params.dni;
 
     await Usuario.update({
-        imagen: null
+        foto: null
     }, { where: { dni: userDni } }).then(function (userUpdated) {
         if (!userUpdated) {
             res.status(404).send({ message: 'No se ha podido eliminar la foto de perfil del usuario.' });
@@ -217,7 +217,7 @@ async function eliminarFotoPerfil(req, res) {
 
 /**
  * Método encargado de obtener la foto de perfil del usuario
- * @param {*} req Consulta la imagen de perfil del usuario
+ * @param {*} req Consulta la foto de perfil del usuario
  * @param {*} res Respuesta generada tras la consulta
  */
 function obtenerFotoPerfil(req, res) {
