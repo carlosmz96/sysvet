@@ -1,0 +1,14 @@
+
+/* CABECERA DEL LOGIN */
+
+.title {
+    color: white;
+    font-size: 40pt;
+    font-weight: bold;
+    margin-top: 10%;
+}
+
+.card {
+    width: 35em;
+    margin-top: 3%;
+}

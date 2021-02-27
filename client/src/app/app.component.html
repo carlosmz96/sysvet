@@ -1,1 +1,15 @@
-<h1>{{title}}</h1>
+<div class="container" *ngIf="!identity">
+    <div class="row" style="text-align: center;">
+        <div>
+            <h1 class="title">{{title}}</h1>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="card mx-auto">
+            <div class="card-body">
+                Estás logueado en la aplicación
+            </div>
+        </div>
+    </div>
+</div>
