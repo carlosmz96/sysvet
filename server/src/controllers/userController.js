@@ -181,7 +181,7 @@ async function subirFotoPerfil(req, res) {
                 if (!userUpdated) {
                     res.status(404).send({ message: 'No se ha podido subir la foto de perfil del usuario.' });
                 } else {
-                    res.status(200).send({ user: userUpdated });
+                    res.status(200).send({ image: file_name, user: userUpdated });
                 }
             }).catch(() => {
                 res.status(500).send({ message: 'Error al subir la foto de perfil del usuario.' });
