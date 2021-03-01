@@ -8,7 +8,17 @@
     margin-top: 10%;
 }
 
+/* CUERPO DEL LOGIN */
+
 .card {
-    width: 35em;
+    width: 25em;
     margin-top: 3%;
+}
+
+.formulario-login {
+    padding: 1.5em;
+}
+
+input {
+    text-align: center;
 }
