@@ -5,8 +5,6 @@
                 <h1 class="title">{{title}}</h1>
             </div>
 
-            <div class="clearfix"></div>
-
             <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                     <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-login" ngNativeValidate>
@@ -33,7 +31,13 @@
             </div>
         </div>
     </div>
+
+    <div class="clearfix"></div>
+
     <div *ngIf="identity">
-        Te has logueado correctamente.
+        <p>Hola {{ identity.nombre }}, te has logueado correctamente.</p>
+        <span class="btn btn-warning" (click)="logout()">
+            Cerrar sesión
+        </span>
     </div>
 </div>

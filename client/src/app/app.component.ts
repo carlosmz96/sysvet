@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Usuario } from './models/Usuario';
 import { UsuarioService } from './usuario.service';
 
@@ -16,7 +16,8 @@ export class AppComponent implements OnInit {
   public mensajeError: string = "";
 
   constructor(
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private elementRef: ElementRef
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
   }
@@ -30,6 +31,8 @@ export class AppComponent implements OnInit {
 
     console.log(this.identity);
     console.log(this.token);
+
+    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)'
   }
 
   /**
@@ -67,6 +70,22 @@ export class AppComponent implements OnInit {
         this.mensajeError = error.error.message;
       }
     );
+
+    // Le cambio el color
+    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(243, 243, 243)';
+  }
+
+  /**
+   * Método encargado de cerrar la sesión y así eliminar todos los elementos del localStorage
+   */
+  public logout(): void {
+    localStorage.clear();
+
+    this.identity = null;
+    this.token = null;
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+
+    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
 }

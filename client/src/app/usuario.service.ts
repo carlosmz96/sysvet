@@ -34,7 +34,7 @@ export class UsuarioService {
 
     const headers = new HttpHeaders().set('Content-Type','application/json');
 
-    return this.httpClient.post(this.url + 'login', params, {headers: headers}).pipe(map(res => res));
+    return this.httpClient.post(this.url + 'login', params, {headers: headers});
   }
 
   public getIdentity() {
@@ -50,7 +50,7 @@ export class UsuarioService {
   }
 
   public getToken() {
-    const token = JSON.parse(localStorage.getItem('token')!);
+    const token = localStorage.getItem('token');
 
     if(token != "undefined"){
       this.token = token;
