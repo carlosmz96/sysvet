@@ -1,11 +1,13 @@
 <div class="container">
     <div *ngIf="!identity">
-        <div class="row" style="text-align: center;">
+
+        <!-- Interfaz de inicio de sesión -->
+        <div class="row" style="text-align: center;" *ngIf="!enRegistro">
             <div>
                 <h1 class="title">{{title}}</h1>
             </div>
 
-            <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+            <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 25em; margin-top: 3%;">
                 <div class="card-body">
                     <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-login" ngNativeValidate>
                         <div *ngIf="mensajeError">
@@ -24,8 +26,64 @@
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success">Iniciar sesión</button>
                             <a href="#">¿Olvidaste tu contraseña?</a>
-                            <button class="btn btn-success" type="button">Regístrate</button>
+                            <button class="btn btn-success" type="button" (click)="goRegister()">Regístrate</button>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interfaz de registro de usuario -->
+        <div class="row" style="text-align: center;" *ngIf="enRegistro">
+            <div>
+                <h1 class="title">{{title}}</h1>
+            </div>
+
+            <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 50em; margin-top: 3%;">
+                <div class="card-body">
+                    Por favor, rellena todos los campos para poder registrarte.
+                    <form #registerForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-register" ngNativeValidate>
+                        <div *ngIf="mensajeError">
+                            <div class="alert alert-danger" role="alert">
+                                {{ mensajeError }}
+                            </div>
+                        </div>
+                        <p>
+                            <input type="text" #nombre="ngModel" name="nombre" [(ngModel)]="usuario_registro.nombre"
+                                class="form-control" placeholder="Introduce tu nombre" required>
+                        </p>
+                        <p>
+                            <input type="text" #apellidos="ngModel" name="apellidos" [(ngModel)]="usuario_registro.apellidos"
+                                class="form-control" placeholder="Introduce tus apellidos" required>
+                        </p>
+                        <p>
+                            <input type="text" #dni="ngModel" name="dni" [(ngModel)]="usuario_registro.dni" class="form-control"
+                                placeholder="Introduce tu dni" required>
+                        </p>
+                        <p>
+                            <input type="email" #email="ngModel" name="email" [(ngModel)]="usuario_registro.email"
+                                class="form-control" placeholder="Introduce tu correo electrónico" required>
+                        </p>
+                        <p>
+                            <input type="password" #password="ngModel" name="password" [(ngModel)]="usuario_registro.pass"
+                                class="form-control" placeholder="Introduce una contraseña" required>
+                        </p>
+                        <p>
+                            <input type="password" #password2="ngModel" name="password2" [(ngModel)]="usuario_registro.pass"
+                                class="form-control" placeholder="Introduce de nuevo la contraseña" required>
+                        </p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente" [(ngModel)]="usuario_registro.rol" value="Cliente">
+                            <label class="form-check-label" for="opcionCliente">Cliente</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionVeterinario" [(ngModel)]="usuario_registro.rol" value="Veterinario">
+                            <label class="form-check-label" for="opcionVeterinario">Veterinario </label>
+                        </div>
+                        <p></p>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Regístrate</button>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -34,10 +92,13 @@
 
     <div class="clearfix"></div>
 
-    <div *ngIf="identity">
+    <!-- Interfaz habiendo iniciado la sesión -->
+    <div *ngIf="identity" style="margin-top: 1em">
         <p>Hola {{ identity.nombre }}, te has logueado correctamente.</p>
+        <p>Como <strong>{{ identity.rol }}</strong></p>
         <span class="btn btn-warning" (click)="logout()">
             Cerrar sesión
         </span>
+
     </div>
 </div>

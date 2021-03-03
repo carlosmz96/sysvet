@@ -11,15 +11,18 @@ import { UsuarioService } from './usuario.service';
 export class AppComponent implements OnInit {
   public title = 'SYSVET';
   public usuario: Usuario;
+  public usuario_registro: Usuario;
   public identity: any = false;
   public token: any = null;
   public mensajeError: string = "";
+  public enRegistro: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
     private elementRef: ElementRef
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+    this.usuario_registro = new Usuario('', '', '', '', '', 'Cliente', '', '', '');
   }
 
   /**
@@ -32,7 +35,9 @@ export class AppComponent implements OnInit {
     console.log(this.identity);
     console.log(this.token);
 
-    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)'
+    if(this.identity == null) {
+      this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
+    }
   }
 
   /**
@@ -86,6 +91,20 @@ export class AppComponent implements OnInit {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
 
     this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
+  }
+
+  /**
+   * Método encargado de settear la variable de registro a true
+   */
+  public goRegister(): void {
+    this.enRegistro = true;
+  }
+
+  /**
+   * Método encargado de settear la variable de registro a false
+   */
+  public goLogin(): void {
+    this.enRegistro = false;
   }
 
 }

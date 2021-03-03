@@ -10,12 +10,7 @@
 
 /* CUERPO DEL LOGIN */
 
-.card {
-    width: 25em;
-    margin-top: 3%;
-}
-
-.formulario-login {
+.formulario-login, .formulario-register {
     padding: 1.5em;
 }
 
