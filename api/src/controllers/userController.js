@@ -6,7 +6,6 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario');
 const jwt = require('../services/jwt');
-const { EROFS } = require('constants');
 
 /**
  * Método encargado del registro de usuarios en BBDD
@@ -32,7 +31,7 @@ async function altaUsuario(req, res) {
                 if (!user) {
                     res.status(404).send({ message: 'No se ha guardado el usuario.' });
                 } else {
-                    res.status(200).send({ message: 'Registro de usuario realizado con éxito.' });
+                    res.status(200).send({ user });
                 }
             }).catch(() => {
                 res.status(500).send({ message: 'Error al dar de alta al usuario.' })

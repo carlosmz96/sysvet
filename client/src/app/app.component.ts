@@ -12,17 +12,19 @@ export class AppComponent implements OnInit {
   public title = 'SYSVET';
   public usuario: Usuario;
   public usuario_registro: Usuario;
-  public identity: any = false;
-  public token: any = null;
+  public identity: any = false; // usuario logueado 
+  public token: any = null; // token generado tras el login
   public mensajeError: string = "";
+  public mensajeExito: string = "";
   public enRegistro: boolean = false;
+  public rePass: string = ""; // repite contraseña
 
   constructor(
     private usuarioService: UsuarioService,
     private elementRef: ElementRef
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
-    this.usuario_registro = new Usuario('', '', '', '', '', 'Cliente', '', '', '');
+    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
   }
 
   /**
@@ -35,8 +37,36 @@ export class AppComponent implements OnInit {
     console.log(this.identity);
     console.log(this.token);
 
-    if(this.identity == null) {
+    if (this.identity == null) {
       this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
+    }
+  }
+
+  /**
+   * Método encargado de registrar a un usuario en la aplicación
+   */
+  public onSubmitRegister(): void {
+    if(this.usuario_registro.pass == this.rePass){
+      this.usuarioService.altaUsuario(this.usuario_registro).subscribe(
+        response => {
+          const user = response.user;
+          this.usuario_registro = user;
+  
+          if (!user.dni) {
+            this.mensajeError = "Error al registrarse";
+          } else {
+            this.mensajeExito = "Te has registrado correctamente";
+            this.mensajeError = "";
+            this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
+            this.rePass = "";
+          }
+        },
+        error => {
+          this.mensajeError = error.error.message;
+        }
+      );
+    }else{
+      this.mensajeError = "La contraseña debe coincidir";
     }
   }
 
@@ -103,7 +133,7 @@ export class AppComponent implements OnInit {
   /**
    * Método encargado de settear la variable de registro a false
    */
-  public goLogin(): void {
+  public goBack(): void {
     this.enRegistro = false;
   }
 

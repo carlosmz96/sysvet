@@ -29,14 +29,26 @@ export class UsuarioService {
       user_to_login.gethash = gethash;
     }
 
-    const json = JSON.stringify(user_to_login);
-    const params = json;
-
+    const params = JSON.stringify(user_to_login);
     const headers = new HttpHeaders().set('Content-Type','application/json');
 
     return this.httpClient.post(this.url + 'login', params, {headers: headers});
   }
 
+  /**
+   * Método encargado de llamar al api para dar de alta a un usuario
+   * @param user_to_register Usuario a registrar
+   */
+  public altaUsuario(user_to_register: any):Observable<any> {
+    const params = JSON.stringify(user_to_register);
+    const headers = new HttpHeaders().set('Content-Type','application/json');
+
+    return this.httpClient.post(this.url + 'registro', params, {headers: headers});  
+  }
+
+  /**
+   * Método que obtiene la identidad a partir del local storage
+   */
   public getIdentity() {
     const identity = JSON.parse(localStorage.getItem('identity')!);
 
@@ -49,6 +61,9 @@ export class UsuarioService {
     return this.identity;
   }
 
+  /**
+   * Método que obtiene el token a partir del local storage
+   */
   public getToken() {
     const token = localStorage.getItem('token');
 

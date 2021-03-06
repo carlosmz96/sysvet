@@ -41,11 +41,19 @@
 
             <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 50em; margin-top: 3%;">
                 <div class="card-body">
-                    Por favor, rellena todos los campos para poder registrarte.
-                    <form #registerForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-register" ngNativeValidate>
+                    <div class="goBack">
+                        <i class="fas fa-arrow-left fa-lg" (click)="goBack()"></i>
+                        Por favor, rellena todos los campos para poder registrarte.
+                    </div>
+                    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" ngNativeValidate>
                         <div *ngIf="mensajeError">
                             <div class="alert alert-danger" role="alert">
                                 {{ mensajeError }}
+                            </div>
+                        </div>
+                        <div *ngIf="mensajeExito">
+                            <div class="alert alert-success" role="alert">
+                                {{ mensajeExito }}
                             </div>
                         </div>
                         <p>
@@ -69,16 +77,16 @@
                                 class="form-control" placeholder="Introduce una contraseña" required>
                         </p>
                         <p>
-                            <input type="password" #password2="ngModel" name="password2" [(ngModel)]="usuario_registro.pass"
+                            <input type="password" #password2="ngModel" name="password2" [(ngModel)]="rePass"
                                 class="form-control" placeholder="Introduce de nuevo la contraseña" required>
                         </p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente" [(ngModel)]="usuario_registro.rol" value="Cliente">
+                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente" [(ngModel)]="usuario_registro.rol" value="cliente">
                             <label class="form-check-label" for="opcionCliente">Cliente</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionVeterinario" [(ngModel)]="usuario_registro.rol" value="Veterinario">
-                            <label class="form-check-label" for="opcionVeterinario">Veterinario </label>
+                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionVeterinario" [(ngModel)]="usuario_registro.rol" value="veterinario">
+                            <label class="form-check-label" for="opcionVeterinario">Veterinario</label>
                         </div>
                         <p></p>
                         <div class="d-grid gap-2">

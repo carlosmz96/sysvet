@@ -17,3 +17,8 @@
 input {
     text-align: center;
 }
+
+.goBack > i {
+    float: left;
+    cursor: pointer;
+}
