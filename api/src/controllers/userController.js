@@ -6,6 +6,8 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario');
 const jwt = require('../services/jwt');
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 
 /**
  * Método encargado del registro de usuarios en BBDD
@@ -221,15 +223,61 @@ async function eliminarFotoPerfil(req, res) {
  */
 function obtenerFotoPerfil(req, res) {
     const fotoPerfil = req.params.fotoPerfil;
-    const path_file = './src/public/images/'+fotoPerfil;
+    const path_file = './src/public/images/' + fotoPerfil;
 
-    fs.stat(path_file, function(error) {
-        if(error) {
-            res.status(200).send({message: 'No existe la foto de perfil.'});
+    fs.stat(path_file, function (error) {
+        if (error) {
+            res.status(200).send({ message: 'No existe la foto de perfil.' });
             console.error(error);
-        }else{
+        } else {
             res.sendFile(path.resolve(path_file));
         }
+    });
+}
+
+/**
+ * Método encargado de enviar un correo electrónico al usuario con una dirección url
+ * para poder crear una nueva contraseña
+ * @param {*} req Consulta del email del usuario
+ * @param {*} res Respuesta generada tras consultar dicho email
+ */
+async function recordarContrasena(req, res) {
+    const userEmail = req.body.email;
+
+    await Usuario.findOne({ where: { email: userEmail } }).then(async function (user) {
+        if (!user) {
+            res.status(404).send({ message: 'No existe ningún usuario con este correo.' });
+        } else {
+            // creación del medio de transporte
+            let transporter = nodemailer.createTransport(smtpTransport({
+                service: 'gmail',
+                host: 'smtp.gmail.com',
+                auth: {
+                    user: 'carlossysvet01@gmail.com',
+                    pass: 'sysvet01tfg'
+                }
+            }));
+
+            let mailOptions = {
+                from: 'SYSVET',
+                to: userEmail,
+                subject: '¿Olvidaste la contraseña? Crea una nueva',
+                html: `<p>Cambia tu contraseña en el siguiente enlace:</p>
+                <p><a href="#">Crear nueva contraseña</p>`
+            };
+
+            await transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    res.status(500).send({ message: 'Error al intentar enviar el email.' });
+                } else {
+                    res.status(200).send({ message: 'Correo enviado correctamente.', user: user });
+
+                    console.log("Mensaje enviado: %s", info.response);
+                }
+            });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al intentar enviar el email.' });
     });
 }
 
@@ -242,5 +290,6 @@ module.exports = {
     bajaUsuario,
     subirFotoPerfil,
     eliminarFotoPerfil,
-    obtenerFotoPerfil
+    obtenerFotoPerfil,
+    recordarContrasena
 }

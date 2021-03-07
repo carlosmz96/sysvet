@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuario } from './models/Usuario';
 import { UsuarioService } from './usuario.service';
 
@@ -16,12 +17,14 @@ export class AppComponent implements OnInit {
   public token: any = null; // token generado tras el login
   public mensajeError: string = "";
   public mensajeExito: string = "";
+  public enLogin: boolean = true;
   public enRegistro: boolean = false;
   public rePass: string = ""; // repite contraseña
 
   constructor(
     private usuarioService: UsuarioService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private router: Router
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
     this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
@@ -37,6 +40,14 @@ export class AppComponent implements OnInit {
     console.log(this.identity);
     console.log(this.token);
 
+    // Comprueba que está en la url correcta
+    if (window.location.href.endsWith('recordar-clave')) {
+      this.enLogin = false;
+      this.enRegistro = false;
+    } else if (window.location.href.endsWith('')) {
+      this.enLogin = true;
+    }
+
     if (this.identity == null) {
       this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
     }
@@ -46,14 +57,15 @@ export class AppComponent implements OnInit {
    * Método encargado de registrar a un usuario en la aplicación
    */
   public onSubmitRegister(): void {
-    if(this.usuario_registro.pass == this.rePass){
+    if (this.usuario_registro.pass == this.rePass) {
       this.usuarioService.altaUsuario(this.usuario_registro).subscribe(
         response => {
           const user = response.user;
           this.usuario_registro = user;
-  
+
           if (!user.dni) {
             this.mensajeError = "Error al registrarse";
+            this.mensajeExito = "";
           } else {
             this.mensajeExito = "Te has registrado correctamente";
             this.mensajeError = "";
@@ -65,7 +77,7 @@ export class AppComponent implements OnInit {
           this.mensajeError = error.error.message;
         }
       );
-    }else{
+    } else {
       this.mensajeError = "La contraseña debe coincidir";
     }
   }
@@ -94,6 +106,7 @@ export class AppComponent implements OnInit {
                 // Crear elemento en localStorage para tener el token disponible
                 localStorage.setItem('token', this.token);
               }
+              this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(243, 243, 243)';
             },
             error => {
               this.mensajeError = error.error.message;
@@ -105,9 +118,6 @@ export class AppComponent implements OnInit {
         this.mensajeError = error.error.message;
       }
     );
-
-    // Le cambio el color
-    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(243, 243, 243)';
   }
 
   /**
@@ -119,21 +129,32 @@ export class AppComponent implements OnInit {
     this.identity = null;
     this.token = null;
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+    this.mensajeError = "";
 
     this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
   /**
-   * Método encargado de settear la variable de registro a true
+   * Método encargado de settear las variables de registro a true y de login a false
    */
   public goRegister(): void {
     this.enRegistro = true;
+    this.enLogin = false;
   }
 
   /**
-   * Método encargado de settear la variable de registro a false
+   * Método encargado de settear las variables de registro a false y de login a true
    */
   public goBack(): void {
+    this.enRegistro = false;
+    this.enLogin = true;
+  }
+
+  /**
+   * Método encargado de settear las variables login y registro a false
+   */
+  public goRecordarClave(): void {
+    this.enLogin = false;
     this.enRegistro = false;
   }
 

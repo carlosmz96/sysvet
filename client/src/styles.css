@@ -6,3 +6,27 @@ body {
 a {
     text-decoration: none;
 }
+
+/* CABECERA DEL LOGIN */
+
+.title {
+    color: white;
+    font-size: 40pt;
+    font-weight: bold;
+    margin-top: 10%;
+}
+
+/* CUERPO DEL LOGIN */
+
+.formulario-login, .formulario-register, .formulario-recuerda-clave {
+    padding: 1.5em;
+}
+
+input {
+    text-align: center;
+}
+
+.goBack > i {
+    float: left;
+    cursor: pointer;
+}

@@ -1,17 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { RecordarClaveComponent } from './recordar-clave/recordar-clave.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: AppComponent
+  },
+  {
+    path: 'recordar-clave',
+    component: RecordarClaveComponent
+  },
   {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'
   },
-  {
-    path: '',
-    component: AppComponent
-  }
 ];
 
 @NgModule({

@@ -47,6 +47,17 @@ export class UsuarioService {
   }
 
   /**
+   * Método encargado de llamar al api para recordar contraseña del usuario
+   * @param user_email Email del usuario
+   */
+  public recordarContrasena(user_email: any):Observable<any> {
+    const params = JSON.stringify(user_email);
+    const headers = new HttpHeaders().set('Content-Type','application/json');
+
+    return this.httpClient.post(this.url + 'recordar-contrasena', params, {headers: headers});
+  }
+
+  /**
    * Método que obtiene la identidad a partir del local storage
    */
   public getIdentity() {

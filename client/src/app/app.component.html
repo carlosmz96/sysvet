@@ -2,7 +2,7 @@
     <div *ngIf="!identity">
 
         <!-- Interfaz de inicio de sesión -->
-        <div class="row" style="text-align: center;" *ngIf="!enRegistro">
+        <div class="row" style="text-align: center;" *ngIf="enLogin && !enRegistro">
             <div>
                 <h1 class="title">{{title}}</h1>
             </div>
@@ -25,7 +25,7 @@
                         </p>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success">Iniciar sesión</button>
-                            <a href="#">¿Olvidaste tu contraseña?</a>
+                            <a routerLink="recordar-clave" (click)="goRecordarClave()">¿Olvidaste tu contraseña?</a>
                             <button class="btn btn-success" type="button" (click)="goRegister()">Regístrate</button>
                         </div>
                     </form>
@@ -34,7 +34,7 @@
         </div>
 
         <!-- Interfaz de registro de usuario -->
-        <div class="row" style="text-align: center;" *ngIf="enRegistro">
+        <div class="row" style="text-align: center;" *ngIf="!enLogin && enRegistro">
             <div>
                 <h1 class="title">{{title}}</h1>
             </div>
@@ -95,6 +95,12 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+        <!-- Redirige al componente de recuerda contraseña -->
+        <div class="row" style="text-align: center;" *ngIf="!enLogin && !enRegistro">
+            <!-- <app-recordar-clave></app-recordar-clave> -->
+            <router-outlet></router-outlet>
         </div>
     </div>
 
