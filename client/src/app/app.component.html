@@ -1,3 +1,7 @@
+<div *ngIf="identity">
+    <app-navegacion (logoutEmitter)="logout()"></app-navegacion>
+</div>
+
 <div class="container">
     <div *ngIf="!identity">
 
@@ -45,7 +49,8 @@
                         <i class="fas fa-arrow-left fa-lg" (click)="goBack()"></i>
                         Por favor, rellena todos los campos para poder registrarte.
                     </div>
-                    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" ngNativeValidate>
+                    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register"
+                        ngNativeValidate>
                         <div *ngIf="mensajeError">
                             <div class="alert alert-danger" role="alert">
                                 {{ mensajeError }}
@@ -61,37 +66,41 @@
                                 class="form-control" placeholder="Introduce tu nombre" required>
                         </p>
                         <p>
-                            <input type="text" #apellidos="ngModel" name="apellidos" [(ngModel)]="usuario_registro.apellidos"
-                                class="form-control" placeholder="Introduce tus apellidos" required>
+                            <input type="text" #apellidos="ngModel" name="apellidos"
+                                [(ngModel)]="usuario_registro.apellidos" class="form-control"
+                                placeholder="Introduce tus apellidos" required>
                         </p>
                         <p>
-                            <input type="text" #dni="ngModel" name="dni" [(ngModel)]="usuario_registro.dni" class="form-control"
-                                placeholder="Introduce tu dni" required>
+                            <input type="text" #dni="ngModel" name="dni" [(ngModel)]="usuario_registro.dni"
+                                class="form-control" placeholder="Introduce tu dni" required>
                         </p>
                         <p>
                             <input type="email" #email="ngModel" name="email" [(ngModel)]="usuario_registro.email"
                                 class="form-control" placeholder="Introduce tu correo electrónico" required>
                         </p>
                         <p>
-                            <input type="password" #password="ngModel" name="password" [(ngModel)]="usuario_registro.pass"
-                                class="form-control" placeholder="Introduce una contraseña" required>
+                            <input type="password" #password="ngModel" name="password"
+                                [(ngModel)]="usuario_registro.pass" class="form-control"
+                                placeholder="Introduce una contraseña" required>
                         </p>
                         <p>
                             <input type="password" #password2="ngModel" name="password2" [(ngModel)]="rePass"
                                 class="form-control" placeholder="Introduce de nuevo la contraseña" required>
                         </p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente" [(ngModel)]="usuario_registro.rol" value="cliente">
+                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente"
+                                [(ngModel)]="usuario_registro.rol" value="cliente">
                             <label class="form-check-label" for="opcionCliente">Cliente</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionVeterinario" [(ngModel)]="usuario_registro.rol" value="veterinario">
+                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol"
+                                id="opcionVeterinario" [(ngModel)]="usuario_registro.rol" value="veterinario">
                             <label class="form-check-label" for="opcionVeterinario">Veterinario</label>
                         </div>
                         <p></p>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success">Regístrate</button>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -99,7 +108,6 @@
 
         <!-- Redirige al componente de recuerda contraseña -->
         <div class="row" style="text-align: center;" *ngIf="!enLogin && !enRegistro">
-            <!-- <app-recordar-clave></app-recordar-clave> -->
             <router-outlet></router-outlet>
         </div>
     </div>
@@ -108,11 +116,9 @@
 
     <!-- Interfaz habiendo iniciado la sesión -->
     <div *ngIf="identity" style="margin-top: 1em">
-        <p>Hola {{ identity.nombre }}, te has logueado correctamente.</p>
-        <p>Como <strong>{{ identity.rol }}</strong></p>
-        <span class="btn btn-warning" (click)="logout()">
-            Cerrar sesión
-        </span>
-
+        <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" >
+            <div class="card-body">
+            </div>
+        </div>
     </div>
 </div>
