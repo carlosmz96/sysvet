@@ -3,10 +3,12 @@
 // Importacion de librerias
 const express = require('express');
 const { conexion } = require('./database/db');
+const dotenv = require('dotenv');
 
 // Inicializaciones
 const app = express();
 const userRoutes = require('./routes/userRoutes');
+dotenv.config();
 
 // Configuraciones
 app.set('port', process.env.PORT || 3000);

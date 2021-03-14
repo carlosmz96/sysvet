@@ -1,15 +1,17 @@
-<div class="container">
+<!-- <div class="container"> -->
     <div *ngIf="!identity">
 
         <div class="row" style="text-align: center;">
             <div>
-                <h1 class="title">{{title}}</h1>
+                <h1 class="title">
+                    <a routerLink="/" style="color: white;">{{title}}</a>
+                </h1>
             </div>
 
             <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 30em; margin-top: 3%;">
                 <div class="card-body">
                     <div class="goBack">
-                        <i class="fas fa-arrow-left fa-lg" (click)="goLogin()"></i>
+                        <i class="fas fa-arrow-left fa-lg" routerLink="/"></i>
                         Por favor, introduce tu correo electrónico.
                     </div>
 
@@ -27,7 +29,7 @@
                         </div>
                         <p>
                             <input type="email" #email="ngModel" name="email" [(ngModel)]="usuario.email"
-                                class="form-control" placeholder="Introduce tu email" required>
+                                class="form-control" placeholder="Introduce tu correo electrónico" required>
                         </p>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success">Enviar</button>
@@ -38,4 +40,4 @@
         </div>
 
     </div>
-</div>
+<!-- </div> -->

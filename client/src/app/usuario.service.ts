@@ -47,6 +47,39 @@ export class UsuarioService {
   }
 
   /**
+   * Método encargado de llamar al api para consultar los datos de un usuario
+   * @param user_to_update Usuario a consultar
+   */
+   public consultarUsuario(dni: any):Observable<any> {
+    // const params = JSON.stringify(user_to_get);
+    // const headers = new HttpHeaders().set('Content-Type','application/json');
+
+    return this.httpClient.get(this.url + 'usuarios/' + dni);
+  }
+
+  /**
+   * Método encargado de llamar al api para modificar los datos de un usuario
+   * @param user_to_update Usuario a modificar
+   */
+  public modificarUsuario(user_to_update: any):Observable<any> {
+    const params = JSON.stringify(user_to_update);
+    const headers = new HttpHeaders().set('Content-Type','application/json');
+
+    return this.httpClient.put(this.url + 'modificar-usuario/' + user_to_update.dni, params, {headers: headers});
+  }
+
+  /**
+   * Método encargado de llamar al api para cambiar la contraseña de un usuario
+   * @param user_to_update Usuario a modificar
+   */
+   public cambiarClaveUsuario(user_to_update: any):Observable<any> {
+    const params = JSON.stringify(user_to_update);
+    const headers = new HttpHeaders().set('Content-Type','application/json');
+
+    return this.httpClient.put(this.url + 'modificar-clave-usuario/' + user_to_update.dni, params, {headers: headers});
+  }
+
+  /**
    * Método encargado de llamar al api para recordar contraseña del usuario
    * @param user_email Email del usuario
    */

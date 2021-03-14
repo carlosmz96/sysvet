@@ -1,20 +1,25 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg" style="width: 100%;">
     <div class="container">
         <a class="navbar-brand" routerLink="">{{ title }}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Perfil</a>
+                    <a class="nav-link" href="#">No action</a>
                 </li>
-                <li class="nav-item">
-                    <span class="nav-link">Hola, {{ identity.nombre }}</span>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="" (click)="logout()" class="nav-link"><i class="fas fa-sign-out-alt"></i> Salir</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hola, {{ identity.nombre }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Mi perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <a routerLink="" (click)="logout()" class="dropdown-item" style="padding-left: 1em;">Cerrar sesión</a>
+                    </div>
                 </li>
             </ul>
         </div>

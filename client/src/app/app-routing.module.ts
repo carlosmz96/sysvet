@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CambiarClaveComponent } from './cambiar-clave/cambiar-clave.component';
 import { RecordarClaveComponent } from './recordar-clave/recordar-clave.component';
 
 const routes: Routes = [
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'recordar-clave',
     component: RecordarClaveComponent
+  },
+  {
+    path: 'cambiar-clave/:token',
+    component: CambiarClaveComponent
   },
   {
     path: '**',

@@ -26,8 +26,8 @@ export class AppComponent implements OnInit {
     private elementRef: ElementRef,
     private router: Router
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
-    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', ''); // usuario de inicio de sesion
+    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', ''); // usuario de registro
   }
 
   /**
@@ -37,18 +37,19 @@ export class AppComponent implements OnInit {
     this.identity = this.usuarioService.getIdentity();
     this.token = this.usuarioService.getToken();
 
-    console.log(this.identity);
-    console.log(this.token);
-
     // Comprueba que está en la url correcta
     if (window.location.href.endsWith('recordar-clave')) {
       this.enLogin = false;
       this.enRegistro = false;
+    } else if (window.location.href.indexOf('cambiar-clave') > -1){
+      this.enLogin = false;
+      this.enRegistro = false;
     } else if (window.location.href.endsWith('')) {
       this.enLogin = true;
-    }
+    } 
 
     if (this.identity == null) {
+      // cambia el color de fondo del body
       this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
     }
   }
@@ -106,6 +107,7 @@ export class AppComponent implements OnInit {
                 // Crear elemento en localStorage para tener el token disponible
                 localStorage.setItem('token', this.token);
               }
+              // cambia el color de fondo del body
               this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(243, 243, 243)';
             },
             error => {
@@ -131,6 +133,7 @@ export class AppComponent implements OnInit {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
     this.mensajeError = "";
 
+    // cambia el color de fondo del body
     this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 

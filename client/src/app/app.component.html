@@ -6,30 +6,35 @@
     <div *ngIf="!identity">
 
         <!-- Interfaz de inicio de sesión -->
-        <div class="row" style="text-align: center;" *ngIf="enLogin && !enRegistro">
+        <div class="row" *ngIf="enLogin && !enRegistro">
             <div>
-                <h1 class="title">{{title}}</h1>
+                <h1 class="title">
+                    <a routerLink="/" style="color: white;">{{title}}</a>
+                </h1>
             </div>
 
             <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 25em; margin-top: 3%;">
                 <div class="card-body">
-                    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-login" ngNativeValidate>
+                    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-login row g-3" ngNativeValidate>
                         <div *ngIf="mensajeError">
                             <div class="alert alert-danger" role="alert">
                                 {{ mensajeError }}
                             </div>
                         </div>
-                        <p>
-                            <input type="text" #dni="ngModel" name="dni" [(ngModel)]="usuario.dni" class="form-control"
-                                placeholder="Introduce tu dni" required>
-                        </p>
-                        <p>
-                            <input type="password" #password="ngModel" name="password" [(ngModel)]="usuario.pass"
-                                class="form-control" placeholder="Introduce tu contraseña" required>
-                        </p>
+                        <div class="form-group">
+                            <label for="dni"><strong>DNI</strong></label>
+                            <input type="text" #dni="ngModel" name="dni" id="dni" [(ngModel)]="usuario.dni"
+                                class="form-control" placeholder="Introduce tu dni" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><strong>Contraseña</strong></label>
+                            <input type="password" #password="ngModel" name="password" id="password"
+                                [(ngModel)]="usuario.pass" class="form-control" placeholder="Introduce tu contraseña"
+                                required>
+                        </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success">Iniciar sesión</button>
-                            <a routerLink="recordar-clave" (click)="goRecordarClave()">¿Olvidaste tu contraseña?</a>
+                            <a routerLink="recordar-clave" style="text-align: center;" (click)="goRecordarClave()">¿Olvidaste tu contraseña?</a>
                             <button class="btn btn-success" type="button" (click)="goRegister()">Regístrate</button>
                         </div>
                     </form>
@@ -38,19 +43,20 @@
         </div>
 
         <!-- Interfaz de registro de usuario -->
-        <div class="row" style="text-align: center;" *ngIf="!enLogin && enRegistro">
+        <div class="row" *ngIf="!enLogin && enRegistro">
             <div>
-                <h1 class="title">{{title}}</h1>
+                <h1 class="title">
+                    <a routerLink="/" (click)="goBack()" style="color: white;">{{title}}</a>
+                </h1>
             </div>
 
             <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 50em; margin-top: 3%;">
                 <div class="card-body">
-                    <div class="goBack">
-                        <i class="fas fa-arrow-left fa-lg" (click)="goBack()"></i>
-                        Por favor, rellena todos los campos para poder registrarte.
-                    </div>
-                    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register"
+
+                    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register row g-3"
                         ngNativeValidate>
+                        <i class="fas fa-arrow-left fa-lg col-auto" style="cursor: pointer;" (click)="goBack()"></i>
+                        <span class="col-auto">Por favor, rellena todos los campos para poder registrarte.</span>
                         <div *ngIf="mensajeError">
                             <div class="alert alert-danger" role="alert">
                                 {{ mensajeError }}
@@ -61,43 +67,58 @@
                                 {{ mensajeExito }}
                             </div>
                         </div>
-                        <p>
-                            <input type="text" #nombre="ngModel" name="nombre" [(ngModel)]="usuario_registro.nombre"
-                                class="form-control" placeholder="Introduce tu nombre" required>
-                        </p>
-                        <p>
-                            <input type="text" #apellidos="ngModel" name="apellidos"
+                        <div class="col-md-6">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" #nombre="ngModel" name="nombre" id="nombre"
+                                [(ngModel)]="usuario_registro.nombre" class="form-control"
+                                placeholder="Introduce tu nombre" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="apellidos">Apellidos</label>
+                            <input type="text" #apellidos="ngModel" name="apellidos" id="apellidos"
                                 [(ngModel)]="usuario_registro.apellidos" class="form-control"
                                 placeholder="Introduce tus apellidos" required>
-                        </p>
-                        <p>
-                            <input type="text" #dni="ngModel" name="dni" [(ngModel)]="usuario_registro.dni"
+                        </div>
+                        <div class="col-md-3">
+                            <label for="dni">DNI</label>
+                            <input type="text" #dni="ngModel" name="dni" id="dni" [(ngModel)]="usuario_registro.dni"
                                 class="form-control" placeholder="Introduce tu dni" required>
-                        </p>
-                        <p>
-                            <input type="email" #email="ngModel" name="email" [(ngModel)]="usuario_registro.email"
-                                class="form-control" placeholder="Introduce tu correo electrónico" required>
-                        </p>
-                        <p>
-                            <input type="password" #password="ngModel" name="password"
+                        </div>
+                        <div class="col-md-9">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" #email="ngModel" name="email" id="email"
+                                [(ngModel)]="usuario_registro.email" class="form-control"
+                                placeholder="Introduce tu correo electrónico" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="password">Contraseña</label>
+                            <input type="password" #password="ngModel" name="password" id="password"
                                 [(ngModel)]="usuario_registro.pass" class="form-control"
                                 placeholder="Introduce una contraseña" required>
-                        </p>
-                        <p>
-                            <input type="password" #password2="ngModel" name="password2" [(ngModel)]="rePass"
-                                class="form-control" placeholder="Introduce de nuevo la contraseña" required>
-                        </p>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente"
-                                [(ngModel)]="usuario_registro.rol" value="cliente">
-                            <label class="form-check-label" for="opcionCliente">Cliente</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" #rol="ngModel" name="rol"
-                                id="opcionVeterinario" [(ngModel)]="usuario_registro.rol" value="veterinario">
-                            <label class="form-check-label" for="opcionVeterinario">Veterinario</label>
+                        <div class="col-md-6">
+                            <label for="password2">Repite la contraseña</label>
+                            <input type="password" #password2="ngModel" name="password2" id="password2"
+                                [(ngModel)]="rePass" class="form-control" placeholder="Introduce de nuevo la contraseña"
+                                required>
                         </div>
-                        <p></p>
+                        <div class="col-md-4">
+                            <label style="margin-right: 1.5em;">Registrarse como</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" #rol="ngModel" name="rol"
+                                    id="opcionCliente" [(ngModel)]="usuario_registro.rol" value="cliente">
+                                <label class="form-check-label" for="opcionCliente">Cliente</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" #rol="ngModel" name="rol"
+                                    id="opcionVeterinario" [(ngModel)]="usuario_registro.rol" value="veterinario">
+                                <label class="form-check-label" for="opcionVeterinario">Veterinario</label>
+                            </div>
+                        </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success">Regístrate</button>
                         </div>
@@ -107,7 +128,7 @@
         </div>
 
         <!-- Redirige al componente de recuerda contraseña -->
-        <div class="row" style="text-align: center;" *ngIf="!enLogin && !enRegistro">
+        <div class="row" *ngIf="!enLogin && !enRegistro">
             <router-outlet></router-outlet>
         </div>
     </div>
@@ -116,8 +137,59 @@
 
     <!-- Interfaz habiendo iniciado la sesión -->
     <div *ngIf="identity" style="margin-top: 1em">
-        <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" >
-            <div class="card-body">
+        <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body" style="text-align: justify;">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ullamcorper iaculis neque ac euismod.
+                    Quisque cursus ornare ligula at efficitur. Integer non suscipit justo. Suspendisse eleifend varius
+                    tellus vel luctus. Curabitur accumsan leo dictum urna semper finibus. Nulla fringilla pellentesque
+                    cursus. Suspendisse accumsan molestie bibendum. Aliquam tellus dolor, aliquam et vehicula in, varius
+                    a
+                    enim. Donec justo nibh, volutpat non suscipit vitae, lacinia et augue. Proin erat ex, vulputate ac
+                    pellentesque vel, viverra et sem.</p>
+
+                <p>Phasellus vel nisi nisi. Vivamus mauris libero, congue vitae lobortis eget, mollis eu magna. Praesent
+                    porta nisi neque, nec venenatis nisi suscipit vitae. Suspendisse vehicula suscipit mauris tincidunt
+                    porttitor. Etiam congue, neque ut egestas scelerisque, risus enim tincidunt lacus, ut molestie velit
+                    turpis ut elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ullamcorper purus at
+                    risus elementum lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus tortor
+                    sit
+                    amet nisl dictum, vitae aliquam tellus scelerisque.</p>
+
+                <p>Curabitur maximus risus ex, id gravida augue ultricies eget. Duis sit amet malesuada magna. Integer
+                    at
+                    nisl ut augue fermentum iaculis at vel urna. Quisque ipsum magna, vulputate eget nulla in, gravida
+                    varius sapien. Cras facilisis congue diam nec rutrum. Vestibulum ante ipsum primis in faucibus orci
+                    luctus et ultrices posuere cubilia curae; Pellentesque porttitor odio nec aliquam mollis. Nulla
+                    faucibus
+                    urna nec nibh feugiat blandit. Mauris faucibus elementum justo ultricies ullamcorper. Aenean erat
+                    justo,
+                    pellentesque quis nisl nec, faucibus scelerisque risus. Nullam venenatis massa et est imperdiet,
+                    vitae
+                    iaculis orci congue. Curabitur facilisis odio quis metus sodales vulputate. Donec rutrum dui luctus
+                    metus dictum, non cursus enim porttitor.</p>
+
+                <p>Praesent consectetur leo eu placerat sollicitudin. Phasellus suscipit consectetur dui, at
+                    pellentesque
+                    dolor iaculis eu. Pellentesque cursus neque nec metus porttitor, at gravida lacus semper. Vestibulum
+                    blandit, massa in pharetra hendrerit, sem nunc congue metus, eget hendrerit odio augue et odio.
+                    Proin
+                    mattis a enim sit amet fermentum. Proin sit amet mauris condimentum, porta urna ut, accumsan justo.
+                    Ut
+                    eget ligula ullamcorper, hendrerit felis ut, interdum tortor. In quis diam in lacus egestas mattis
+                    eu
+                    nec metus.</p>
+
+                <p>Ut rhoncus sem vel velit pretium commodo vel in augue. Cras finibus turpis nisl, ut porta mi sagittis
+                    non. Donec scelerisque erat sed urna finibus posuere. Suspendisse a nulla lacus. Ut pharetra mauris
+                    et
+                    purus ullamcorper commodo mollis ornare nisl. Nunc hendrerit eleifend turpis, vel finibus lectus
+                    lobortis vitae. Maecenas sollicitudin, tellus quis malesuada ullamcorper, ipsum velit placerat nunc,
+                    eu
+                    euismod ligula magna quis felis. Pellentesque vitae tincidunt mauris, nec varius enim. Nullam ex
+                    nulla,
+                    blandit gravida egestas et, pulvinar quis mauris. Mauris sit amet mattis est. Sed vitae elit vitae
+                    augue
+                    commodo ultrices mollis id dolor. Vestibulum tincidunt semper odio nec malesuada.</p>
             </div>
         </div>
     </div>

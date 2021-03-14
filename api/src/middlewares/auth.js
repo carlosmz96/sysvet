@@ -2,7 +2,6 @@
 
 const jwt = require('jwt-simple');
 const moment = require('moment');
-const secret = 'sysvet_secret_123';
 
 /**
  * Método encargado de asegurar que exista la cabecera de autenticación
@@ -18,7 +17,7 @@ exports.ensureAuth = function(req, res, next){
         const token = req.headers.authorization.replace(/['"]+/g, ''); // Elimina comillas simples y dobles del token
 
         try {
-            const payload = jwt.decode(token, secret);
+            const payload = jwt.decode(token, process.env.SECRET_KEY);
             if(payload.exp <= moment.unix()){
                 return res.status(401).send({message: 'El token ha expirado.'});
             }

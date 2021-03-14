@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RecordarClaveComponent } from './recordar-clave/recordar-clave.component';
 import { NavegacionComponent } from './navegacion/navegacion.component';
+import { CambiarClaveComponent } from './cambiar-clave/cambiar-clave.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecordarClaveComponent,
-    NavegacionComponent
+    NavegacionComponent,
+    CambiarClaveComponent
   ],
   imports: [
     BrowserModule,

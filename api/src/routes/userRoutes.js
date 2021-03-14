@@ -20,6 +20,7 @@ api.post('/subir-foto-perfil/:dni', [md_auth.ensureAuth, md_upload.single('image
 api.post('/eliminar-foto-perfil/:dni', md_auth.ensureAuth, UserController.eliminarFotoPerfil);
 api.get('/obtener-foto-perfil/:fotoPerfil', md_auth.ensureAuth, UserController.obtenerFotoPerfil);
 api.post('/recordar-contrasena', UserController.recordarContrasena);
+api.put('/modificar-clave-usuario/:dni', UserController.modificarContrasena);
 
 // Se exporta la api de rutas de usuario
 module.exports = api;

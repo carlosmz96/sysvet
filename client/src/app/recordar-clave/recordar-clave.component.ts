@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../usuario.service';
 
@@ -17,8 +16,7 @@ export class RecordarClaveComponent implements OnInit {
   public mensajeExito: string = "";
 
   constructor(
-    private usuarioService: UsuarioService,
-    private router: Router
+    private usuarioService: UsuarioService
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
   }
@@ -28,8 +26,6 @@ export class RecordarClaveComponent implements OnInit {
    */
   ngOnInit(): void {
     this.identity = this.usuarioService.getIdentity();
-
-    console.log(this.identity);
   }
 
   /**
@@ -54,13 +50,6 @@ export class RecordarClaveComponent implements OnInit {
         this.mensajeError = error.error.message;
       }
     )
-  }
-
-  /**
-   * Método encargado de redirigir al login
-   */
-  public goLogin(): void {
-    this.router.navigate(['/']);
   }
 
 }

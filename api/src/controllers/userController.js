@@ -125,11 +125,12 @@ async function modificarUsuario(req, res) {
     const userDni = req.params.dni;
     const update = req.body;
 
+    const hashPass = bcrypt.hashSync(update.pass, 10);
     await Usuario.update({
         nombre: update.nombre,
         apellidos: update.apellidos,
         email: update.email,
-        pass: update.pass,
+        pass: hashPass,
         rol: update.rol,
         telefono: update.telefono,
         direccion: update.direccion
@@ -248,6 +249,9 @@ async function recordarContrasena(req, res) {
         if (!user) {
             res.status(404).send({ message: 'No existe ningún usuario con este correo.' });
         } else {
+            // creación del token con una durabilidad de 20 minutos
+            const token = jwt.crearTokenCambiarClave(user);
+
             // creación del medio de transporte
             let transporter = nodemailer.createTransport(smtpTransport({
                 service: 'gmail',
@@ -258,12 +262,14 @@ async function recordarContrasena(req, res) {
                 }
             }));
 
+            // le paso la url con el id cifrado
             let mailOptions = {
-                from: 'SYSVET',
+                from: 'carlossysvet01@gmail.com',
                 to: userEmail,
-                subject: '¿Olvidaste la contraseña? Crea una nueva',
-                html: `<p>Cambia tu contraseña en el siguiente enlace:</p>
-                <p><a href="#">Crear nueva contraseña</p>`
+                subject: '¿Olvidaste tu contraseña?',
+                html: `<p>Para cambiar tu contraseña, tan solo haz clic en el siguiente enlace:
+                <a href="${process.env.CAMBIO_CLAVE}/${token}">crear nueva contraseña</p>
+                <p>Este enlace solo tendrá una validez de hasta 20 minutos desde que se creó.</p>`
             };
 
             await transporter.sendMail(mailOptions, (error, info) => {
@@ -281,6 +287,30 @@ async function recordarContrasena(req, res) {
     });
 }
 
+/**
+ * Método encargado de cambiar solo la contraseña del usuario
+ * @param {*} req Consulta el usuario mediante el dni
+ * @param {*} res Respuesta generada tras el cambio de contraseña
+ */
+async function modificarContrasena(req, res) {
+    const userDni = req.params.dni;
+    const update = req.body;
+
+    const hashPass = bcrypt.hashSync(update.pass, 10);
+
+    await Usuario.update({
+        pass: hashPass
+    }, { where: { dni: userDni } }).then(function (userUpdated) {
+        if (!userUpdated) {
+            res.status(404).send({ message: 'No se ha podido cambiar la contraseña del usuario.' });
+        } else {
+            res.status(200).send({ user: userUpdated });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al cambiar la contraseña del usuario.' });
+    });
+}
+
 module.exports = {
     altaUsuario,
     iniciarSesion,
@@ -291,5 +321,6 @@ module.exports = {
     subirFotoPerfil,
     eliminarFotoPerfil,
     obtenerFotoPerfil,
-    recordarContrasena
+    recordarContrasena,
+    modificarContrasena
 }
