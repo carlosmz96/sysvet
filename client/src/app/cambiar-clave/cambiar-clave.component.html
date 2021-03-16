@@ -10,7 +10,7 @@
         <div *ngIf="!expirado && !mensajeExito">
             <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 30em; margin-top: 3%;">
                 <div class="card-body">
-                    <form #emailForm="ngForm" (ngSubmit)="onSubmitCambioClave()" class="formulario-cambiar-clave"
+                    <form #emailForm="ngForm" (ngSubmit)="onSubmitCambioClave()" class="formulario-cambiar-clave row g-3"
                         ngNativeValidate>
                         <div *ngIf="mensajeError">
                             <div class="alert alert-danger" role="alert">

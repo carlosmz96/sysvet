@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class NavegacionComponent implements OnInit {
   public title = 'SYSVET';
   public identity: any = false; // usuario logueado
-  @Output() logoutEmitter = new EventEmitter<boolean>();
+  // @Output() logoutEmitter = new EventEmitter<boolean>();
 
   constructor(
     private router: Router
@@ -27,7 +27,8 @@ export class NavegacionComponent implements OnInit {
    public logout(): void {
     localStorage.clear();
     
-    this.logoutEmitter.emit();
+    // this.logoutEmitter.emit();
+    this.router.navigate(['login']);
   }
 
 }

@@ -1,13 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { CambiarClaveComponent } from './cambiar-clave/cambiar-clave.component';
+import { PrincipalComponent } from './principal/principal.component';
 import { RecordarClaveComponent } from './recordar-clave/recordar-clave.component';
+import { AuthGuard } from './auth.guard';
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent
+    redirectTo: 'index',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'registro',
+    component: RegistroComponent
+  },
+  {
+    path: 'index',
+    component: PrincipalComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'recordar-clave',
@@ -19,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'index',
     pathMatch: 'full'
   },
 ];

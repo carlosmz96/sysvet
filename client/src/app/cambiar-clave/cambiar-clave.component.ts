@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../usuario.service';
@@ -25,7 +25,8 @@ export class CambiarClaveComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private elementRef: ElementRef
   ) {
     // obtengo el parametro token
     const myRawToken: string = this.route.snapshot.paramMap.get('token')!;
@@ -43,6 +44,8 @@ export class CambiarClaveComponent implements OnInit {
       this.mensajeError = "Este enlace ha expirado, vuelve a intentarlo de nuevo.";
       this.expirado = true;
     }
+
+    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
   /**

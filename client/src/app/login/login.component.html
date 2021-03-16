@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div>
+            <h1 class="title">
+                <a routerLink="login" style="color: white;">{{title}}</a>
+            </h1>
+        </div>
+
+        <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="width: 25em; margin-top: 3%;">
+            <div class="card-body">
+                <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-login row g-3" ngNativeValidate>
+                    <div *ngIf="mensajeError">
+                        <div class="alert alert-danger" role="alert">
+                            {{ mensajeError }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dni"><strong>DNI</strong></label>
+                        <input type="text" #dni="ngModel" name="dni" id="dni" [(ngModel)]="usuario.dni"
+                            class="form-control" placeholder="Introduce tu dni" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><strong>Contraseña</strong></label>
+                        <input type="password" #password="ngModel" name="password" id="password"
+                            [(ngModel)]="usuario.pass" class="form-control" placeholder="Introduce tu contraseña"
+                            required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Iniciar sesión</button>
+                        <a routerLink="recordar-clave" style="text-align: center;" (click)="goRecordarClave()">¿Olvidaste tu
+                            contraseña?</a>
+                        <button class="btn btn-success" type="button" (click)="goRegister()">Regístrate</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

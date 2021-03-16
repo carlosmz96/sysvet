@@ -8,13 +8,19 @@ import { AppComponent } from './app.component';
 import { RecordarClaveComponent } from './recordar-clave/recordar-clave.component';
 import { NavegacionComponent } from './navegacion/navegacion.component';
 import { CambiarClaveComponent } from './cambiar-clave/cambiar-clave.component';
+import { PrincipalComponent } from './principal/principal.component';
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecordarClaveComponent,
     NavegacionComponent,
-    CambiarClaveComponent
+    CambiarClaveComponent,
+    PrincipalComponent,
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
