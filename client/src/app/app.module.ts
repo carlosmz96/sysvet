@@ -11,6 +11,7 @@ import { CambiarClaveComponent } from './cambiar-clave/cambiar-clave.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
+import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RegistroComponent } from './registro/registro.component';
     CambiarClaveComponent,
     PrincipalComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    ListadoUsuariosComponent
   ],
   imports: [
     BrowserModule,

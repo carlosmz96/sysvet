@@ -1,0 +1,49 @@
+<app-navegacion></app-navegacion>
+
+<div class="container">
+    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body" style="text-align: justify;">
+            <table id="tabla-usuarios" style="width: 100%;" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            DNI
+                        </th>
+                        <th scope="col">
+                            Nombre
+                        </th>
+                        <th scope="col">
+                            Apellidos
+                        </th>
+                        <th scope="col">
+                            Rol
+                        </th>
+                        <th scope="col">
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>
+                            {{ usuario.dni }}
+                        </td>
+                        <td>
+                            {{ usuario.nombre }}
+                        </td>
+                        <td>
+                            {{ usuario.apellidos }}
+                        </td>
+                        <td>
+                            {{ usuario.rol }}
+                        </td>
+                        <td>
+                            <button style="display: block; margin: auto; width: 100%;" class="btn btn-success"
+                                type="button">Consultar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

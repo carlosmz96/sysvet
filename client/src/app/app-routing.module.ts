@@ -6,6 +6,7 @@ import { RecordarClaveComponent } from './recordar-clave/recordar-clave.componen
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
+import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'cambiar-clave/:token',
     component: CambiarClaveComponent
+  },
+  {
+    path: 'listado-usuarios',
+    component: ListadoUsuariosComponent
   },
   {
     path: '**',

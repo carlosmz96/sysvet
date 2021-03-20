@@ -47,13 +47,18 @@ export class UsuarioService {
   }
 
   /**
+   * Método encargado de llamar al api para obtener el listado de usuarios
+   */
+  public listarUsuarios():Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', this.getToken());
+    return this.httpClient.get(this.url + '/usuarios', {headers: headers});
+  }
+
+  /**
    * Método encargado de llamar al api para consultar los datos de un usuario
    * @param user_to_update Usuario a consultar
    */
    public consultarUsuario(dni: any):Observable<any> {
-    // const params = JSON.stringify(user_to_get);
-    // const headers = new HttpHeaders().set('Content-Type','application/json');
-
     return this.httpClient.get(this.url + 'usuarios/' + dni);
   }
 
