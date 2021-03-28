@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { AccordionModule } from 'primeng/accordion';
+import { ButtonModule } from 'primeng/button'
+
 import { AppComponent } from './app.component';
 import { RecordarClaveComponent } from './recordar-clave/recordar-clave.component';
 import { NavegacionComponent } from './navegacion/navegacion.component';
@@ -28,7 +33,12 @@ import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.co
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    TableModule,
+    InputTextModule,
+    AccordionModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

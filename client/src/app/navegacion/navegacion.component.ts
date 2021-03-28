@@ -21,6 +21,13 @@ export class NavegacionComponent implements OnInit {
   }
 
   /**
+   * Método encargado de redirigir a la gestión de usuarios
+   */
+   public goUsuarios(): void {
+    this.router.navigate(['listado-usuarios']);
+  }
+
+  /**
    * Método encargado de cerrar la sesión y así eliminar todos los elementos del localStorage
    */
   public logout(): void {
@@ -28,13 +35,6 @@ export class NavegacionComponent implements OnInit {
 
     // this.logoutEmitter.emit();
     this.router.navigate(['login']);
-  }
-
-  /**
-   * Método encargado de redirigir a la gestión de usuarios
-   */
-  public goUsuarios(): void {
-    this.router.navigate(['listado-usuarios']);
   }
 
 }

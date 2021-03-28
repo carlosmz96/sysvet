@@ -1,19 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* html, body { height: 100%; } */
-
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-body {
     background: rgb(243, 243, 243);
     overflow-y: auto;
 }
 
 a {
     text-decoration: none;
+}
+
+.page-item .page-link {
+    color: #72bd78;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+}
+
+.page-item.active .page-link {
+    background-color: #72bd78;
+    border-color: #72bd78;
+    color: white;
 }
 
 /* CABECERA DEL LOGIN */
@@ -57,21 +66,26 @@ form {
     }
 }
 
-/* @media (min-width: 769px) and (max-width: 809px) {
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0;
+    }
     .card {
-        width: 45em;
+        padding: 0 !important;
     }
 }
 
-@media (min-width: 680px) and (max-width: 768px) {
-    .card {
-        width: 40em;
-    }
-} */
-
 /* ESTILO DE LAS TABLAS */
 
-.table>thead {
-    background: #72bd78;
-    color: white
+th {
+    background: #72bd78 !important;
+    color: white !important;
+}
+
+.p-sortable-column-icon {
+    color: white !important
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    border: 1px solid #68af6e;
 }
