@@ -7,6 +7,7 @@ import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'listado-usuarios',
     component: ListadoUsuariosComponent
+  },
+  {
+    path: 'usuario/:dni',
+    component: PerfilUsuarioComponent
   },
   {
     path: '**',

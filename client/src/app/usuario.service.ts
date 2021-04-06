@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { Usuario } from './models/Usuario';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { GLOBAL } from './global';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class UsuarioService {
   constructor(
     private httpClient: HttpClient
   ) {
-    this.url = "http://localhost:3000/api/";
+    this.url = GLOBAL.url;
   }
 
   /**

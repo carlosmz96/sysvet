@@ -17,6 +17,7 @@ import { PrincipalComponent } from './principal/principal.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.co
     PrincipalComponent,
     LoginComponent,
     RegistroComponent,
-    ListadoUsuariosComponent
+    ListadoUsuariosComponent,
+    PerfilUsuarioComponent
   ],
   imports: [
     BrowserModule,
