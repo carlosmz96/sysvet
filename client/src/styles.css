@@ -66,6 +66,12 @@ form {
     }
 }
 
+@media (min-width: 992px) {
+    .modificar-usuario {
+        width: 50em;
+    }
+}
+
 @media screen and (max-width: 600px) {
     .container {
         padding: 0;
@@ -86,6 +92,14 @@ th {
     color: white !important
 }
 
-.p-datatable .p-datatable-thead > tr > th {
+.p-datatable .p-datatable-thead>tr>th {
     border: 1px solid #68af6e;
+}
+
+/* ESTILO PERFILES */
+
+.imagen-perfil-usuario {
+    width: 150px;
+    border-radius: 50%;
+    /* overflow: hidden; */
 }

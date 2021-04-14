@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { ModificarUsuarioComponent } from './modificar-usuario/modificar-usuario.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path: 'usuario/:dni',
     component: PerfilUsuarioComponent
+  },
+  {
+    path: 'modificar-usuario/:dni',
+    component: ModificarUsuarioComponent
   },
   {
     path: '**',

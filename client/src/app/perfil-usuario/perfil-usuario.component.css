@@ -87,15 +87,17 @@
     align-items: center;
 }
 
-.imagen-perfil-usuario {
-    width: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
 .titulo-perfil-usuario {
     margin-left: 1em;
+    margin-bottom: 0;
     text-align: left;
+    font-size: 18pt;
+}
+
+.subtitulo-perfil-usuario {
+    margin-left: 1.3em;
+    text-align: left;
+    font-size: 14pt;
 }
 
 /* Datos del usuario */

@@ -19,6 +19,7 @@ api.delete('/baja-usuario/:dni', md_auth.ensureAuth, UserController.bajaUsuario)
 api.post('/subir-foto-perfil/:dni', [md_auth.ensureAuth, md_upload.single('imagen')], UserController.subirFotoPerfil);
 api.post('/eliminar-foto-perfil/:dni', md_auth.ensureAuth, UserController.eliminarFotoPerfil);
 api.get('/obtener-foto-perfil/:fotoPerfil', UserController.obtenerFotoPerfil);
+api.get('/comprobar-clave/:dni/:pass', UserController.comprobarContrasena);
 api.post('/recordar-contrasena', UserController.recordarContrasena);
 api.put('/modificar-clave-usuario/:dni', UserController.modificarContrasena);
 

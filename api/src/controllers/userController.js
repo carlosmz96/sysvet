@@ -125,20 +125,20 @@ async function modificarUsuario(req, res) {
     const userDni = req.params.dni;
     const update = req.body;
 
-    const hashPass = bcrypt.hashSync(update.pass, 10);
     await Usuario.update({
         nombre: update.nombre,
         apellidos: update.apellidos,
         email: update.email,
-        pass: hashPass,
         rol: update.rol,
         telefono: update.telefono,
         direccion: update.direccion
-    }, { where: { dni: userDni } }).then(function (userUpdated) {
+    }, { where: { dni: userDni } }).then(async function (userUpdated) {
         if (!userUpdated) {
             res.status(404).send({ message: 'No se ha podido actualizar el usuario.' });
         } else {
-            res.status(200).send({ user: userUpdated });
+            await Usuario.findByPk(userDni).then((userUpdated) => {
+                res.status(200).send({ user: userUpdated });
+            });
         }
     }).catch(() => {
         res.status(500).send({ message: 'Error al modificar los datos del usuario.' });
@@ -237,6 +237,31 @@ function obtenerFotoPerfil(req, res) {
 }
 
 /**
+ * Método encargado de comprobar que la contraseña introducida sea correcta
+ * @param {*} req Consulta del usuario y contraseña
+ * @param {*} res Respuesta resultado tras la comprobación
+ */
+async function comprobarContrasena(req, res) {
+    const userDni = req.params.dni;
+    const userPass = req.params.pass;
+
+    await Usuario.findByPk(userDni).then(function (user) {
+        if (!user) {
+            res.status(404).send({ message: 'El usuario no existe.' });
+        } else {
+            // Se comprueba la contraseña
+            if (bcrypt.compareSync(userPass, user.pass)) {
+                res.status(200).send({ res: true });
+            } else {
+                res.status(200).send({ res: false });
+            }
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al obtener el usuario.' });
+    });
+}
+
+/**
  * Método encargado de enviar un correo electrónico al usuario con una dirección url
  * para poder crear una nueva contraseña
  * @param {*} req Consulta del email del usuario
@@ -300,11 +325,13 @@ async function modificarContrasena(req, res) {
 
     await Usuario.update({
         pass: hashPass
-    }, { where: { dni: userDni } }).then(function (userUpdated) {
+    }, { where: { dni: userDni } }).then(async function (userUpdated) {
         if (!userUpdated) {
             res.status(404).send({ message: 'No se ha podido cambiar la contraseña del usuario.' });
         } else {
-            res.status(200).send({ user: userUpdated });
+            await Usuario.findByPk(userDni).then((userUpdated) => {
+                res.status(200).send({ user: userUpdated });
+            });
         }
     }).catch(() => {
         res.status(500).send({ message: 'Error al cambiar la contraseña del usuario.' });
@@ -321,6 +348,7 @@ module.exports = {
     subirFotoPerfil,
     eliminarFotoPerfil,
     obtenerFotoPerfil,
+    comprobarContrasena,
     recordarContrasena,
     modificarContrasena
 }
