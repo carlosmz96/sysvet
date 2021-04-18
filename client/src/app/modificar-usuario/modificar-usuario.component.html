@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div *ngIf="mensajeExito">
-                        <div class="alert alert-success" role="alert">
+                        <div id="mensajito" class="alert alert-success" role="alert">
                             {{ mensajeExito }}
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                             [(ngModel)]="usuario.direccion" class="form-control" placeholder="Introduce tu dirección">
                     </div>
                 </div>
-                <div class="apartado-imagen" *ngIf="usuario.foto && usuario.foto != null">
+                <div class="apartado-imagen">
                     <div class="recuadro-imagen">
                         <img class="imagen-perfil-usuario" src="{{ url + 'obtener-foto-perfil/' + usuario.foto }}"
                             alt="Imagen de perfil del usuario">
@@ -85,10 +85,15 @@
                         <span *ngIf="foto && !fotoCambiada">Archivo a subir: {{foto.name}}</span>
                         <label for="subir" class="btn btn-success btn-block subir-foto">Subir foto de perfil</label>
                         <input type="file" id="subir" style="display: none;" (change)="fileChoosen($event)">
-                        <button type="button" class="btn btn-danger eliminar-foto">Eliminar foto de perfil</button>
+                        <button type="button" class="btn btn-danger eliminar-foto"
+                            (click)="eliminarFotoPerfil()">Eliminar foto de perfil</button>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-submit">Editar datos</button>
+                <div class="btn-submit">
+                    <button type="button" class="btn btn-danger"
+                        [routerLink]="['/usuario', usuario.dni]">Volver</button>
+                    <button type="submit" class="btn btn-success success">Editar datos</button>
+                </div>
             </form>
         </div>
     </div>

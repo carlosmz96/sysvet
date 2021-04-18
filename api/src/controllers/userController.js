@@ -206,11 +206,13 @@ async function eliminarFotoPerfil(req, res) {
 
     await Usuario.update({
         foto: null
-    }, { where: { dni: userDni } }).then(function (userUpdated) {
+    }, { where: { dni: userDni } }).then(async function (userUpdated) {
         if (!userUpdated) {
             res.status(404).send({ message: 'No se ha podido eliminar la foto de perfil del usuario.' });
         } else {
-            res.status(200).send({ user: userUpdated });
+            await Usuario.findByPk(userDni).then((userUpdated) => {
+                res.status(200).send({ user: userUpdated });
+            });
         }
     }).catch(() => {
         res.status(500).send({ message: 'Error al eliminar la foto de perfil del usuario.' });
@@ -224,7 +226,12 @@ async function eliminarFotoPerfil(req, res) {
  */
 function obtenerFotoPerfil(req, res) {
     const fotoPerfil = req.params.fotoPerfil;
-    const path_file = './src/public/images/' + fotoPerfil;
+    let path_file = "";
+    if(fotoPerfil == 'null'){
+        path_file = './src/public/images/default-image.png';
+    } else {
+        path_file = './src/public/images/' + fotoPerfil;
+    }
 
     fs.stat(path_file, function (error) {
         if (error) {

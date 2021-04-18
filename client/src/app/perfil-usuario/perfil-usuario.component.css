@@ -87,6 +87,12 @@
     align-items: center;
 }
 
+.imagen-perfil-usuario {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
 .titulo-perfil-usuario {
     margin-left: 1em;
     margin-bottom: 0;

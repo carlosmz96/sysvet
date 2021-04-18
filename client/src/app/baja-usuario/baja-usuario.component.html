@@ -1,0 +1,23 @@
+<app-navegacion></app-navegacion>
+
+<div class="container">
+    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded eliminar-usuario">
+        <div class="card-body" style="text-align: justify;">
+            <div *ngIf="mensajeError">
+                <div class="alert alert-danger" role="alert">
+                    {{ mensajeError }}
+                </div>
+            </div>
+            <p class="info">Confirmar baja de usuario</p>
+            <div class="botonera">
+                <div class="baja">
+                    <button type="button" class="btn btn-danger" (click)="darDeBaja()">Dar de baja</button>
+                </div>
+                <span class="espacio"></span>
+                <div class="cancelar">
+                    <button type="button" class="btn btn-success" routerLink="/usuario/{{dniUsuario}}">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,13 +22,15 @@ export class ModificarUsuarioComponent implements OnInit {
   public foto: any; // variable para almacenar el archivo a subir
   public nuevaFoto: boolean = false;
   public fotoCambiada: boolean = false;
+  public identity: any;
 
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+    this.identity = this.usuarioService.getIdentity();
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', 'default-image.png');
     this.token = this.usuarioService.getToken();
     this.url = GLOBAL.url;
   }
@@ -42,6 +44,9 @@ export class ModificarUsuarioComponent implements OnInit {
    */
   ngOnInit(): void {
     this.dniUsuario = this.route.snapshot.paramMap.get('dni')!;
+    if(this.identity.dni != this.dniUsuario && this.identity.rol != "administrador"){
+      this.router.navigate(['acceso-denegado']);
+    }
     if (this.dniUsuario == "") {
       this.router.navigate(['index']);
     } else {
@@ -56,7 +61,7 @@ export class ModificarUsuarioComponent implements OnInit {
         error => {
           this.mensajeError = "Error al obtener todos los datos del usuario";
         }
-      )
+      );
     }
   }
 
@@ -194,6 +199,32 @@ export class ModificarUsuarioComponent implements OnInit {
       this.nuevaFoto = true;
       this.fotoCambiada = false;
     }
+  }
+
+  /**
+   * Método encargado de eliminar la foto de perfil del usuario
+   */
+  public eliminarFotoPerfil(): void {
+    this.usuarioService.eliminarFotoUsuario(this.dniUsuario).subscribe(
+      response => {
+        this.usuario = response.user;
+        this.usuario.pass = "";
+        this.usuario.foto = "default-image.png";
+
+        this.mensajeError = "";
+        this.mensajeExito = "Se ha eliminado la foto de perfil correctamente.";
+      },
+      error => {
+        this.mensajeError = error.error.message;
+      }
+    );
+  }
+
+  /**
+   * Método encargado de redireccionar a perfil usuario
+   */
+  public goPerfil(): void {
+    this.router.navigate(['usuario/', this.usuario.dni]);
   }
 
 }

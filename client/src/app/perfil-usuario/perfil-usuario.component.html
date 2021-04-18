@@ -79,8 +79,8 @@
                                 </div>
                             </form>
 
-                            <div class="botonera">
-                                <button type="button" class="btn btn-danger">Date de baja</button>
+                            <div class="botonera" *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
+                                <button type="button" class="btn btn-danger" routerLink="/baja-usuario/{{usuario.dni}}">Date de baja</button>
                                 <button type="button" class="btn btn-success" routerLink="/modificar-usuario/{{usuario.dni}}">Editar datos</button>
                             </div>
                         </div>

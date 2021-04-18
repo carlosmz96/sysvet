@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../usuario.service';
@@ -15,14 +15,19 @@ export class PerfilUsuarioComponent implements OnInit {
   public dniUsuario: string = "";
   public mensajeError: string = "";
   public url: string = "";
+  public identity: any;
 
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) {
-    this.usuario = new Usuario('','','','','','','','','');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
     this.url = GLOBAL.url;
+    this.identity = this.usuarioService.getIdentity();
+    // permite suscribirse al cambio de ruta para poder recargar el componente sin recargar la página
+    this.subscribeRouteChange();
   }
 
   /**
@@ -33,13 +38,13 @@ export class PerfilUsuarioComponent implements OnInit {
    */
   ngOnInit(): void {
     this.dniUsuario = this.route.snapshot.paramMap.get('dni')!;
-    if(this.dniUsuario == ""){
+    if (this.dniUsuario == "") {
       this.router.navigate(['index']);
-    }else{
+    } else {
       this.usuarioService.consultarUsuario(this.dniUsuario).subscribe(
         response => {
           this.usuario = response.user;
-          if(this.usuario.foto == null) {
+          if (this.usuario.foto == null) {
             this.usuario.foto = 'default-image.png';
           }
         },
@@ -48,6 +53,15 @@ export class PerfilUsuarioComponent implements OnInit {
         }
       )
     }
+  }
+
+  /**
+   * Método encargado de suscribirse al cambio de ruta
+   */
+  subscribeRouteChange() {
+    this.activatedRoute.params.subscribe((params = {}) => {
+      this.ngOnInit();
+    });
   }
 
 }

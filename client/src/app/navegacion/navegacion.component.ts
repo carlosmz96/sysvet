@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { PerfilUsuarioComponent } from '../perfil-usuario/perfil-usuario.component';
 
 @Component({
   selector: 'app-navegacion',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class NavegacionComponent implements OnInit {
   public title = 'SYSVET';
   public identity: any = false; // usuario logueado
-  // @Output() logoutEmitter = new EventEmitter<boolean>();
+  @ViewChild(PerfilUsuarioComponent) perfilUsuario?: PerfilUsuarioComponent;
 
   constructor(
     private router: Router
@@ -18,6 +19,7 @@ export class NavegacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   /**
@@ -35,6 +37,20 @@ export class NavegacionComponent implements OnInit {
 
     // this.logoutEmitter.emit();
     this.router.navigate(['login']);
+  }
+
+  /**
+   * Método encargado de redireccionar a la página principal
+   */
+  public goHome(): void {
+    this.router.navigate(['index']);
+  }
+
+  /**
+   * Método encargado de redireccionar al perfil del usuario
+   */
+  public recargarPerfil(): void {
+    
   }
 
 }

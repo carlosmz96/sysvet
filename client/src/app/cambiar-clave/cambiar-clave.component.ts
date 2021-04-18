@@ -11,7 +11,6 @@ import * as moment from 'moment';
   styleUrls: ['./cambiar-clave.component.css']
 })
 export class CambiarClaveComponent implements OnInit {
-
   public title: string = 'SYSVET';
   public usuario: Usuario;
   public identity: any = false; // usuario logueado
@@ -28,6 +27,13 @@ export class CambiarClaveComponent implements OnInit {
     private route: ActivatedRoute,
     private elementRef: ElementRef
   ) {
+    this.identity = this.usuarioService.getIdentity();
+
+    // si el usuario ya está logueado, redirecciona a index
+    if(this.identity) {
+      this.router.navigate(['index']);
+    }
+    
     // obtengo el parametro token
     const myRawToken: string = this.route.snapshot.paramMap.get('token')!;
     const helper = new JwtHelperService();

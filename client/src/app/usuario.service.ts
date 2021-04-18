@@ -62,7 +62,7 @@ export class UsuarioService {
    * @param user_to_update Usuario a consultar
    * @returns Usuario consultado
    */
-  public consultarUsuario(dni: any): Observable<any> {
+  public consultarUsuario(dni: string): Observable<any> {
     return this.httpClient.get(this.url + 'usuarios/' + dni);
   }
 
@@ -76,6 +76,31 @@ export class UsuarioService {
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.getToken()});
 
     return this.httpClient.put(this.url + 'modificar-usuario/' + user_to_update.dni, params, { headers: headers });
+  }
+
+  /**
+   * Método encargado de llamar al api para eliminar la foto de perfil del usuario
+   * @param dni Dni del usuario
+   * @returns Respuesta tras la eliminación de la foto de perfil
+   */
+  public eliminarFotoUsuario(dni: string): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.getToken()});
+
+    return this.httpClient.post(this.url + 'eliminar-foto-perfil/' + dni, {}, { headers: headers });
+  }
+
+  /**
+   * Método encargado de llamar al api para eliminar a un usuario por completo
+   * @param dni Dni del usuario
+   * @returns Usuario eliminado
+   */
+  public bajaUsuario(dni: string): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.getToken()});
+    const options = {
+      headers: headers
+    }
+
+    return this.httpClient.delete(this.url + 'baja-usuario/' + dni, options);
   }
 
   /**

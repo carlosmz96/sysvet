@@ -22,14 +22,18 @@ export class RecordarClaveComponent implements OnInit {
     private elementRef: ElementRef
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+    this.identity = this.usuarioService.getIdentity();
+
+    // si el usuario ya está logueado, redirecciona a index
+    if(this.identity) {
+      this.router.navigate(['index']);
+    }
   }
 
   /**
    * Método que se ejecuta al iniciar el componente
    */
   ngOnInit(): void {
-    this.identity = this.usuarioService.getIdentity();
-
     this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 

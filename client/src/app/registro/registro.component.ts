@@ -10,6 +10,7 @@ import { UsuarioService } from '../usuario.service';
 })
 export class RegistroComponent implements OnInit {
   public title = 'SYSVET';
+  public identity: any;
   public usuario_registro: Usuario;
   public mensajeExito: string = "";
   public mensajeError: string = "";
@@ -20,7 +21,13 @@ export class RegistroComponent implements OnInit {
     private router: Router,
     private elementRef: ElementRef
   ) {
-    this.usuario_registro = new Usuario('','','','','','cliente','','','');
+    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
+    this.identity = this.usuarioService.getIdentity();
+
+    // si el usuario ya está logueado, redirecciona a index
+    if(this.identity) {
+      this.router.navigate(['index']);
+    }
   }
 
   ngOnInit(): void {
@@ -30,7 +37,7 @@ export class RegistroComponent implements OnInit {
   /**
    * Método encargado de registrar a un usuario en la aplicación
    */
-   public onSubmitRegister(): void {
+  public onSubmitRegister(): void {
     if (this.usuario_registro.pass == this.rePass) {
       this.usuarioService.altaUsuario(this.usuario_registro).subscribe(
         response => {
@@ -59,7 +66,7 @@ export class RegistroComponent implements OnInit {
   /**
    * Método encargado de redireccionar a login
    */
-   public goLogin(): void {
+  public goLogin(): void {
     this.router.navigate(['login']);
   }
 

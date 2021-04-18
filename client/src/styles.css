@@ -70,6 +70,9 @@ form {
     .modificar-usuario {
         width: 50em;
     }
+    .eliminar-usuario {
+        width: 50em;
+    }
 }
 
 @media screen and (max-width: 600px) {

@@ -19,6 +19,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { ModificarUsuarioComponent } from './modificar-usuario/modificar-usuario.component';
+import { BajaUsuarioComponent } from './baja-usuario/baja-usuario.component';
+import { AccesoDenegadoComponent } from './acceso-denegado/acceso-denegado.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ModificarUsuarioComponent } from './modificar-usuario/modificar-usuario
     RegistroComponent,
     ListadoUsuariosComponent,
     PerfilUsuarioComponent,
-    ModificarUsuarioComponent
+    ModificarUsuarioComponent,
+    BajaUsuarioComponent,
+    AccesoDenegadoComponent
   ],
   imports: [
     BrowserModule,

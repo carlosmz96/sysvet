@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../usuario.service';
 
@@ -19,18 +19,23 @@ export class LoginComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private elementRef: ElementRef,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', ''); // usuario de inicio de sesion
+    this.identity = this.usuarioService.getIdentity();
+    this.token = this.usuarioService.getToken();
+
+    // si el usuario ya está logueado, redirecciona a index
+    if(this.identity) {
+      this.router.navigate(['index']);
+    }
   }
 
   /**
    * Método que se ejecuta al iniciar el componente
    */
   ngOnInit(): void {
-    this.identity = this.usuarioService.getIdentity();
-    this.token = this.usuarioService.getToken();
-
     this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
@@ -73,21 +78,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
-  /**
-   * Método encargado de cerrar la sesión y así eliminar todos los elementos del localStorage
-   */
-  // public logout(): void {
-  //   localStorage.clear();
-
-  //   this.identity = null;
-  //   this.token = null;
-  //   this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
-  //   this.mensajeError = "";
-
-  //   // cambia el color de fondo del body
-  //   this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
-  // }
 
   /**
    * Método encargado de redirigir al formulario de registro

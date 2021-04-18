@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../usuario.service';
@@ -10,14 +11,19 @@ import { UsuarioService } from '../usuario.service';
 })
 export class ListadoUsuariosComponent implements OnInit {
   public usuarios: Usuario[] = [];
+  public identity: any;
 
   constructor(
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private router: Router
   ) {
-
+    this.identity = this.usuarioService.getIdentity();
   }
 
   ngOnInit(): void {
+    if(this.identity.rol != "administrador"){
+      this.router.navigate(['acceso-denegado']);
+    }
     this.usuarioService.listarUsuarios().subscribe(
       users => {
         this.usuarios = users.users as Usuario[];
