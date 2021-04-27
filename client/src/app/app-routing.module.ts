@@ -11,6 +11,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { ModificarUsuarioComponent } from './modificar-usuario/modificar-usuario.component';
 import { BajaUsuarioComponent } from './baja-usuario/baja-usuario.component';
 import { AccesoDenegadoComponent } from './acceso-denegado/acceso-denegado.component';
+import { ListadoMascotasComponent } from './listado-mascotas/listado-mascotas.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,11 @@ const routes: Routes = [
   {
     path: 'listado-usuarios',
     component: ListadoUsuariosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'listado-mascotas',
+    component: ListadoMascotasComponent,
     canActivate: [AuthGuard]
   },
   {

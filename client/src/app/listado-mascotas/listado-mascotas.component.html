@@ -1,0 +1,84 @@
+<app-navegacion></app-navegacion>
+
+<div class="container">
+    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body" style="text-align: justify;">
+            <p-table #dtpets [value]="mascotas" dataKey="microchip" styleClass="p-datatable-gridlines" [paginator]="true"
+                stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+                [rowsPerPageOptions]="[10,25,50]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="acordeon" style="width: 4.4rem; display: none;"></th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dtpets.filter(getValueInput($event.target), 'microchip', 'contains')"
+                                placeholder="Buscar..." class="p-column-filter">
+                        </th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dtpets.filter(getValueInput($event.target), 'nombre', 'contains')"
+                                placeholder="Buscar..." class="p-column-filter">
+                        </th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dtpets.filter(getValueInput($event.target), 'propietario', 'contains')"
+                                placeholder="Buscar..." class="p-column-filter">
+                        </th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dtpets.filter(getValueInput($event.target), 'veterinario', 'contains')"
+                                placeholder="Buscar..." class="p-column-filter">
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="acordeon" style="display: none;"></th>
+                        <th pSortableColumn="microchip">Microchip <p-sortIcon field="microchip"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="propietario">Propietario <p-sortIcon field="propietario"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="veterinario">Veterinario <p-sortIcon field="veterinario"></p-sortIcon>
+                        </th>
+                        <th>Acción</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-mascota let-expanded="expanded">
+                    <tr>
+                        <td class="acordeon" style="display: none;">
+                            <button type="button" pButton pRipple [pRowToggler]="mascota"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td>{{mascota.microchip}}</td>
+                        <td>{{mascota.nombre}}</td>
+                        <td>{{mascota.propietario}}</td>
+                        <td>{{mascota.veterinario}}</td>
+                        <td>
+                            <i class="fas fa-lg fa-eye consultar" routerLink="/mascota/{{mascota.microchip}}"
+                                style="display: block; text-align: center; cursor: pointer;"></i>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-mascota>
+                    <tr class="rowmedia">
+                        <td colspan="5">
+                            <p class="colnombre"><strong>Nombre: </strong>{{mascota.nombre}}</p>
+                        </td>
+                    </tr>
+                    <tr class="rowsmall">
+                        <td colspan="3">
+                            <p class="colnombre"><strong>Nombre: </strong>{{mascota.nombre}}</p>
+                            <p class="colpropietario"><strong>Propietario: </strong>{{mascota.propietario}}</p>
+                            <p class="colveterinario"><strong>Veterinario: </strong>{{mascota.veterinario}}</p>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

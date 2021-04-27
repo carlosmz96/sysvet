@@ -21,6 +21,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { ModificarUsuarioComponent } from './modificar-usuario/modificar-usuario.component';
 import { BajaUsuarioComponent } from './baja-usuario/baja-usuario.component';
 import { AccesoDenegadoComponent } from './acceso-denegado/acceso-denegado.component';
+import { ListadoMascotasComponent } from './listado-mascotas/listado-mascotas.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AccesoDenegadoComponent } from './acceso-denegado/acceso-denegado.compo
     PerfilUsuarioComponent,
     ModificarUsuarioComponent,
     BajaUsuarioComponent,
-    AccesoDenegadoComponent
+    AccesoDenegadoComponent,
+    ListadoMascotasComponent
   ],
   imports: [
     BrowserModule,

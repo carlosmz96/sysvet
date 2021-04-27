@@ -54,12 +54,12 @@ export class UsuarioService {
    */
   public listarUsuarios(): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', this.getToken());
-    return this.httpClient.get(this.url + '/usuarios', { headers: headers });
+    return this.httpClient.get(this.url + 'usuarios', { headers: headers });
   }
 
   /**
    * Método encargado de llamar al api para consultar los datos de un usuario
-   * @param user_to_update Usuario a consultar
+   * @param dni Dni del usuario a consultar
    * @returns Usuario consultado
    */
   public consultarUsuario(dni: string): Observable<any> {
