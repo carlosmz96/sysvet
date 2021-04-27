@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 // Inicializaciones
 const app = express();
 const userRoutes = require('./routes/userRoutes');
+const petRoutes = require('./routes/petRoutes');
 dotenv.config();
 
 // Configuraciones
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 
 // Rutas base
 app.use('/api', userRoutes);
+app.use('/api', petRoutes);
 
 // Iniciar el servidor
 app.listen(app.get('port'), () => {

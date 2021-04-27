@@ -63,7 +63,8 @@ export class UsuarioService {
    * @returns Usuario consultado
    */
   public consultarUsuario(dni: string): Observable<any> {
-    return this.httpClient.get(this.url + 'usuarios/' + dni);
+    const headers = new HttpHeaders().set('Authorization', this.getToken());
+    return this.httpClient.get(this.url + 'usuarios/' + dni, { headers: headers });
   }
 
   /**

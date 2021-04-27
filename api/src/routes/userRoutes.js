@@ -12,7 +12,7 @@ const api = express.Router();
 // Rutas de usuario
 api.post('/registro', UserController.altaUsuario);
 api.post('/login', UserController.iniciarSesion);
-api.get('/usuarios/:dni', UserController.consultarUsuario);
+api.get('/usuarios/:dni', md_auth.ensureAuth, UserController.consultarUsuario);
 api.get('/usuarios', md_auth.ensureAuth, UserController.consultarUsuarios);
 api.put('/modificar-usuario/:dni', md_auth.ensureAuth, UserController.modificarUsuario);
 api.delete('/baja-usuario/:dni', md_auth.ensureAuth, UserController.bajaUsuario);
