@@ -79,13 +79,42 @@
                                 </div>
                             </form>
 
-                            <div class="botonera" *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
-                                <button type="button" class="btn btn-danger" routerLink="/baja-usuario/{{usuario.dni}}">Date de baja</button>
-                                <button type="button" class="btn btn-success" routerLink="/modificar-usuario/{{usuario.dni}}">Editar datos</button>
+                            <div class="botonera"
+                                *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
+                                <button type="button" class="btn btn-danger"
+                                    routerLink="/baja-usuario/{{usuario.dni}}">Date de baja</button>
+                                <button type="button" class="btn btn-success"
+                                    routerLink="/modificar-usuario/{{usuario.dni}}">Editar datos</button>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="mis-mascotas" role="tabpanel" aria-labelledby="mis-mascotas-tab">
-                            ...
+                            <div class="cabecera-perfil-mascotas">
+                                <h2 class="titulo-mascotas-usuario">Mis mascotas</h2>
+                                <p>En este apartado se muestran los datos de tus mascotas registradas en el sistema.</p>
+                            </div>
+                            <div class="listado-mascotas">
+                                <div *ngIf="mascotas.length > 0">
+                                    <div *ngFor="let mascota of mascotas">
+                                        <div class="card-mascota">
+                                            <div class="imagen">
+                                                <img class="imagen-perfil-mascota"
+                                                    src="{{ url + 'obtener-foto-mascota/' + mascota.imagen }}"
+                                                    alt="Imagen de perfil de la mascota">
+                                            </div>
+                                            <div class="nombre-mascota">
+                                                <span class="nombre">{{ mascota.nombre }}</span>
+                                                <button type="button"
+                                                    class="btn btn-success btn-consultar">Consultar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="mascotas.length == 0">
+                                    <div class="card-mascota-vacia justify-content-center">
+                                        <span>Todavía no tienes ninguna mascota asociada.</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

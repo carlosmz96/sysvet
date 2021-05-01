@@ -4,6 +4,8 @@ import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../usuario.service';
 
 import { GLOBAL } from '../global';
+import { Mascota } from '../models/Mascota';
+import { MascotaService } from '../mascota.service';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -12,6 +14,7 @@ import { GLOBAL } from '../global';
 })
 export class PerfilUsuarioComponent implements OnInit {
   public usuario: Usuario;
+  public mascotas: Mascota[] = [];
   public dniUsuario: string = "";
   public mensajeError: string = "";
   public url: string = "";
@@ -19,6 +22,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
   constructor(
     private usuarioService: UsuarioService,
+    private mascotaService: MascotaService,
     private router: Router,
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute
@@ -35,6 +39,7 @@ export class PerfilUsuarioComponent implements OnInit {
    * 1) Obtiene el dni del usuario (si no hay ninguno, redirecciona a la página principal)
    * 2) Consulta el usuario
    * 3) Si la imagen del usuario es nula, se sustituye por la foto por defecto
+   * 4) Obtiene las mascotas asociadas al usuario
    */
   ngOnInit(): void {
     this.dniUsuario = this.route.snapshot.paramMap.get('dni')!;
@@ -51,7 +56,27 @@ export class PerfilUsuarioComponent implements OnInit {
         error => {
           this.mensajeError = "Error al obtener todos los datos del usuario";
         }
-      )
+      );
+
+      // carga de mascotas asociadas al usuario
+      this.mascotaService.listarMascotas().subscribe(
+        response => {
+          const mascotasSinFiltrar = response.pets as Mascota[];
+          if (this.usuario.rol == "administrador" || this.usuario.rol == "cliente") {
+            this.mascotas = mascotasSinFiltrar.filter(mascota => mascota.propietario == this.dniUsuario);
+          } else {
+            this.mascotas = mascotasSinFiltrar.filter(mascota => mascota.veterinario == this.dniUsuario);
+          }
+          this.mascotas.forEach(mascota => {
+            if (mascota.imagen == null) {
+              mascota.imagen = 'default-image.png';
+            }
+          });
+        },
+        error => {
+          this.mensajeError = "Error al obtener la lista de mascotas asociadas al usuario";
+        }
+      );
     }
   }
 

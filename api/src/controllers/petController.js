@@ -1,6 +1,9 @@
 'use strict'
 
+// Importaciones
 const Mascota = require("../models/Mascota");
+const fs = require('fs');
+const path = require('path');
 
 /**
  * Método encargado del registro de mascotas en BBDD

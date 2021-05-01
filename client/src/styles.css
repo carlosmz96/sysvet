@@ -104,5 +104,9 @@ th {
 .imagen-perfil-usuario {
     width: 150px;
     border-radius: 50%;
-    /* overflow: hidden; */
+}
+
+.imagen-perfil-mascota {
+    width: 110px;
+    border-radius: 50%;
 }
