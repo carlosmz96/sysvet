@@ -34,7 +34,7 @@
                         <div class="tab-pane fade show active" id="mis-datos" role="tabpanel"
                             aria-labelledby="mis-datos-tab">
                             <!-- Cabecera del perfil de usuario -->
-                            <div class="cabecera-perfil-usuario" *ngIf="usuario.foto && usuario.foto != null">
+                            <div class="cabecera-perfil-usuario" style="padding-top: 1em;" *ngIf="usuario.foto && usuario.foto != null">
                                 <img class="imagen-perfil-usuario"
                                     src="{{ url + 'obtener-foto-perfil/' + usuario.foto }}"
                                     alt="Imagen de perfil del usuario">
@@ -103,7 +103,7 @@
                                             </div>
                                             <div class="nombre-mascota">
                                                 <span class="nombre">{{ mascota.nombre }}</span>
-                                                <button type="button"
+                                                <button type="button" routerLink="/datos-mascota/{{ mascota.microchip }}"
                                                     class="btn btn-success btn-consultar">Consultar</button>
                                             </div>
                                         </div>

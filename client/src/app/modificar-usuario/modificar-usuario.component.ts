@@ -88,6 +88,7 @@ export class ModificarUsuarioComponent implements OnInit {
           if (response.res == false) {
             this.mensajeError = "Error: contraseña incorrecta.";
           } else { // si la contraseña es correcta
+            this.usuario.pass = this.newPass;
             this.usuarioService.cambiarClaveUsuario(this.usuario).subscribe(
               response => {
                 this.usuario = response.user;

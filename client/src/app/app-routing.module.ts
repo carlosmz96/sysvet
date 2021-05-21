@@ -12,6 +12,7 @@ import { ModificarUsuarioComponent } from './modificar-usuario/modificar-usuario
 import { BajaUsuarioComponent } from './baja-usuario/baja-usuario.component';
 import { AccesoDenegadoComponent } from './acceso-denegado/acceso-denegado.component';
 import { ListadoMascotasComponent } from './listado-mascotas/listado-mascotas.component';
+import { DatosMascotaComponent } from './datos-mascota/datos-mascota.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,11 @@ const routes: Routes = [
   {
     path: 'baja-usuario/:dni',
     component: BajaUsuarioComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'datos-mascota/:microchip',
+    component: DatosMascotaComponent,
     canActivate: [AuthGuard]
   },
   {

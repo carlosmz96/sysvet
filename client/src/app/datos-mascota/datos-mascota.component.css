@@ -1,0 +1,100 @@
+.apartado-imagen {
+    display: flex;
+    align-items: center;
+    margin-top: 2em;
+    width: 100%;
+}
+
+.recuadro-imagen {
+    width: 130px;
+    height: 130px;
+    margin-right: 2em;
+}
+
+.imagen-perfil-mascota {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+}
+
+.botonera-imagen-mascota {
+    width: 100%;
+}
+
+.subir-foto {
+    display: block;
+    width: 100% !important;
+    margin-bottom: 0.5em;
+}
+
+.eliminar-foto {
+    display: block;
+    width: 100% !important;
+}
+
+.btn-submit {
+    float: right;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.btn-submit .btn-success {
+    margin-left: 0.5em;
+}
+
+.dropdown-100 {
+    width: 100%;
+}
+
+.consultar {
+    align-self: center;
+    cursor: pointer;
+    margin-right: 0.5em;
+}
+
+.no-consultar {
+    align-self: center;
+    margin-right: 0.5em;
+    color: rgb(173, 173, 173);
+}
+
+.consultar:hover {
+    color: #72bd78;
+}
+
+.arreglo-row {
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .select-propietario, .select-veterinario {
+        min-width: 91%;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+    .select-propietario, .select-veterinario {
+        min-width: 90%;
+        padding-left: 1.5em;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 600px) {
+    .select-propietario, .select-veterinario {
+        min-width: 90%;
+        padding-left: 1.5em;
+    }
+}
+
+@media (max-width: 575px) {
+    .arreglo-row {
+        margin: 0;
+        padding: 0;
+        flex-wrap: nowrap;
+    }
+
+    .select-propietario, .select-veterinario {
+        min-width: 80%;
+    }
+}

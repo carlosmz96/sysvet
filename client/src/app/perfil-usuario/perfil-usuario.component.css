@@ -48,7 +48,7 @@
         width: 100% !important;
     }
     .tab-content {
-        padding: 2em !important;
+        padding: 0em !important;
     }
 }
 
@@ -83,7 +83,7 @@
 }
 
 .tab-content {
-    padding: 2em 1em 2em 3em;
+    padding: 0.5em 1em 1em 2em;
 }
 
 /* Cabecera del perfil de usuario */
@@ -91,6 +91,7 @@
 .cabecera-perfil-usuario {
     display: flex;
     align-items: center;
+    padding-left: 1em;
 }
 
 .imagen-perfil-usuario {

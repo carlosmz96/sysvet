@@ -12,8 +12,8 @@ export class Mascota {
         public peso: number,
         public esterilizado: string,
         public imagen: string,
-        public propietario: string,
-        public veterinario: string
+        public propietario: string | null,
+        public veterinario: string | null
     ) {}
 
 }

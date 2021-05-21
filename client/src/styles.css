@@ -73,6 +73,9 @@ form {
     .eliminar-usuario {
         width: 50em;
     }
+    .modificar-mascota {
+        width: 50em;
+    }
 }
 
 @media screen and (max-width: 600px) {

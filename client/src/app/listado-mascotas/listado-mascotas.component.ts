@@ -22,7 +22,7 @@ export class ListadoMascotasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.identity.rol != "administrador") {
+    if (this.identity.rol != "administrador" && this.identity.rol != "veterinario") {
       this.router.navigate(['acceso-denegado']);
     }
     this.mascotaService.listarMascotas().subscribe(
