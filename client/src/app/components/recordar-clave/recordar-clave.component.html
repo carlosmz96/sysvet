@@ -1,0 +1,38 @@
+<div>
+    <h1 class="title">
+        <a (click)="goLogin()" style="color: white; cursor: pointer;">{{title}}</a>
+    </h1>
+</div>
+
+<div class="card mx-auto shadow p-3 mb-5 bg-white rounded recordar-clave" style="margin-top: 3%;">
+    <div class="card-body">
+        <div class="goBack form-row form-group">
+            <i class="fas fa-arrow-left fa-lg col-auto" style="cursor: pointer;" (click)="goLogin()"></i>
+            <div class="d-flex justify-content-center">
+                <span class="col-auto">Por favor, introduce tu correo electrónico.</span>
+            </div>
+        </div>
+
+        <form #emailForm="ngForm" (ngSubmit)="onSubmitEmail()" class="formulario-recuerda-clave" ngNativeValidate>
+            <div *ngIf="mensajeError">
+                <div class="alert alert-danger" role="alert">
+                    {{ mensajeError }}
+                </div>
+            </div>
+            <div *ngIf="mensajeExito">
+                <div class="alert alert-success" role="alert">
+                    {{ mensajeExito }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="email" #email="ngModel" name="email" [(ngModel)]="usuario.email" class="form-control"
+                    placeholder="Introduce tu correo electrónico" maxlength="60" required>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success btn-block">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
