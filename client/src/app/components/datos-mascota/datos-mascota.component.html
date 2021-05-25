@@ -5,7 +5,7 @@
 <div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-mascota">
         <div class="card-body" style="text-align: justify;">
-            <form #dataPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-mascota">
+            <form #dataPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-mascota" ngNativeValidate>
                 <div class="form-group" *ngIf="mensajeError != '' && mensajeExito != ''">
                     <div *ngIf="mensajeError != ''">
                         <div class="alert alert-danger" role="alert">
@@ -167,7 +167,7 @@
 <div class="container" *ngIf="identity.rol == 'cliente'">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-mascota">
         <div class="card-body" style="text-align: justify;">
-            <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario">
+            <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario" ngNativeValidate>
                 <div class="form-group row">
                     <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
                     <div class="col-sm-4">

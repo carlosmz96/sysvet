@@ -4,23 +4,23 @@
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-usuario">
         <div class="card-body" style="text-align: justify;">
             <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario">
-                <div class="form-group" *ngIf="mensajeError != '' && mensajeErrorPass != '' && mensajeExito != '' && mensajeExitoPass != ''">
-                    <div *ngIf="mensajeError != ''">
+                <div class="form-group" *ngIf="mensajeError != '' || mensajeErrorPass != '' || mensajeExito != '' || mensajeExitoPass != ''">
+                    <div *ngIf="mensajeError">
                         <div class="alert alert-danger" role="alert">
                             {{ mensajeError }}
                         </div>
                     </div>
-                    <div *ngIf="mensajeErrorPass != ''">
+                    <div *ngIf="mensajeErrorPass">
                         <div class="alert alert-danger" role="alert">
                             {{ mensajeErrorPass }}
                         </div>
                     </div>
-                    <div *ngIf="mensajeExitoPass != ''">
+                    <div *ngIf="mensajeExitoPass">
                         <div class="alert alert-success" role="alert">
                             {{ mensajeExitoPass }}
                         </div>
                     </div>
-                    <div *ngIf="mensajeExito != ''">
+                    <div *ngIf="mensajeExito">
                         <div id="mensajito" class="alert alert-success" role="alert">
                             {{ mensajeExito }}
                         </div>
