@@ -1,0 +1,13 @@
+@media (max-width: 991px) {
+    .col-sm-2 {
+        min-width: 100%;
+    }
+    .col-sm-4 {
+        min-width: 100%;
+    }
+}
+
+.btn-crear {
+    display: block;
+    width: 100%;
+}

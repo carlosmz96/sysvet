@@ -5,7 +5,7 @@
 <div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-mascota">
         <div class="card-body" style="text-align: justify;">
-            <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario">
+            <form #dataPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-mascota">
                 <div class="form-group" *ngIf="mensajeError != '' && mensajeExito != ''">
                     <div *ngIf="mensajeError != ''">
                         <div class="alert alert-danger" role="alert">
@@ -154,6 +154,7 @@
                 </div>
                 <div class="btn-submit">
                     <button type="button" class="btn btn-danger" (click)="goBack()">Volver</button>
+                    <button type="button" class="btn btn-danger" routerLink="/baja-mascota/{{mascota.microchip}}">Dar de baja</button>
                     <button type="submit" class="btn btn-success success">Editar datos</button>
                 </div>
             </form>

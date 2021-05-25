@@ -1,0 +1,24 @@
+.info {
+    text-align: center;
+}
+
+.botonera {
+    width: 100%;
+    display: inline-flex;
+}
+
+.btn-danger, .btn-success {
+    width: 100%;
+}
+
+.baja {
+    width: 48.5%;
+}
+
+.espacio {
+    width: 3%;
+}
+
+.cancelar {
+    width: 48.5%;
+}

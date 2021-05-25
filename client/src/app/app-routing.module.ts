@@ -13,6 +13,8 @@ import { BajaUsuarioComponent } from './baja-usuario/baja-usuario.component';
 import { AccesoDenegadoComponent } from './acceso-denegado/acceso-denegado.component';
 import { ListadoMascotasComponent } from './listado-mascotas/listado-mascotas.component';
 import { DatosMascotaComponent } from './datos-mascota/datos-mascota.component';
+import { BajaMascotaComponent } from './baja-mascota/baja-mascota.component';
+import { AltaMascotaComponent } from './alta-mascota/alta-mascota.component';
 
 const routes: Routes = [
   {
@@ -67,8 +69,18 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'alta-mascota',
+    component: AltaMascotaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'datos-mascota/:microchip',
     component: DatosMascotaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'baja-mascota/:microchip',
+    component: BajaMascotaComponent,
     canActivate: [AuthGuard]
   },
   {

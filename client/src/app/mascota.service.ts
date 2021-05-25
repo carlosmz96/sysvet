@@ -30,7 +30,7 @@ export class MascotaService {
    */
   public altaMascota(pet_to_create: any): Observable<any> {
     const params = JSON.stringify(pet_to_create);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.token });
 
     return this.httpClient.post(this.url + 'alta-mascota', params, { headers: headers });
   }

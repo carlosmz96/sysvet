@@ -3,8 +3,13 @@
 <div class="container">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
         <div class="card-body" style="text-align: justify;">
-            <p-table #dtpets [value]="mascotas" dataKey="microchip" styleClass="p-datatable-gridlines" [paginator]="true"
-                stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
+            <div class="nueva-mascota">
+                <button type="button" class="btn btn-success" routerLink="/alta-mascota"><i
+                        class="fas fa-plus-circle"></i> Nueva mascota</button>
+            </div>
+            <p-table #dtpets [value]="mascotas" dataKey="microchip" styleClass="p-datatable-gridlines"
+                [paginator]="true" stateStorage="local" stateKey="statedemo-local" [rows]="10"
+                [showCurrentPageReport]="true"
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
                 [rowsPerPageOptions]="[10,25,50]">
                 <ng-template pTemplate="header">
