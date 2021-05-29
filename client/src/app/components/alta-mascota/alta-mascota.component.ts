@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { MascotaService } from 'src/app/services/mascota.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Mascota } from '../../models/Mascota';
@@ -14,8 +15,6 @@ export class AltaMascotaComponent implements OnInit {
   public identity: any;
   public token: any;
   public mascota: Mascota;
-  public mensajeError: string = "";
-  public mensajeExito: string = "";
   public usuarios: Usuario[] = [];
   public propietario: any;
   public propietarios: Usuario[] = [];
@@ -25,7 +24,8 @@ export class AltaMascotaComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
     this.mascota = new Mascota('','','','','','','', 0, 0, '', '', '', '');
@@ -61,7 +61,7 @@ export class AltaMascotaComponent implements OnInit {
         this.router.navigate(['datos-mascota', response.pet.microchip]);
       },
       error => {
-        this.mensajeError = error.error.message;
+        this.addErrorMessage(error.error.message);
       }
     )
   }
@@ -84,6 +84,14 @@ export class AltaMascotaComponent implements OnInit {
    */
   public goBack(): void {
     this.router.navigate(['listado-mascotas']);
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
   }
 
 }

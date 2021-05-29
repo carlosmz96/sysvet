@@ -3,6 +3,7 @@
 // Importacion de librerias
 const express = require('express');
 const { conexion } = require('./database/db');
+const { conexionMongo } = require('./database/mongo');
 const dotenv = require('dotenv');
 
 // Inicializaciones
@@ -35,4 +36,5 @@ app.listen(app.get('port'), () => {
     console.log(`Servidor en el puerto ${app.get('port')}`);
     
     conexion(); // Prueba de conexión
+    conexionMongo();
 });

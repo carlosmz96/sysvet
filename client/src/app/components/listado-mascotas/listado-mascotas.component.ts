@@ -18,7 +18,7 @@ export class ListadoMascotasComponent implements OnInit {
     private mascotaService: MascotaService,
     private router: Router
   ) {
-    this.identity = usuarioService.getIdentity();
+    this.identity = this.usuarioService.getIdentity();
   }
 
   ngOnInit(): void {

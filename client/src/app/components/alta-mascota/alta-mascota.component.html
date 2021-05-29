@@ -1,26 +1,16 @@
+<p-toast></p-toast>
+
 <app-navegacion></app-navegacion>
 
 <div class="container">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded alta-mascota">
         <div class="card-body" style="text-align: justify;">
             <form #newPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-alta-mascota" ngNativeValidate>
-                <div class="form-row " style="margin-bottom: 0.5em;">
+                <div class="form-row" style="margin-bottom: 0.5em;">
                     <div class="form-group row">
                         <div class="col-sm-1"><i class="fas fa-arrow-left fa-lg" style="cursor: pointer;" (click)="goBack()"></i></div>
                         <span class="col-sm-11">Por favor, rellena todos los campos obligatorios (*) para poder
                             registrar a la mascota en el sistema.</span>
-                    </div>
-                </div>
-                <div class="form-group" *ngIF="mensajeError != '' || mensajeExito != ''">
-                    <div *ngIf="mensajeError != ''">
-                        <div class="alert alert-danger" role="alert">
-                            {{ mensajeError }}
-                        </div>
-                    </div>
-                    <div *ngIf="mensajeExito != ''">
-                        <div id="mensajito" class="alert alert-success" role="alert">
-                            {{ mensajeExito }}
-                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -31,7 +21,7 @@
                     </div>
                     <label for="microchip" class="col-sm-2 col-form-label"><strong>* Microchip</strong></label>
                     <div class="col-sm-4">
-                        <input type="text" #microchip="ngModel" name="microchip" id="microchip"
+                        <input type="text" #microchip="ngModel" name="microchip" id="microchip" (keypress)="($event.charCode >= 48 && $event.charCode <= 57)"
                             [(ngModel)]="mascota.microchip" class="form-control" placeholder="Microchip de la mascota"
                             maxlength="10" required>
                     </div>

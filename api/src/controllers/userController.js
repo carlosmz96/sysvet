@@ -72,7 +72,7 @@ async function iniciarSesion(req, res) {
                     res.status(200).send({ user });
                 }
             } else {
-                res.status(404).send({ message: 'El usuario no ha podido iniciar sesión.' })
+                res.status(404).send({ message: 'Contraseña incorrecta.' })
             }
         }
     }).catch(() => {

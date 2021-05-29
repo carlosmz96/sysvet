@@ -9,8 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { AccordionModule } from 'primeng/accordion';
-import { ButtonModule } from 'primeng/button'
+import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
+import { ToastModule } from 'primeng/toast';
 
 import { AppComponent } from './app.component';
 import { RecordarClaveComponent } from './components/recordar-clave/recordar-clave.component';
@@ -28,6 +30,7 @@ import { ListadoMascotasComponent } from './components/listado-mascotas/listado-
 import { DatosMascotaComponent } from './components/datos-mascota/datos-mascota.component';
 import { BajaMascotaComponent } from './components/baja-mascota/baja-mascota.component';
 import { AltaMascotaComponent } from './components/alta-mascota/alta-mascota.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -58,9 +61,11 @@ import { AltaMascotaComponent } from './components/alta-mascota/alta-mascota.com
     InputTextModule,
     AccordionModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    EditorModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

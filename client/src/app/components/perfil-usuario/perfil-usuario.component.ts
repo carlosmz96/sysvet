@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../../models/Usuario';
 
@@ -6,6 +6,7 @@ import { GLOBAL } from '../../global';
 import { Mascota } from '../../models/Mascota';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { MascotaService } from 'src/app/services/mascota.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -16,7 +17,6 @@ export class PerfilUsuarioComponent implements OnInit {
   public usuario: Usuario;
   public mascotas: Mascota[] = [];
   public dniUsuario: string = "";
-  public mensajeError: string = "";
   public url: string = "";
   public identity: any;
 
@@ -25,7 +25,8 @@ export class PerfilUsuarioComponent implements OnInit {
     private mascotaService: MascotaService,
     private router: Router,
     private route: ActivatedRoute,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private messageService: MessageService
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
     this.url = GLOBAL.url;
@@ -54,7 +55,7 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         },
         error => {
-          this.mensajeError = "Error al obtener todos los datos del usuario";
+          this.addErrorMessage('Error al obtener todos los datos del usuario.');
         }
       );
 
@@ -74,7 +75,7 @@ export class PerfilUsuarioComponent implements OnInit {
           });
         },
         error => {
-          this.mensajeError = "Error al obtener la lista de mascotas asociadas al usuario";
+          this.addErrorMessage('Error al obtener la lista de mascotas asociadas al usuario.');
         }
       );
     }
@@ -87,6 +88,14 @@ export class PerfilUsuarioComponent implements OnInit {
     this.activatedRoute.params.subscribe((params = {}) => {
       this.ngOnInit();
     });
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
   }
 
 }

@@ -91,4 +91,28 @@ export class MascotaService {
     return this.httpClient.delete(this.url + 'baja-mascota/' + microchip, options);
   }
 
+  /**
+   * Método encargado de llamar al api para obtener las observaciones de una mascota
+   * @param microchip Microchip de la mascota
+   * @returns Observaciones de la mascota
+   */
+  public obtenerObservacionesMascota(microchip: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', this.token);
+    return this.httpClient.get(this.url + 'observaciones-mascota/' + microchip, { headers: headers });
+  }
+
+  /**
+   * Método encargado de llamar al api para modificar las observaciones de una mascota
+   * @param microchip Microchip de la mascota
+   * @param observaciones Observaciones de la mascota
+   * @returns Observaciones actualizadas
+   */
+  public modificarObservacionesMascota(pet_to_update: any): Observable<any> {
+    const params = JSON.stringify(pet_to_update);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.token });
+    return this.httpClient.put(this.url + 'modificar-observaciones-mascota/' + pet_to_update.microchip, params, { headers: headers });
+  }
+
 }

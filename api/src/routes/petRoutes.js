@@ -18,7 +18,8 @@ api.delete('/baja-mascota/:microchip', md_auth.ensureAuth, PetController.bajaMas
 api.post('/subir-foto-mascota/:microchip', [md_auth.ensureAuth, md_upload.single('imagen')], PetController.subirFotoMascota);
 api.post('/eliminar-foto-mascota/:microchip', md_auth.ensureAuth, PetController.eliminarFotoMascota);
 api.get('/obtener-foto-mascota/:fotoMascota', PetController.obtenerFotoMascota);
-
+api.get('/observaciones-mascota/:microchip', md_auth.ensureAuth, PetController.obtenerObservacionesMascota);
+api.put('/modificar-observaciones-mascota/:microchip', md_auth.ensureAuth, PetController.modificarObservacionesMascota);
 
 // Se exporta la api de rutas de mascota
 module.exports = api;

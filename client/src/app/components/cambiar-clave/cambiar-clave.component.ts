@@ -4,6 +4,7 @@ import { Usuario } from '../../models/Usuario';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import * as moment from 'moment';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-cambiar-clave',
@@ -14,9 +15,8 @@ export class CambiarClaveComponent implements OnInit {
   public title: string = 'SYSVET';
   public usuario: Usuario;
   public identity: any = false; // usuario logueado
-  public mensajeError: string = "";
   public expirado: boolean = false;
-  public mensajeExito: string = "";
+  public exito: boolean = false;
   public nuevaPass: string = "";
   public rePass: string = "";
   public payload: any = null;
@@ -25,7 +25,8 @@ export class CambiarClaveComponent implements OnInit {
     private usuarioService: UsuarioService,
     private router: Router,
     private route: ActivatedRoute,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
 
@@ -47,7 +48,7 @@ export class CambiarClaveComponent implements OnInit {
   ngOnInit(): void {
     // si la fecha del token ha expirado
     if(this.payload.exp < moment().unix()){
-      this.mensajeError = "Este enlace ha expirado, vuelve a intentarlo de nuevo.";
+      this.addErrorMessage('Este enlace ha expirado, vuelve a intentarlo de nuevo.');
       this.expirado = true;
     }
 
@@ -63,24 +64,21 @@ export class CambiarClaveComponent implements OnInit {
         response => {
           const user = response.user;
 
-          console.log(user);
-
           if (!user) {
-            this.mensajeError = "Error al cambiar la contraseña.";
-            this.mensajeExito = "";
+            this.addErrorMessage('Error al cambiar la contraseña.');
           } else {
-            this.mensajeExito = "Has cambiado la contraseña correctamente.";
-            this.mensajeError = "";
+            this.addSuccessMessage('Has cambiado la contraseña correctamente.');
+            this.exito = true;
             this.usuario.pass = "";
             this.rePass = "";
           }
         },
         error => {
-          this.mensajeError = error.error.message;
+          this.addErrorMessage(error.error.message);
         }
       )
     }else{
-      this.mensajeError = "Error, ambos campos deben coincidir.";
+      this.addErrorMessage('Ambos campos deben coincidir.');
     }
   }
 
@@ -89,6 +87,22 @@ export class CambiarClaveComponent implements OnInit {
    */
   public goRecordarClave(): void {
     this.router.navigate(['recordar-clave']);
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de éxito
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addSuccessMessage(msg: string): void {
+    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
   }
 
 }

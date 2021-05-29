@@ -2,6 +2,7 @@
 
 // Importaciones
 const Mascota = require("../models/Mascota");
+const MascotaDocumental = require('../models/MascotaDocumental');
 const fs = require('fs');
 const path = require('path');
 
@@ -206,6 +207,48 @@ function obtenerFotoMascota(req, res) {
     });
 }
 
+/**
+ * Método encargado de obtener las observaciones de la mascota
+ * @param {*} req Consulta las observaciones de la mascota
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function obtenerObservacionesMascota(req, res) {
+    const microchip = req.params.microchip;
+    
+    await MascotaDocumental.findOne({_id: microchip}, (err, pet) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al obtener los datos.' });
+        } else {
+            res.status(200).send({ pet });
+        }
+    });
+}
+
+/**
+ * Método encargado de modificar las observaciones de la mascota
+ * Nota: si no está creada, se crea
+ * @param {*} req Consulta para modificar las observaciones de la mascota
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function modificarObservacionesMascota(req, res) {
+    const microchip = req.params.microchip;
+    const params = req.body;
+
+    await MascotaDocumental.updateOne({_id: microchip}, { observaciones: params.observaciones }, async function (err) {
+        if (err) {
+            res.status(500).send({ message: 'Error al actualizar los datos.' });
+        } else {
+            await MascotaDocumental.findById({_id: microchip}, (err, pet) => {
+                if (err) {
+                    res.status(500).send({ message: 'Error al obtener los datos.' });
+                } else {
+                    res.status(200).send({ pet });
+                }
+            });
+        }
+    });
+}
+
 module.exports = {
     altaMascota,
     consultarMascota,
@@ -214,5 +257,7 @@ module.exports = {
     bajaMascota,
     subirFotoMascota,
     eliminarFotoMascota,
-    obtenerFotoMascota
+    obtenerFotoMascota,
+    obtenerObservacionesMascota,
+    modificarObservacionesMascota
 }

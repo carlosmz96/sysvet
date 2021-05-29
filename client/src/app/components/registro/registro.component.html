@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <div>
     <h1 class="title">
         <a (click)="goLogin()" style="color: white; cursor: pointer;">{{title}}</a>
@@ -12,17 +14,6 @@
                     <i class="fas fa-arrow-left fa-lg col-auto" style="cursor: pointer;" (click)="goLogin()"></i>
                     <span class="col-auto text-center">Por favor, rellena todos los campos obligatorios (*) para poder
                         registrarte.</span>
-                </div>
-
-                <div *ngIf="mensajeError">
-                    <div class="alert alert-danger" role="alert">
-                        {{ mensajeError }}
-                    </div>
-                </div>
-                <div *ngIf="mensajeExito">
-                    <div class="alert alert-success" role="alert">
-                        {{ mensajeExito }}
-                    </div>
                 </div>
             </div>
 

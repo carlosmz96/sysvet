@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { MascotaDocumental } from 'src/app/models/MascotaDocumental';
 import { MascotaService } from 'src/app/services/mascota.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GLOBAL } from '../../global';
@@ -14,12 +16,11 @@ import { Usuario } from '../../models/Usuario';
 })
 export class DatosMascotaComponent implements OnInit {
   public mascota: Mascota;
+  public mascotaDocumental: any;
   public token: any; // token del usuario
   public identity: any; // identidad logueada
   public microchipMascota: string = "";
   public url: string; // url raíz de la api
-  public mensajeExito: string = "";
-  public mensajeError: string = "";
   public usuarios: Usuario[] = [];
   public propietarios: Usuario[] = [];
   public veterinarios: Usuario[] = [];
@@ -28,18 +29,22 @@ export class DatosMascotaComponent implements OnInit {
   public foto: any; // variable para almacenar el archivo a subir
   public nuevaFoto: boolean = false;
   public fotoCambiada: boolean = false;
+  public sinErrores: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
     this.token = this.usuarioService.getToken();
     // mascota
     this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', 'default-image.png', '', '');
+    // mascota documental
+    this.mascotaDocumental = new MascotaDocumental('', '');
     // obtiene todos los usuarios del sistema
     this.obtenerUsuarios();
     // url global
@@ -57,6 +62,7 @@ export class DatosMascotaComponent implements OnInit {
     if (this.microchipMascota == "") {
       this.router.navigate(['index']);
     } else {
+      // consulta datos mascota
       this.mascotaService.consultarMascota(this.microchipMascota).subscribe(
         response => {
           this.mascota = response.pet;
@@ -67,7 +73,7 @@ export class DatosMascotaComponent implements OnInit {
                 this.propietario = response.user;
               },
               error => {
-                this.mensajeError = error.error.message;
+                this.addErrorMessage(error.error.message);
               }
             );
           }
@@ -78,13 +84,25 @@ export class DatosMascotaComponent implements OnInit {
                 this.veterinario = response.user;
               },
               error => {
-                this.mensajeError = error.error.message;
+                this.addErrorMessage(error.error.message);
               }
             );
           }
         },
         error => {
-          this.mensajeError = "Error al obtener los datos de la mascota";
+          this.addErrorMessage('Error al obtener los datos de la mascota');
+        }
+      );
+
+      // consulta observaciones mascota
+      this.mascotaService.obtenerObservacionesMascota(this.microchipMascota).subscribe(
+        response => {
+          if (response.pet != null) {
+            this.mascotaDocumental = response.pet;
+          }
+        },
+        error => {
+          this.addErrorMessage(error.error.message);
         }
       );
     }
@@ -122,17 +140,36 @@ export class DatosMascotaComponent implements OnInit {
     this.mascotaService.modificarMascota(this.mascota).subscribe(
       response => {
         if (!response.pet) {
-          this.mensajeError = response.message;
+          this.addErrorMessage(response.message);
+          this.sinErrores = false;
         } else {
           this.mascota = response.pet;
-
-          this.mensajeError = "";
-          this.mensajeExito = "Se han actualizado los datos con éxito.";
+          this.sinErrores = true;
         }
       },
       error => {
-        this.mensajeError = error.error.message;
-        this.mensajeExito = "";
+        this.addErrorMessage(error.error.message);
+      }
+    );
+
+    this.mascotaDocumental.microchip = this.mascota.microchip;
+
+    // se actualizan los datos documentales de la mascota
+    this.mascotaService.modificarObservacionesMascota(this.mascotaDocumental).subscribe(
+      response => {
+        if (response.pet) {
+          this.mascotaDocumental = response.pet;
+          this.sinErrores = true;
+        } else {
+          this.sinErrores = false;
+        }
+
+        if (this.sinErrores) {
+          this.addSuccessMessage('Se han actualizado los datos con éxito.');
+        }
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
       }
     );
   }
@@ -190,12 +227,10 @@ export class DatosMascotaComponent implements OnInit {
       response => {
         this.mascota = response.pet;
         this.mascota.imagen = "default-image.png";
-
-        this.mensajeError = "";
-        this.mensajeExito = "Se ha eliminado la foto de perfil de la mascota correctamente.";
+        this.addSuccessMessage('Se ha eliminado la foto de perfil de la mascota correctamente.');
       },
       error => {
-        this.mensajeError = error.error.message;
+        this.addErrorMessage(error.error.message);
       }
     );
   }
@@ -218,6 +253,22 @@ export class DatosMascotaComponent implements OnInit {
    */
   public goBack(): void {
     this.location.back();
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de éxito
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addSuccessMessage(msg: string): void {
+    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
   }
 
 }

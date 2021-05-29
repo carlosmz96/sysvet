@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <app-navegacion></app-navegacion>
 
 <!-- VETERINARIOS Y ADMINISTRADOR -->
@@ -5,19 +7,8 @@
 <div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-mascota">
         <div class="card-body" style="text-align: justify;">
-            <form #dataPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-mascota" ngNativeValidate>
-                <div class="form-group" *ngIf="mensajeError != '' && mensajeExito != ''">
-                    <div *ngIf="mensajeError != ''">
-                        <div class="alert alert-danger" role="alert">
-                            {{ mensajeError }}
-                        </div>
-                    </div>
-                    <div *ngIf="mensajeExito != ''">
-                        <div id="mensajito" class="alert alert-success" role="alert">
-                            {{ mensajeExito }}
-                        </div>
-                    </div>
-                </div>
+            <form #dataPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-mascota"
+                ngNativeValidate>
                 <div class="form-group row">
                     <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
                     <div class="col-sm-4">
@@ -27,8 +18,8 @@
                     <label for="microchip" class="col-sm-2 col-form-label"><strong>Microchip</strong></label>
                     <div class="col-sm-4">
                         <input type="text" #microchip="ngModel" name="microchip" id="microchip"
-                            [(ngModel)]="mascota.microchip" class="form-control" maxlength="10" placeholder="Microchip de la mascota"
-                            required>
+                            [(ngModel)]="mascota.microchip" class="form-control" maxlength="10"
+                            placeholder="Microchip de la mascota" disabled required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -152,9 +143,14 @@
                             (click)="eliminarFotoMascota()">Eliminar foto de mascota</button>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="observaciones"><strong>Observaciones</strong></label>
+                    <p-editor [(ngModel)]="mascotaDocumental.observaciones" name="observaciones" [style]="{'height':'250px'}"></p-editor>
+                </div>
                 <div class="btn-submit">
                     <button type="button" class="btn btn-danger" (click)="goBack()">Volver</button>
-                    <button type="button" class="btn btn-danger" routerLink="/baja-mascota/{{mascota.microchip}}">Dar de baja</button>
+                    <button type="button" class="btn btn-danger" routerLink="/baja-mascota/{{mascota.microchip}}">Dar de
+                        baja</button>
                     <button type="submit" class="btn btn-success success">Editar datos</button>
                 </div>
             </form>
@@ -167,7 +163,8 @@
 <div class="container" *ngIf="identity.rol == 'cliente'">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-mascota">
         <div class="card-body" style="text-align: justify;">
-            <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario" ngNativeValidate>
+            <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario"
+                ngNativeValidate>
                 <div class="form-group row">
                     <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
                     <div class="col-sm-4">

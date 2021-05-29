@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { MascotaService } from 'src/app/services/mascota.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -10,14 +11,14 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class BajaMascotaComponent implements OnInit {
   public microchip: string = "";
-  public mensajeError: string = "";
   public identity: any;
 
   constructor(
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
   }
@@ -46,9 +47,17 @@ export class BajaMascotaComponent implements OnInit {
         this.router.navigate(['listado-mascotas']);
       },
       error => {
-        this.mensajeError = error.error.message;
+        this.addErrorMessage(error.error.message);
       }
     )
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
   }
 
 }

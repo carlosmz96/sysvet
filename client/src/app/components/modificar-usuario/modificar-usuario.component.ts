@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GLOBAL } from '../../global';
 import { Usuario } from '../../models/Usuario';
@@ -15,10 +16,6 @@ export class ModificarUsuarioComponent implements OnInit {
   public token: any; // token del usuario
   public newPass: string = ""; // nueva contraseña
   public url: string; // url raíz de la api
-  public mensajeExito: string = "";
-  public mensajeExitoPass: string = "";
-  public mensajeError: string = "";
-  public mensajeErrorPass: string = "";
   public foto: any; // variable para almacenar el archivo a subir
   public nuevaFoto: boolean = false;
   public fotoCambiada: boolean = false;
@@ -27,7 +24,8 @@ export class ModificarUsuarioComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
     this.usuario = new Usuario('', '', '', '', '', '', '', '', 'default-image.png');
@@ -59,7 +57,7 @@ export class ModificarUsuarioComponent implements OnInit {
           }
         },
         error => {
-          this.mensajeError = "Error al obtener todos los datos del usuario";
+          this.addErrorMessage('Error al obtener todos los datos del usuario.');
         }
       );
     }
@@ -86,7 +84,7 @@ export class ModificarUsuarioComponent implements OnInit {
       this.usuarioService.comprobarClaveUsuario(this.usuario.dni, this.usuario.pass).subscribe(
         response => {
           if (response.res == false) {
-            this.mensajeError = "Error: contraseña incorrecta.";
+            this.addErrorMessage('Contraseña incorrecta.');
           } else { // si la contraseña es correcta
             this.usuario.pass = this.newPass;
             this.usuarioService.cambiarClaveUsuario(this.usuario).subscribe(
@@ -95,63 +93,50 @@ export class ModificarUsuarioComponent implements OnInit {
                 this.usuario.pass = "";
                 this.newPass = "";
 
-                this.mensajeErrorPass = "";
-                this.mensajeExitoPass = "Contraseña modificada con éxito.";
+                this.addSuccessMessage('Contraseña modificada con éxito.');
 
                 // se actualiza el resto de datos
                 this.usuarioService.modificarUsuario(this.usuario).subscribe(
                   response => {
                     if (!response.user) {
-                      this.mensajeError = response.message;
+                      this.addErrorMessage(response.message);
                     } else {
                       this.usuario = response.user;
                       this.usuario.pass = "";
-
-                      this.mensajeError = "";
-                      this.mensajeExito = "Se han actualizado los datos con éxito.";
+                      this.addSuccessMessage('Se han actualizado los datos con éxito.');
                     }
                   },
                   error => {
-                    this.mensajeError = error.error.message;
-                    this.mensajeExito = "";
+                    this.addErrorMessage(error.error.message);
                   }
                 );
               },
               error => {
-                this.mensajeErrorPass = error.error.message;
-                this.mensajeExitoPass = "";
+                this.addErrorMessage(error.error.message);
               }
             );
           }
         },
         error => {
-          this.mensajeErrorPass = error.error.message;
-          this.mensajeExitoPass = "";
+          this.addErrorMessage(error.error.message);
         }
       );
     } else if (this.usuario.pass && !this.newPass) {
-      this.mensajeErrorPass = "Debes rellenar el campo con tu nueva contraseña.";
-      this.mensajeExitoPass = "";
-      this.mensajeExito = "";
+      this.addErrorMessage('Debes rellenar el campo con tu nueva contraseña.');
     } else {
       // se actualiza el resto de datos
       this.usuarioService.modificarUsuario(this.usuario).subscribe(
         response => {
           if (!response.user) {
-            this.mensajeError = response.message;
+            this.addErrorMessage(response.message);
           } else {
             this.usuario = response.user;
             this.usuario.pass = "";
-
-            this.mensajeErrorPass = "";
-            this.mensajeError = "";
-            this.mensajeExitoPass = "";
-            this.mensajeExito = "Se han actualizado los datos con éxito.";
+            this.addSuccessMessage('Se han actualizado los datos con éxito.');
           }
         },
         error => {
-          this.mensajeError = error.error.message;
-          this.mensajeExito = "";
+          this.addErrorMessage(error.error.message);
         }
       );
     }
@@ -211,12 +196,10 @@ export class ModificarUsuarioComponent implements OnInit {
         this.usuario = response.user;
         this.usuario.pass = "";
         this.usuario.foto = "default-image.png";
-
-        this.mensajeError = "";
-        this.mensajeExito = "Se ha eliminado la foto de perfil correctamente.";
+        this.addSuccessMessage('Se ha eliminado la foto de perfil correctamente.');
       },
       error => {
-        this.mensajeError = error.error.message;
+        this.addErrorMessage(error.error.message);
       }
     );
   }
@@ -226,6 +209,22 @@ export class ModificarUsuarioComponent implements OnInit {
    */
   public goPerfil(): void {
     this.router.navigate(['usuario/', this.usuario.dni]);
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de éxito
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addSuccessMessage(msg: string): void {
+    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
   }
 
 }

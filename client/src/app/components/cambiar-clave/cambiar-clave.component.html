@@ -1,24 +1,16 @@
+<p-toast></p-toast>
+
 <div>
     <h1 class="title">
         <a routerLink="/" style="color: white; text-decoration: none">{{title}}</a>
     </h1>
 </div>
 
-<div *ngIf="!expirado && !mensajeExito">
+<div *ngIf="!expirado && !exito">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded cambiar-clave" style="margin-top: 3%;">
         <div class="card-body">
             <form #emailForm="ngForm" (ngSubmit)="onSubmitCambioClave()" class="formulario-cambiar-clave"
                 ngNativeValidate>
-                <div *ngIf="mensajeError">
-                    <div class="alert alert-danger" role="alert">
-                        {{ mensajeError }}
-                    </div>
-                </div>
-                <div *ngIf="mensajeExito">
-                    <div class="alert alert-success" role="alert">
-                        {{ mensajeExito }}
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label for="password">Nueva contraseña</label>
@@ -38,12 +30,9 @@
     </div>
 </div>
 
-<div *ngIf="!expirado && mensajeExito">
+<div *ngIf="!expirado && exito">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded cambiar-clave" style="margin-top: 3%;">
         <div class="card-body">
-            <div class="alert alert-success" role="alert">
-                {{ mensajeExito }}
-            </div>
             <div class="d-grid gap-2">
                 <button type="button" routerLink="/" class="btn btn-success btn-block">Iniciar sesión</button>
             </div>
@@ -54,9 +43,6 @@
 <div *ngIf="expirado">
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded cambiar-clave" style="margin-top: 3%;">
         <div class="card-body">
-            <div class="alert alert-danger" role="alert">
-                {{ mensajeError }}
-            </div>
             <div class="d-grid gap-2">
                 <button type="button" (click)="goRecordarClave()" class="btn btn-success btn-block">Recordar
                     contraseña</button>

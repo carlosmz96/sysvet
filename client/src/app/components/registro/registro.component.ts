@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from '../../models/Usuario';
 
@@ -12,14 +13,13 @@ export class RegistroComponent implements OnInit {
   public title = 'SYSVET';
   public identity: any;
   public usuario_registro: Usuario;
-  public mensajeExito: string = "";
-  public mensajeError: string = "";
   public rePass: string = ""; // repite contraseña
 
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private messageService: MessageService
   ) {
     this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
     this.identity = this.usuarioService.getIdentity();
@@ -45,21 +45,19 @@ export class RegistroComponent implements OnInit {
           this.usuario_registro = user;
 
           if (!user.dni) {
-            this.mensajeError = "Error al registrarse";
-            this.mensajeExito = "";
+            this.addErrorMessage('Error al registrarse');
           } else {
-            this.mensajeExito = "Te has registrado correctamente";
-            this.mensajeError = "";
+            this.addSuccessMessage('Te has registrado correctamente');
             this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
             this.rePass = "";
           }
         },
         error => {
-          this.mensajeError = error.error.message;
+          this.addErrorMessage(error.error.message);
         }
       );
     } else {
-      this.mensajeError = "La contraseña debe coincidir";
+      this.addErrorMessage('La contraseña debe coincidir');
     }
   }
 
@@ -68,6 +66,22 @@ export class RegistroComponent implements OnInit {
    */
   public goLogin(): void {
     this.router.navigate(['login']);
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+  public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de éxito
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addSuccessMessage(msg: string): void {
+    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
   }
 
 }

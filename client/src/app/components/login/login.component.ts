@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from '../../models/Usuario';
 
@@ -13,14 +14,12 @@ export class LoginComponent implements OnInit {
   public usuario: Usuario;
   public identity: any = false; // usuario logueado
   public token: any = null; // token generado tras el login
-  public mensajeError: string = "";
-  public mensajeExito: string = "";  
 
   constructor(
     private usuarioService: UsuarioService,
     private elementRef: ElementRef,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private messageService: MessageService
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', ''); // usuario de inicio de sesion
     this.identity = this.usuarioService.getIdentity();
@@ -48,7 +47,7 @@ export class LoginComponent implements OnInit {
       response => {
         this.identity = response.user;
         if (!this.identity.dni) {
-          this.mensajeError = "El usuario no está correctamente identificado";
+          this.addErrorMessage('El usuario no está correctamente identificado');
         } else {
           // Crear elemento en localStorage para tener al usuario logueado
           localStorage.setItem('identity', JSON.stringify(this.identity));
@@ -58,7 +57,7 @@ export class LoginComponent implements OnInit {
             response => {
               this.token = response.token;
               if (this.token.length <= 0) {
-                this.mensajeError = "El token no se ha generado";
+                this.addErrorMessage('El token no se ha generado');
               } else {
                 // Crear elemento en localStorage para tener el token disponible
                 localStorage.setItem('token', this.token);
@@ -68,13 +67,13 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['index']);
             },
             error => {
-              this.mensajeError = error.error.message;
+              this.addErrorMessage(error.error.message);
             }
           );
         }
       },
       error => {
-        this.mensajeError = error.error.message;
+        this.addErrorMessage(error.error.message);
       }
     );
   }
@@ -91,6 +90,22 @@ export class LoginComponent implements OnInit {
    */
   public goRecordarClave(): void {
     this.router.navigate(['recordar-clave']);
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de error
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addErrorMessage(msg: string): void {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de éxito
+   * @param msg Mensaje pasado por parámetro
+   */
+   public addSuccessMessage(msg: string): void {
+    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
   }
 
 }
