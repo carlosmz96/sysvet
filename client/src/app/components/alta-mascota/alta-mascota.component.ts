@@ -28,7 +28,7 @@ export class AltaMascotaComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
-    this.mascota = new Mascota('','','','','','','', 0, 0, '', '', '', '');
+    this.mascota = new Mascota('','','','','','','', 0, 0, '', '', '', '', null, '');
     // obtiene todos los usuarios del sistema
     this.obtenerUsuarios();
   }
@@ -46,7 +46,8 @@ export class AltaMascotaComponent implements OnInit {
   /**
    * Método encargado de dar de alta una mascota en el sistema
    * 1) Setteo de propietario y veterinario si procede
-   * 2) Creación entidad mascota
+   * 2) Setteo el dni de creador
+   * 3) Creación entidad mascota
    */
   public onSubmit(): void {
     if (this.propietario != null) {
@@ -54,6 +55,9 @@ export class AltaMascotaComponent implements OnInit {
     }
     if (this.veterinario != null) {
       this.mascota.veterinario = this.veterinario.dni;
+    }
+    if (this.identity != null) {
+      this.mascota.dni_creacion = this.identity.dni;
     }
 
     this.mascotaService.altaMascota(this.mascota).subscribe(

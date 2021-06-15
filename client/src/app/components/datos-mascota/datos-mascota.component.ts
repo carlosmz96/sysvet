@@ -29,7 +29,8 @@ export class DatosMascotaComponent implements OnInit {
   public foto: any; // variable para almacenar el archivo a subir
   public nuevaFoto: boolean = false;
   public fotoCambiada: boolean = false;
-  public sinErrores: boolean = false;
+  public sinErrores: boolean | null = null;
+  public mensajeMostrado: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -42,7 +43,7 @@ export class DatosMascotaComponent implements OnInit {
     this.identity = this.usuarioService.getIdentity();
     this.token = this.usuarioService.getToken();
     // mascota
-    this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', 'default-image.png', '', '');
+    this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', 'default-image.png', '', '', '', null);
     // mascota documental
     this.mascotaDocumental = new MascotaDocumental('', '');
     // obtiene todos los usuarios del sistema
@@ -118,9 +119,13 @@ export class DatosMascotaComponent implements OnInit {
         (result: any) => {
           this.mascota.imagen = result.image;
           this.fotoCambiada = true;
+          this.sinErrores = true;
+          this.addSuccessMessage('Imagen de la mascota subida correctamente.');
+          this.nuevaFoto = false;
         }
       ).catch(error => {
-        console.error(error);
+        this.sinErrores = false;
+        this.addErrorMessage('Fichero demasiado pesado. El tamaño máximo es 1Mb.');
       });
     }
 
@@ -136,6 +141,11 @@ export class DatosMascotaComponent implements OnInit {
       this.mascota.veterinario = null;
     }
 
+    // se actualiza el dni del usuario que modifica la mascota
+    if (this.identity != null) {
+      this.mascota.dni_modificacion = this.identity.dni;
+    }
+
     // se actualiza el resto de datos
     this.mascotaService.modificarMascota(this.mascota).subscribe(
       response => {
@@ -144,7 +154,17 @@ export class DatosMascotaComponent implements OnInit {
           this.sinErrores = false;
         } else {
           this.mascota = response.pet;
-          this.sinErrores = true;
+          // si la foto ha sido cambiada y no hay errores
+          if (this.fotoCambiada && this.sinErrores) {
+            this.fotoCambiada = false;
+          } else {
+            this.sinErrores = true;
+          }
+
+          if (this.sinErrores) {
+            this.addSuccessMessage('Se han actualizado los datos con éxito.');
+            this.sinErrores = false;
+          }
         }
       },
       error => {
@@ -159,13 +179,8 @@ export class DatosMascotaComponent implements OnInit {
       response => {
         if (response.pet) {
           this.mascotaDocumental = response.pet;
-          this.sinErrores = true;
         } else {
           this.sinErrores = false;
-        }
-
-        if (this.sinErrores) {
-          this.addSuccessMessage('Se han actualizado los datos con éxito.');
         }
       },
       error => {

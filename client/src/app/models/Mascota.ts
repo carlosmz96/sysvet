@@ -13,7 +13,9 @@ export class Mascota {
         public esterilizado: string,
         public imagen: string,
         public propietario: string | null,
-        public veterinario: string | null
+        public veterinario: string | null,
+        public dni_modificacion: string | null,
+        public dni_creacion: string | null
     ) {}
 
 }

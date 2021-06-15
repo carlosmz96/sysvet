@@ -75,6 +75,22 @@ const Mascota = sequelize.define('Mascota', {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
+    },
+    dni_modificacion: {
+        type: DataTypes.STRING(9),
+        allowNull: true,
+        references: {
+            model: Usuario,
+            key: 'dni'
+        }
+    },
+    dni_creacion: {
+        type: DataTypes.STRING(9),
+        allowNull: false,
+        references: {
+            model: Usuario,
+            key: 'dni'
+        }
     }
 },
 {

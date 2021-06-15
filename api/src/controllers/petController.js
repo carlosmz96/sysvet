@@ -5,6 +5,7 @@ const Mascota = require("../models/Mascota");
 const MascotaDocumental = require('../models/MascotaDocumental');
 const fs = require('fs');
 const path = require('path');
+const { options } = require("../models/Mascota");
 
 /**
  * Método encargado del registro de mascotas en BBDD
@@ -27,7 +28,8 @@ async function altaMascota(req, res) {
         peso: params.peso,
         esterilizado: params.esterilizado,
         propietario: params.propietario,
-        veterinario: params.veterinario
+        veterinario: params.veterinario,
+        dni_creacion: params.dni_creacion
     }).then(function (pet) {
         if (!pet) {
             res.status(404).send({ message: 'No se ha guardado la mascota.' });
@@ -95,7 +97,8 @@ async function modificarMascota(req, res) {
         peso: update.peso,
         esterilizado: update.esterilizado,
         propietario: update.propietario,
-        veterinario: update.veterinario
+        veterinario: update.veterinario,
+        dni_modificacion: update.dni_modificacion
     }, { where: { microchip: petMicrochip } }).then(async function (petUpdated) {
         if (!petUpdated) {
             res.status(404).send({ message: 'No se ha podido actualizar la mascota.' });
@@ -234,7 +237,9 @@ async function modificarObservacionesMascota(req, res) {
     const microchip = req.params.microchip;
     const params = req.body;
 
-    await MascotaDocumental.updateOne({_id: microchip}, { observaciones: params.observaciones }, async function (err) {
+    console.log(params);
+
+    await MascotaDocumental.updateOne({_id: microchip}, { observaciones: params.observaciones }, { upsert: true }, async function (err) {
         if (err) {
             res.status(500).send({ message: 'Error al actualizar los datos.' });
         } else {

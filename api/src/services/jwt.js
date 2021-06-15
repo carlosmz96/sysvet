@@ -19,7 +19,7 @@ exports.crearToken = function(user) {
         direccion: user.direccion,
         imagen: user.imagen,
         iat: moment().unix(), // Momento en el que se inicia sesión
-        exp: moment().add(30, 'days').unix() // Tiempo de caducidad de la sesión
+        exp: moment().add(1, 'days').unix() // Tiempo de caducidad de la sesión
     };
 
     // Devuelve el token codificando los datos del usuario con una clave secreta

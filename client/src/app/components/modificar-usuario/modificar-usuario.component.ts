@@ -20,6 +20,7 @@ export class ModificarUsuarioComponent implements OnInit {
   public nuevaFoto: boolean = false;
   public fotoCambiada: boolean = false;
   public identity: any;
+  public sinErrores: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -73,9 +74,13 @@ export class ModificarUsuarioComponent implements OnInit {
         (result: any) => {
           this.usuario.foto = result.image;
           this.fotoCambiada = true;
+          this.sinErrores = true;
+          this.addSuccessMessage('Foto de perfil subida correctamente.');
         }
       ).catch(error => {
-        console.error(error);
+        this.addErrorMessage('Fichero demasiado pesado. El tamaño máximo es 1Mb.');
+        this.sinErrores = false;
+        console.log(this.sinErrores);
       });
     }
 
@@ -103,7 +108,10 @@ export class ModificarUsuarioComponent implements OnInit {
                     } else {
                       this.usuario = response.user;
                       this.usuario.pass = "";
-                      this.addSuccessMessage('Se han actualizado los datos con éxito.');
+
+                      if (this.sinErrores) {
+                        this.addSuccessMessage('Se han actualizado los datos con éxito.');
+                      }
                     }
                   },
                   error => {
@@ -132,7 +140,10 @@ export class ModificarUsuarioComponent implements OnInit {
           } else {
             this.usuario = response.user;
             this.usuario.pass = "";
-            this.addSuccessMessage('Se han actualizado los datos con éxito.');
+            
+            if (this.sinErrores) {
+              this.addSuccessMessage('Se han actualizado los datos con éxito.');
+            }
           }
         },
         error => {
