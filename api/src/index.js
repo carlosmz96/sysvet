@@ -38,3 +38,5 @@ app.listen(app.get('port'), () => {
     conexion(); // Prueba de conexión
     conexionMongo();
 });
+
+module.exports = app;

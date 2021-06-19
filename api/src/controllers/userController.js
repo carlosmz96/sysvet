@@ -159,7 +159,7 @@ async function bajaUsuario(req, res) {
         } else {
             res.status(200).send({ user: userDeleted });
         }
-    }).catch(() => {
+    }).catch((err) => {
         res.status(500).send({ message: 'Error al dar de baja al usuario.' });
     });
 }
@@ -204,6 +204,11 @@ async function subirFotoPerfil(req, res) {
 async function eliminarFotoPerfil(req, res) {
     const userDni = req.params.dni;
 
+    const user = await Usuario.findByPk(userDni);
+    const file_name = user.foto;
+    // eliminación de la foto en el directorio
+    fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
+
     await Usuario.update({
         foto: null
     }, { where: { dni: userDni } }).then(async function (userUpdated) {
@@ -236,7 +241,6 @@ function obtenerFotoPerfil(req, res) {
     fs.stat(path_file, function (error) {
         if (error) {
             res.status(200).send({ message: 'No existe la foto de perfil.' });
-            console.error(error);
         } else {
             res.sendFile(path.resolve(path_file));
         }
@@ -309,8 +313,6 @@ async function recordarContrasena(req, res) {
                     res.status(500).send({ message: 'Error al intentar enviar el email.' });
                 } else {
                     res.status(200).send({ message: 'Correo enviado correctamente.', user: user });
-
-                    console.log("Mensaje enviado: %s", info.response);
                 }
             });
         }

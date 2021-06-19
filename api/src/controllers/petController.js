@@ -5,7 +5,6 @@ const Mascota = require("../models/Mascota");
 const MascotaDocumental = require('../models/MascotaDocumental');
 const fs = require('fs');
 const path = require('path');
-const { options } = require("../models/Mascota");
 
 /**
  * Método encargado del registro de mascotas en BBDD
@@ -120,11 +119,16 @@ async function modificarMascota(req, res) {
 async function bajaMascota(req, res) {
     const petMicrochip = req.params.microchip;
 
-    await Mascota.destroy({ where: { microchip: petMicrochip } }).then(function (petDeleted) {
+    await Mascota.destroy({ where: { microchip: petMicrochip } }).then(async function (petDeleted) {
         if (!petDeleted) {
             res.status(404).send({ message: 'No se ha podido dar de baja a la mascota.' });
         } else {
             res.status(200).send({ pet: petDeleted });
+            await MascotaDocumental.findByIdAndRemove({ _id: petMicrochip }, (err) => {
+                if (err) {
+                    res.status(500).send({ message: 'Error al eliminar la mascota documental' });
+                }
+            })
         }
     }).catch(() => {
         res.status(500).send({ message: 'Error al dar de baja a la mascota.' });
@@ -170,6 +174,11 @@ async function subirFotoMascota(req, res) {
  */
 async function eliminarFotoMascota(req, res) {
     const petMicrochip = req.params.microchip;
+
+    const mascota = await Mascota.findByPk(petMicrochip);
+    const file_name = mascota.imagen;
+    // eliminación de la foto en el directorio
+    fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
 
     await Mascota.update({
         imagen: null
@@ -236,8 +245,6 @@ async function obtenerObservacionesMascota(req, res) {
 async function modificarObservacionesMascota(req, res) {
     const microchip = req.params.microchip;
     const params = req.body;
-
-    console.log(params);
 
     await MascotaDocumental.updateOne({_id: microchip}, { observaciones: params.observaciones }, { upsert: true }, async function (err) {
         if (err) {
