@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MascotaDocumental } from 'src/app/models/MascotaDocumental';
 import { MascotaService } from 'src/app/services/mascota.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -35,6 +35,7 @@ export class DatosMascotaComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
+    private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
@@ -238,16 +239,21 @@ export class DatosMascotaComponent implements OnInit {
    * Método encargado de eliminar la foto de perfil de la mascota
    */
   public eliminarFotoMascota(): void {
-    this.mascotaService.eliminarFotoMascota(this.microchipMascota).subscribe(
-      response => {
-        this.mascota = response.pet;
-        this.mascota.imagen = "default-image.png";
-        this.addSuccessMessage('Se ha eliminado la foto de perfil de la mascota correctamente.');
-      },
-      error => {
-        this.addErrorMessage(error.error.message);
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de querer eliminar la foto de perfil?',
+      accept: () => {
+        this.mascotaService.eliminarFotoMascota(this.microchipMascota).subscribe(
+          response => {
+            this.mascota = response.pet;
+            this.mascota.imagen = "default-image.png";
+            this.addSuccessMessage('Se ha eliminado la foto de perfil de la mascota correctamente.');
+          },
+          error => {
+            this.addErrorMessage(error.error.message);
+          }
+        );
       }
-    );
+    });
   }
 
   /**

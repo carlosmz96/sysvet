@@ -1,3 +1,10 @@
+<p-confirmDialog #cd [style]="{width: '20em'}">
+    <ng-template pTemplate="footer">
+        <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
+        <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
+    </ng-template>
+</p-confirmDialog>
+
 <p-toast></p-toast>
 
 <app-navegacion></app-navegacion>

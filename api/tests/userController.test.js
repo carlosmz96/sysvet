@@ -17,7 +17,7 @@ before((done) => {
     request(app)
         .post('/api/login')
         .set('Accept', 'application/json')
-        .send({ dni: '11111111H', pass: '123', gethash: true })
+        .send({ dni: '30265512L', pass: 'admin', gethash: true })
         .expect('Content-Type', /json/)
         .expect(200, done)
         .expect((res) => {

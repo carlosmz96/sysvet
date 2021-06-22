@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GLOBAL } from '../../global';
 import { Usuario } from '../../models/Usuario';
+import { AccesoDenegadoComponent } from '../acceso-denegado/acceso-denegado.component';
 
 @Component({
   selector: 'app-modificar-usuario',
@@ -24,6 +25,7 @@ export class ModificarUsuarioComponent implements OnInit {
 
   constructor(
     private usuarioService: UsuarioService,
+    private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService
@@ -200,19 +202,26 @@ export class ModificarUsuarioComponent implements OnInit {
 
   /**
    * Método encargado de eliminar la foto de perfil del usuario
+   * 1) Al querer eliminar la foto de perfil mostrará un dialogo pidiendo confirmación
+   * 2) Si se acepta, procederá al borrado de dicha imagen
    */
   public eliminarFotoPerfil(): void {
-    this.usuarioService.eliminarFotoUsuario(this.dniUsuario).subscribe(
-      response => {
-        this.usuario = response.user;
-        this.usuario.pass = "";
-        this.usuario.foto = "default-image.png";
-        this.addSuccessMessage('Se ha eliminado la foto de perfil correctamente.');
-      },
-      error => {
-        this.addErrorMessage(error.error.message);
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de querer eliminar la foto de perfil?',
+      accept: () => {
+        this.usuarioService.eliminarFotoUsuario(this.dniUsuario).subscribe(
+          response => {
+            this.usuario = response.user;
+            this.usuario.pass = "";
+            this.usuario.foto = "default-image.png";
+            this.addSuccessMessage('Se ha eliminado la foto de perfil correctamente.');
+          },
+          error => {
+            this.addErrorMessage(error.error.message);
+          }
+        );
       }
-    );
+    });
   }
 
   /**

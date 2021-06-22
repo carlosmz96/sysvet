@@ -206,8 +206,11 @@ async function eliminarFotoPerfil(req, res) {
 
     const user = await Usuario.findByPk(userDni);
     const file_name = user.foto;
+    
     // eliminación de la foto en el directorio
-    fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
+    if(file_name !== null && fs.existsSync(`${__dirname}/../public/images/` + file_name)) {
+        fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
+    }
 
     await Usuario.update({
         foto: null

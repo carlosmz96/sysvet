@@ -177,8 +177,11 @@ async function eliminarFotoMascota(req, res) {
 
     const mascota = await Mascota.findByPk(petMicrochip);
     const file_name = mascota.imagen;
+    
     // eliminación de la foto en el directorio
-    fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
+    if(file_name !== null && fs.existsSync(`${__dirname}/../public/images/` + file_name)) {
+        fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
+    }
 
     await Mascota.update({
         imagen: null

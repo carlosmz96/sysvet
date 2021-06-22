@@ -13,6 +13,8 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 import { AppComponent } from './app.component';
 import { RecordarClaveComponent } from './components/recordar-clave/recordar-clave.component';
@@ -63,9 +65,10 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     DropdownModule,
     EditorModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
