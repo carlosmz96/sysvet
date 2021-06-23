@@ -10,6 +10,7 @@ const dotenv = require('dotenv');
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const petRoutes = require('./routes/petRoutes');
+const citaRoutes = require('./routes/citaRoutes');
 dotenv.config();
 
 // Configuraciones
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 // Rutas base
 app.use('/api', userRoutes);
 app.use('/api', petRoutes);
+app.use('/api', citaRoutes);
 
 // Iniciar el servidor
 app.listen(app.get('port'), () => {
