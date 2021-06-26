@@ -181,3 +181,7 @@ $RECYCLE.BIN/
 
 # Other directories
 api/src/public/images
+
+# Package-lock
+api/package-lock.json
+client/package-lock.json
