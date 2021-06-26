@@ -3,26 +3,19 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { sequelize } = require('../database/db');
 
-const Cita = sequelize.define('Cita', {
-    id_cita: {
+const Servicio = sequelize.define('Servicio', {
+    id_servicio: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrementIdentity: true
     },
-    microchip: {
+    codigo: {
         type: DataTypes.STRING(10),
-        allowNull: false
+        primaryKey: true,
+        autoIncrementIdentity: true
     },
-    propietario: {
-        type: DataTypes.STRING(9),
-        allowNull: false
-    },
-    fecha: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    activa: {
-        type: DataTypes.STRING(1),
+    nombre: {
+        type: DataTypes.STRING(20),
         allowNull: false
     },
     fecha_modificacion: {
@@ -37,9 +30,9 @@ const Cita = sequelize.define('Cita', {
     }
 },
 {
-    tableName: 'citas',
+    tableName: 'servicios',
     updatedAt: 'fecha_modificacion',
     createdAt: 'fecha_creacion'
 });
 
-module.exports = Cita;
+module.exports = Servicio;

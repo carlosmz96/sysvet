@@ -10,28 +10,30 @@ const Cita = require('../models/Cita');
  */
 async function nuevaCita(req, res) {
     const params = req.body;
-    const fechaActual = new Date();
+    const fecha = new Date(params.fecha).valueOf();
+    const fechaActual = new Date().valueOf();
 
-    const cita = new Cita();
-    cita.microchip = params.microchip;
-    cita.propietario = params.propietario;
-    cita.fecha = params.fecha;
-    cita.activa = 'S';
-
-    if (cita.fecha > fechaActual) {
-        if (cita.microchip != null && cita.propietario != null && cita.fecha != null) {
-            await cita.save((err, citaStored) => {
-                if (err) {
-                    res.status(500).send({ message: 'Error al crear la cita.' });
-                } else {
-                    if (!citaStored) {
+    if ((fecha > fechaActual) && (params.microchip && params.propietario && params.fecha)) {
+        await Cita.findOne({ where: { fecha: params.fecha, activa: 'S' } }).then(async function (cita) {
+            if (!cita) {
+                await Cita.create({
+                    microchip: params.microchip,
+                    propietario: params.propietario,
+                    fecha: params.fecha,
+                    activa: 'S'
+                }).then(function (cita) {
+                    if (!cita) {
                         res.status(404).send({ message: 'No se ha creado la cita.' });
                     } else {
-                        res.status(200).send({ cita: citaStored });
+                        res.status(200).send({ cita });
                     }
-                }
-            });
-        }
+                }).catch(() => {
+                    res.status(500).send({ message: 'Error al crear una cita.' });
+                });
+            } else {
+                res.status(500).send({ message: 'Ya hay una cita programada para esa fecha.' });
+            }
+        });
     } else {
         res.status(500).send({ message: 'La fecha debe de ser futura.' });
     }
@@ -42,17 +44,15 @@ async function nuevaCita(req, res) {
  * @param {*} req Consulta de todas las citas del sistema
  * @param {*} res Respuesta generada tras la consulta
  */
-async function obtenerCitas(req, res) {
-    await Cita.find({ activa: 'S' }, (err, citas) => {
-        if (err) {
-            res.status(500).send({ message: 'Error al obtener todas las citas.' });
+async function consultarCitas(req, res) {
+    await Cita.findAll({ where: { activa: 'S' } }).then(function (citas) {
+        if (!citas) {
+            res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {
-            if (!citas) {
-                res.status(404).send({ message: 'No se han podido obtener todas las citas.' });
-            } else {
-                res.status(200).send({ citas });
-            }
+            res.status(200).send({ citas });
         }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al consultar las citas.' });
     });
 }
 
@@ -61,19 +61,17 @@ async function obtenerCitas(req, res) {
  * @param {*} req Consulta de todas las citas de una mascota
  * @param {*} res Respuesta generada tras la consulta
  */
-async function obtenerCitasMascota(req, res) {
+async function consultarCitasMascota(req, res) {
     const petMicrochip = req.params.microchip;
 
-    await Cita.find({ microchip: petMicrochip, activa: 'S' }, (err, citas) => {
-        if (err) {
-            res.status(500).send({ message: 'Error al obtener las citas de la mascota.' });
+    await Cita.findAll({ where: { microchip: petMicrochip, activa: 'S' } }).then(function (citas) {
+        if (!citas) {
+            res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {
-            if (!citas) {
-                res.status(404).send({ message: 'No se han podido obtener las citas de la mascota.' });
-            } else {
-                res.status(200).send({ citas });
-            }
+            res.status(200).send({ citas });
         }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al consultar las citas.' });
     });
 }
 
@@ -82,19 +80,17 @@ async function obtenerCitasMascota(req, res) {
  * @param {*} req Consulta de todas las citas de un propietario
  * @param {*} res Respuesta generada tras la consulta
  */
-async function obtenerCitasPropietario(req, res) {
+async function consultarCitasPropietario(req, res) {
     const dniPropietario = req.params.dni;
 
-    await Cita.find({ propietario: dniPropietario, activa: 'S' }, (err, citas) => {
-        if (err) {
-            res.status(500).send({ message: 'Error al obtener las citas del propietario.' });
+    await Cita.findAll({ where: { propietario: dniPropietario, activa: 'S' } }).then(function (citas) {
+        if (!citas) {
+            res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {
-            if (!citas) {
-                res.status(404).send({ message: 'No se han podido obtener las citas del propietario.' });
-            } else {
-                res.status(200).send({ citas });
-            }
+            res.status(200).send({ citas });
         }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al consultar las citas.' });
     });
 }
 
@@ -106,23 +102,21 @@ async function obtenerCitasPropietario(req, res) {
 async function anularCita(req, res) {
     const params = req.body;
 
-    await Cita.updateOne({
-        microchip: params.microchip,
-        propietario: params.propietario,
-        fecha: params.fecha
-    }, {
-        activa: 'N'
-    }, (err, cita) => {
-        if (err) {
-            res.status(500).send({ message: 'Error al intentar anular la cita.' });
-        } else {
-            if(!cita) {
-                res.status(404).send({ message: 'No se ha podido anular la cita.' });
-            } else {
-                res.status(200).send({ cita });
-            }
+    await Cita.update({ activa: 'N' }, {
+        where: {
+            microchip: params.microchip,
+            propietario: params.propietario,
+            fecha: params.fecha
         }
-    });
+    }).then(function (citaCanceled) {
+        if (!citaCanceled) {
+            res.status(404).send({ message: 'No se ha podido anular la cita.' });
+        } else {
+            res.status(200).send({ cita: citaCanceled });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al anular la cita.' });
+    });;
 }
 
 /**
@@ -134,20 +128,16 @@ async function eliminarCita(req, res) {
     const params = req.body;
 
     if (params.activa == 'N') {
-        await Cita.deleteOne({
-            microchip: params.microchip,
-            propietario: params.propietario,
+        await Cita.destroy({ where: {
             fecha: params.fecha
-        }, (err, cita) => {
-            if (err) {
-                res.status(500).send({ message: 'Error al intentar eliminar la cita.' });
+        } }).then(function (citaDeleted) {
+            if (!citaDeleted) {
+                res.status(404).send({ message: 'No se ha podido eliminar la cita.' });
             } else {
-                if(!cita) {
-                    res.status(404).send({ message: 'No se ha podido eliminar la cita.' });
-                } else {
-                    res.status(200).send({ cita });
-                }
+                res.status(200).send({ cita: citaDeleted });
             }
+        }).catch((err) => {
+            res.status(500).send({ message: 'Error al eliminar la cita.' });
         });
     } else {
         res.status(500).send({ message: 'Para eliminar una cita primero debe estar anulada.' });
@@ -156,9 +146,9 @@ async function eliminarCita(req, res) {
 
 module.exports = {
     nuevaCita,
-    obtenerCitas,
-    obtenerCitasMascota,
-    obtenerCitasPropietario,
+    consultarCitas,
+    consultarCitasMascota,
+    consultarCitasPropietario,
     anularCita,
     eliminarCita
 }
