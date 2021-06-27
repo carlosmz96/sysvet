@@ -33,6 +33,7 @@ import { DatosMascotaComponent } from './components/datos-mascota/datos-mascota.
 import { BajaMascotaComponent } from './components/baja-mascota/baja-mascota.component';
 import { AltaMascotaComponent } from './components/alta-mascota/alta-mascota.component';
 import { MessageService } from 'primeng/api';
+import { ListadoCitasComponent } from './components/listado-citas/listado-citas.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MessageService } from 'primeng/api';
     ListadoMascotasComponent,
     DatosMascotaComponent,
     BajaMascotaComponent,
-    AltaMascotaComponent
+    AltaMascotaComponent,
+    ListadoCitasComponent
   ],
   imports: [
     BrowserModule,

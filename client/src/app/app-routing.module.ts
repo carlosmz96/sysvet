@@ -15,6 +15,7 @@ import { ListadoMascotasComponent } from './components/listado-mascotas/listado-
 import { DatosMascotaComponent } from './components/datos-mascota/datos-mascota.component';
 import { BajaMascotaComponent } from './components/baja-mascota/baja-mascota.component';
 import { AltaMascotaComponent } from './components/alta-mascota/alta-mascota.component';
+import { ListadoCitasComponent } from './components/listado-citas/listado-citas.component';
 
 const routes: Routes = [
   {
@@ -81,6 +82,11 @@ const routes: Routes = [
   {
     path: 'baja-mascota/:microchip',
     component: BajaMascotaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'listado-citas',
+    component: ListadoCitasComponent,
     canActivate: [AuthGuard]
   },
   {

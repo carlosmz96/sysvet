@@ -7,6 +7,8 @@ import { Mascota } from '../../models/Mascota';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { MascotaService } from 'src/app/services/mascota.service';
 import { MessageService } from 'primeng/api';
+import { Cita } from 'src/app/models/Cita';
+import { CitaService } from 'src/app/services/cita.service';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -16,6 +18,7 @@ import { MessageService } from 'primeng/api';
 export class PerfilUsuarioComponent implements OnInit {
   public usuario: Usuario;
   public mascotas: Mascota[] = [];
+  public citas: Cita[] = [];
   public dniUsuario: string = "";
   public url: string = "";
   public identity: any;
@@ -23,6 +26,7 @@ export class PerfilUsuarioComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
+    private citaService: CitaService,
     private router: Router,
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute,
@@ -78,6 +82,17 @@ export class PerfilUsuarioComponent implements OnInit {
           this.addErrorMessage('Error al obtener la lista de mascotas asociadas al usuario.');
         }
       );
+
+      //carga de citas asociadas al propietario
+      this.citaService.consultarCitasPropietario(this.dniUsuario).subscribe(
+        response => {
+          this.citas = response.citas as Cita[];
+          this.citas.forEach(cita => cita.fechaStr = this.formatearFecha(cita.fecha));
+        },
+        error => {
+          this.addErrorMessage('Error al obtener la lista de citas del propietario.');
+        }
+      )
     }
   }
 
@@ -94,8 +109,24 @@ export class PerfilUsuarioComponent implements OnInit {
    * Método encargado de mostrar una notificación con un mensaje de error
    * @param msg Mensaje pasado por parámetro
    */
-   public addErrorMessage(msg: string): void {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  public addErrorMessage(msg: string): void {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
+  }
+
+  /**
+   * Método encargado de formatear la fecha
+   * @param fecha Fecha de la cita
+   * @returns Fecha formateada a cadena de texto
+   */
+  public formatearFecha(fecha: Date): string {
+    const fecha2 = new Date(fecha);
+    const dia = fecha2.getDate();
+    const mes = fecha2.getMonth() + 1;
+    const anyo = fecha2.getFullYear();
+    const hora = fecha2.getUTCHours();
+    const minutos = fecha2.getMinutes();
+
+    return dia + '/' + mes + '/' + anyo + ' ' + hora + ':' + minutos;
   }
 
 }

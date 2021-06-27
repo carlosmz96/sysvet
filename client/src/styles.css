@@ -119,3 +119,14 @@ th {
     width: 110px;
     border-radius: 50%;
 }
+
+/* ESTILO BOTONES */
+.btn-success {
+    background-color: #72bd78 !important;
+    border-color: inherit;
+}
+
+.btn-success:hover {
+    background-color: #63a868 !important;
+    border-color: inherit;
+}

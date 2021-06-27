@@ -212,3 +212,13 @@
         margin-right: 0.5em;
     }
 }
+
+/* Citas */
+
+.titulo-citas-usuario {
+    font-size: 18pt;
+}
+
+.consultar:hover {
+    color: #72bd78;
+}

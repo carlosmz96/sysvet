@@ -16,6 +16,10 @@
                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-mascotas"
                                 role="tab" aria-controls="pills-profile" aria-selected="false">Mis mascotas</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-citas"
+                                role="tab" aria-controls="pills-profile" aria-selected="false">Mis citas</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -28,6 +32,8 @@
                                 role="tab" aria-controls="v-mis-datos" aria-selected="true">Mis datos</a>
                             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#mis-mascotas"
                                 role="tab" aria-controls="v-mis-mascotas" aria-selected="false">Mis mascotas</a>
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#mis-citas" role="tab"
+                                aria-controls="v-mis-citas" aria-selected="false">Mis citas</a>
                         </div>
                     </div>
                 </div>
@@ -36,7 +42,8 @@
                         <div class="tab-pane fade show active" id="mis-datos" role="tabpanel"
                             aria-labelledby="mis-datos-tab">
                             <!-- Cabecera del perfil de usuario -->
-                            <div class="cabecera-perfil-usuario" style="padding-top: 1em;" *ngIf="usuario.foto && usuario.foto != null">
+                            <div class="cabecera-perfil-usuario" style="padding-top: 1em;"
+                                *ngIf="usuario.foto && usuario.foto != null">
                                 <img class="imagen-perfil-usuario"
                                     src="{{ url + 'obtener-foto-perfil/' + usuario.foto }}"
                                     alt="Imagen de perfil del usuario">
@@ -105,7 +112,8 @@
                                             </div>
                                             <div class="nombre-mascota">
                                                 <span class="nombre">{{ mascota.nombre }}</span>
-                                                <button type="button" routerLink="/datos-mascota/{{ mascota.microchip }}"
+                                                <button type="button"
+                                                    routerLink="/datos-mascota/{{ mascota.microchip }}"
                                                     class="btn btn-success btn-consultar">Consultar</button>
                                             </div>
                                         </div>
@@ -114,6 +122,41 @@
                                 <div *ngIf="mascotas.length == 0">
                                     <div class="card-mascota-vacia justify-content-center">
                                         <span>Todavía no tienes ninguna mascota asociada.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="mis-citas" role="tabpanel" aria-labelledby="mis-citas-tab">
+                            <div class="cabecera-perfil-citas">
+                                <h2 class="titulo-citas-usuario">Mis citas</h2>
+                                <p>En este apartado se muestran tus citas activas.</p>
+                            </div>
+                            <div class="listado-citas">
+                                <div *ngIf="citas.length > 0">
+                                    <p-table [value]="citas">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Mascota</th>
+                                                <th>Fecha</th>
+                                                <th style="width: 15%;"></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-cita let-expanded="expanded">
+                                            <tr>
+                                                <td>{{cita.microchip}}</td>
+                                                <td>{{cita.fechaStr}}</td>
+                                                <td>
+                                                    <i class="fas fa-lg fa-eye consultar"
+                                                        routerLink="/cita/{{cita.id_cita}}"
+                                                        style="display: block; text-align: center; cursor: pointer;"></i>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                                <div *ngIf="citas.length == 0">
+                                    <div class="card-cita-vacia justify-content-center">
+                                        <span>Todavía no tienes ninguna cita.</span>
                                     </div>
                                 </div>
                             </div>

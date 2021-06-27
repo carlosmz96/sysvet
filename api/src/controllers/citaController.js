@@ -57,6 +57,25 @@ async function consultarCitas(req, res) {
 }
 
 /**
+ * Método encargado de obtener una cita en específico
+ * @param {*} req Consulta para obtener una cita
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function consultarCita(req, res) {
+    const idCita = req.params.id;
+
+    await Cita.find({ where: { id_cita: idCita } }).then(function (cita) {
+        if (!cita) {
+            res.status(404).send({ message: 'No se ha podido encontrar la cita.' });
+        } else {
+            res.status(200).send({ cita });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al obtener la cita.' });
+    });
+}
+
+/**
  * Método encargado de obtener las citas de una mascota que estén activas
  * @param {*} req Consulta de todas las citas de una mascota
  * @param {*} res Respuesta generada tras la consulta
@@ -147,6 +166,7 @@ async function eliminarCita(req, res) {
 module.exports = {
     nuevaCita,
     consultarCitas,
+    consultarCita,
     consultarCitasMascota,
     consultarCitasPropietario,
     anularCita,
