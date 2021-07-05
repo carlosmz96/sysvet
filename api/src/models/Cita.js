@@ -5,9 +5,8 @@ const { sequelize } = require('../database/db');
 
 const Cita = sequelize.define('Cita', {
     id_cita: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrementIdentity: true
+        type: DataTypes.STRING(15),
+        primaryKey: true
     },
     microchip: {
         type: DataTypes.STRING(10),

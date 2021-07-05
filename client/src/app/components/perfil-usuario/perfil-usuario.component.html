@@ -1,169 +1,173 @@
+<p-confirmDialog #cd [style]="{width: '20em'}">
+  <ng-template pTemplate="footer">
+      <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
+      <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
+  </ng-template>
+</p-confirmDialog>
+
 <p-toast></p-toast>
 
 <app-navegacion></app-navegacion>
 
 <div class="container">
-    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body" style="text-align: justify;">
-            <div class="row-horizontal">
-                <div class="card top-menu-perfil" style="display: none;">
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#mis-datos"
-                                role="tab" aria-controls="pills-home" aria-selected="true">Mis datos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-mascotas"
-                                role="tab" aria-controls="pills-profile" aria-selected="false">Mis mascotas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-citas"
-                                role="tab" aria-controls="pills-profile" aria-selected="false">Mis citas</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card side-menu-perfil">
-                    <div class="col-3">
-                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-                            aria-orientation="vertical">
-                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#mis-datos"
-                                role="tab" aria-controls="v-mis-datos" aria-selected="true">Mis datos</a>
-                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#mis-mascotas"
-                                role="tab" aria-controls="v-mis-mascotas" aria-selected="false">Mis mascotas</a>
-                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#mis-citas" role="tab"
-                                aria-controls="v-mis-citas" aria-selected="false">Mis citas</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-contenido">
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="mis-datos" role="tabpanel"
-                            aria-labelledby="mis-datos-tab">
-                            <!-- Cabecera del perfil de usuario -->
-                            <div class="cabecera-perfil-usuario" style="padding-top: 1em;"
-                                *ngIf="usuario.foto && usuario.foto != null">
-                                <img class="imagen-perfil-usuario"
-                                    src="{{ url + 'obtener-foto-perfil/' + usuario.foto }}"
-                                    alt="Imagen de perfil del usuario">
-                                <div class="texto-cabecera-perfil">
-                                    <h2 class="titulo-perfil-usuario">{{usuario.nombre}} {{usuario.apellidos}}</h2>
-                                    <span class="subtitulo-perfil-usuario">Usuario {{usuario.rol}}</span>
-                                </div>
-                            </div>
-
-                            <!-- Datos del perfil de usuario -->
-                            <form class="datos-usuario">
-                                <div class="form-row">
-                                    <label for="dni" class="col-sm-4 col-form-label"><strong>DNI</strong></label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="dni" value="{{usuario.dni}}"
-                                            disabled>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <label for="email" class="col-sm-4 col-form-label"><strong>Correo
-                                            electrónico</strong></label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="email" value="{{usuario.email}}"
-                                            disabled>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <label for="telefono"
-                                        class="col-sm-4 col-form-label"><strong>Teléfono</strong></label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="telefono"
-                                            value="{{usuario.telefono}}" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <label for="direccion"
-                                        class="col-sm-4 col-form-label"><strong>Dirección</strong></label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="direccion"
-                                            value="{{usuario.direccion}}" disabled>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="botonera"
-                                *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
-                                <button type="button" class="btn btn-danger"
-                                    routerLink="/baja-usuario/{{usuario.dni}}">Date de baja</button>
-                                <button type="button" class="btn btn-success"
-                                    routerLink="/modificar-usuario/{{usuario.dni}}">Editar datos</button>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="mis-mascotas" role="tabpanel" aria-labelledby="mis-mascotas-tab">
-                            <div class="cabecera-perfil-mascotas">
-                                <h2 class="titulo-mascotas-usuario">Mis mascotas</h2>
-                                <p>En este apartado se muestran los datos de tus mascotas registradas en el sistema.</p>
-                            </div>
-                            <div class="listado-mascotas">
-                                <div *ngIf="mascotas.length > 0">
-                                    <div *ngFor="let mascota of mascotas">
-                                        <div class="card-mascota">
-                                            <div class="imagen">
-                                                <img class="imagen-perfil-mascota"
-                                                    src="{{ url + 'obtener-foto-mascota/' + mascota.imagen }}"
-                                                    alt="Imagen de perfil de la mascota">
-                                            </div>
-                                            <div class="nombre-mascota">
-                                                <span class="nombre">{{ mascota.nombre }}</span>
-                                                <button type="button"
-                                                    routerLink="/datos-mascota/{{ mascota.microchip }}"
-                                                    class="btn btn-success btn-consultar">Consultar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div *ngIf="mascotas.length == 0">
-                                    <div class="card-mascota-vacia justify-content-center">
-                                        <span>Todavía no tienes ninguna mascota asociada.</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="mis-citas" role="tabpanel" aria-labelledby="mis-citas-tab">
-                            <div class="cabecera-perfil-citas">
-                                <h2 class="titulo-citas-usuario">Mis citas</h2>
-                                <p>En este apartado se muestran tus citas activas.</p>
-                            </div>
-                            <div class="listado-citas">
-                                <div *ngIf="citas.length > 0">
-                                    <p-table [value]="citas">
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th>Mascota</th>
-                                                <th>Fecha</th>
-                                                <th style="width: 15%;"></th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-cita let-expanded="expanded">
-                                            <tr>
-                                                <td>{{cita.microchip}}</td>
-                                                <td>{{cita.fechaStr}}</td>
-                                                <td>
-                                                    <i class="fas fa-lg fa-eye consultar"
-                                                        routerLink="/cita/{{cita.id_cita}}"
-                                                        style="display: block; text-align: center; cursor: pointer;"></i>
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                                <div *ngIf="citas.length == 0">
-                                    <div class="card-cita-vacia justify-content-center">
-                                        <span>Todavía no tienes ninguna cita.</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body" style="text-align: justify;">
+      <div class="row-horizontal">
+        <div class="card top-menu-perfil" style="display: none;">
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#mis-datos" role="tab"
+                aria-controls="pills-home" aria-selected="true">Mis datos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-mascotas" role="tab"
+                aria-controls="pills-profile" aria-selected="false">Mis mascotas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-citas" role="tab"
+                aria-controls="pills-profile" aria-selected="false">Mis citas</a>
+            </li>
+          </ul>
         </div>
+      </div>
+      <div class="row">
+        <div class="card side-menu-perfil">
+          <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#mis-datos" role="tab"
+                aria-controls="v-mis-datos" aria-selected="true">Mis datos</a>
+              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#mis-mascotas" role="tab"
+                aria-controls="v-mis-mascotas" aria-selected="false">Mis mascotas</a>
+              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#mis-citas" role="tab"
+                aria-controls="v-mis-citas" aria-selected="false">Mis citas</a>
+            </div>
+          </div>
+        </div>
+        <div class="tab-contenido">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="mis-datos" role="tabpanel" aria-labelledby="mis-datos-tab">
+              <!-- Cabecera del perfil de usuario -->
+              <div class="cabecera-perfil-usuario" style="padding-top: 1em;"
+                *ngIf="usuario.foto && usuario.foto != null">
+                <img class="imagen-perfil-usuario" src="{{ url + 'obtener-foto-perfil/' + usuario.foto }}"
+                  alt="Imagen de perfil del usuario">
+                <div class="texto-cabecera-perfil">
+                  <h2 class="titulo-perfil-usuario">{{usuario.nombre}} {{usuario.apellidos}}</h2>
+                  <span class="subtitulo-perfil-usuario">Usuario {{usuario.rol}}</span>
+                </div>
+              </div>
+
+              <!-- Datos del perfil de usuario -->
+              <form class="datos-usuario">
+                <div class="form-row">
+                  <label for="dni" class="col-sm-4 col-form-label"><strong>DNI</strong></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="dni" value="{{usuario.dni}}" disabled>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label for="email" class="col-sm-4 col-form-label"><strong>Correo
+                      electrónico</strong></label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" id="email" value="{{usuario.email}}" disabled>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label for="telefono" class="col-sm-4 col-form-label"><strong>Teléfono</strong></label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" id="telefono" value="{{usuario.telefono}}" disabled>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label for="direccion" class="col-sm-4 col-form-label"><strong>Dirección</strong></label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" id="direccion" value="{{usuario.direccion}}" disabled>
+                  </div>
+                </div>
+              </form>
+
+              <div class="botonera" *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
+                <button type="button" class="btn btn-danger" routerLink="/baja-usuario/{{usuario.dni}}">Date de
+                  baja</button>
+                <button type="button" class="btn btn-success" routerLink="/modificar-usuario/{{usuario.dni}}">Editar
+                  datos</button>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="mis-mascotas" role="tabpanel" aria-labelledby="mis-mascotas-tab">
+              <div class="cabecera-perfil-mascotas">
+                <h2 class="titulo-mascotas-usuario">Mis mascotas</h2>
+                <p>En este apartado se muestran los datos de tus mascotas registradas en el sistema.</p>
+              </div>
+              <div class="listado-mascotas">
+                <div *ngIf="mascotas.length > 0">
+                  <div *ngFor="let mascota of mascotas">
+                    <div class="card-mascota">
+                      <div class="imagen">
+                        <img class="imagen-perfil-mascota" src="{{ url + 'obtener-foto-mascota/' + mascota.imagen }}"
+                          alt="Imagen de perfil de la mascota">
+                      </div>
+                      <div class="nombre-mascota">
+                        <span class="nombre">{{ mascota.nombre }}</span>
+                        <button type="button" routerLink="/datos-mascota/{{ mascota.microchip }}"
+                          class="btn btn-success btn-consultar">Consultar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="mascotas.length == 0">
+                  <div class="card-mascota-vacia justify-content-center">
+                    <span>Todavía no tienes ninguna mascota asociada.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="mis-citas" role="tabpanel" aria-labelledby="mis-citas-tab">
+              <div class="cabecera-perfil-citas">
+                <h2 class="titulo-citas-usuario">Mis citas</h2>
+                <p>En este apartado se muestran tus citas activas.</p>
+              </div>
+              <div class="listado-citas">
+                <div class="btn-nueva-cita">
+                  <button type="button" routerLink="/nueva-cita" title="Solicitar nueva cita"
+                    class="btn btn-success">Nueva cita</button>
+                </div>
+
+                <div *ngIf="citas.length > 0">
+                  <p-table [value]="citas">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>Mascota</th>
+                        <th>Fecha</th>
+                        <th style="width: 20%;"></th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-cita let-expanded="expanded">
+                      <tr>
+                        <td><a routerLink="/datos-mascota/{{cita.microchip}}"
+                            title="Consultar mascota">{{cita.microchip}}</a></td>
+                        <td>{{cita.fechaStr}}</td>
+                        <td>
+                          <div class="espaciado-icono">
+                            <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}"
+                              title="Consultar cita" style="cursor: pointer;"></i>
+                            <i class="far fa-lg fa-calendar-times consultar" title="Anular cita" (click)="anularCita(cita)"
+                              style="cursor: pointer;"></i>
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+                <div *ngIf="citas.length == 0">
+                  <div class="card-cita-vacia justify-content-center">
+                    <span>Todavía no tienes ninguna cita.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

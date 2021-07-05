@@ -4,7 +4,7 @@
     <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
         <div class="card-body" style="text-align: justify;">
             <div class="nueva-mascota">
-                <button type="button" class="btn btn-success" routerLink="/alta-mascota"><i
+                <button type="button" class="btn btn-success" title="Nueva mascota" routerLink="/alta-mascota"><i
                         class="fas fa-plus-circle"></i> Nueva mascota</button>
             </div>
             <p-table #dtpets [value]="mascotas" dataKey="microchip" styleClass="p-datatable-gridlines"
@@ -61,10 +61,10 @@
                         </td>
                         <td>{{mascota.microchip}}</td>
                         <td>{{mascota.nombre}}</td>
-                        <td>{{mascota.propietario}}</td>
-                        <td>{{mascota.veterinario}}</td>
+                        <td><a routerLink="/usuario/{{mascota.propietario}}" title="Consultar propietario">{{mascota.propietario}}</a></td>
+                        <td><a routerLink="/usuario/{{mascota.veterinario}}" title="Consultar veterinario">{{mascota.veterinario}}</a></td>
                         <td>
-                            <i class="fas fa-lg fa-eye consultar" routerLink="/datos-mascota/{{mascota.microchip}}"
+                            <i class="fas fa-lg fa-eye consultar" title="Consultar mascota" routerLink="/datos-mascota/{{mascota.microchip}}"
                                 style="display: block; text-align: center; cursor: pointer;"></i>
                         </td>
                     </tr>

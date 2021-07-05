@@ -15,7 +15,9 @@ import { EditorModule } from 'primeng/editor';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
 
+// Componentes
 import { AppComponent } from './app.component';
 import { RecordarClaveComponent } from './components/recordar-clave/recordar-clave.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
@@ -34,6 +36,9 @@ import { BajaMascotaComponent } from './components/baja-mascota/baja-mascota.com
 import { AltaMascotaComponent } from './components/alta-mascota/alta-mascota.component';
 import { MessageService } from 'primeng/api';
 import { ListadoCitasComponent } from './components/listado-citas/listado-citas.component';
+import { NuevaCitaComponent } from './components/nueva-cita/nueva-cita.component';
+import { CitaSolicitadaComponent } from './components/cita-solicitada/cita-solicitada.component';
+import { ConsultarCitaComponent } from './components/consultar-cita/consultar-cita.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +58,10 @@ import { ListadoCitasComponent } from './components/listado-citas/listado-citas.
     DatosMascotaComponent,
     BajaMascotaComponent,
     AltaMascotaComponent,
-    ListadoCitasComponent
+    ListadoCitasComponent,
+    NuevaCitaComponent,
+    CitaSolicitadaComponent,
+    ConsultarCitaComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +76,8 @@ import { ListadoCitasComponent } from './components/listado-citas/listado-citas.
     DropdownModule,
     EditorModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    CalendarModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

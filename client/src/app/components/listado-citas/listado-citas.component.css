@@ -49,3 +49,11 @@ tr th:last-of-type {
         display: none;
     }
 }
+
+.espaciado-icono {
+  text-align: center;
+}
+
+.izq {
+  margin-right: 0.4em;
+}

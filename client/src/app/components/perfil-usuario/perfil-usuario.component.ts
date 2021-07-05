@@ -6,7 +6,7 @@ import { GLOBAL } from '../../global';
 import { Mascota } from '../../models/Mascota';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { MascotaService } from 'src/app/services/mascota.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { Cita } from 'src/app/models/Cita';
 import { CitaService } from 'src/app/services/cita.service';
 
@@ -30,7 +30,8 @@ export class PerfilUsuarioComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
     this.url = GLOBAL.url;
@@ -84,16 +85,23 @@ export class PerfilUsuarioComponent implements OnInit {
       );
 
       //carga de citas asociadas al propietario
-      this.citaService.consultarCitasPropietario(this.dniUsuario).subscribe(
-        response => {
-          this.citas = response.citas as Cita[];
-          this.citas.forEach(cita => cita.fechaStr = this.formatearFecha(cita.fecha));
-        },
-        error => {
-          this.addErrorMessage('Error al obtener la lista de citas del propietario.');
-        }
-      )
+      this.obtenerCitas();
     }
+  }
+
+  /**
+   * Método encargado de obtener todas las citas activas del propietario
+   */
+  public obtenerCitas(): void {
+    this.citaService.consultarCitasPropietario(this.dniUsuario).subscribe(
+      response => {
+        this.citas = response.citas as Cita[];
+        this.citas.forEach(cita => cita.fechaStr = this.formatearFecha(cita.fecha));
+      },
+      error => {
+        this.addErrorMessage('Error al obtener la lista de citas del propietario.');
+      }
+    );
   }
 
   /**
@@ -103,6 +111,35 @@ export class PerfilUsuarioComponent implements OnInit {
     this.activatedRoute.params.subscribe((params = {}) => {
       this.ngOnInit();
     });
+  }
+
+  /**
+   * Método encargado de anular una cita específica
+   * @param cita Cita a anular
+   */
+  public anularCita(cita: any): void {
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de querer anular la cita?',
+      accept: () => {
+        this.citaService.anularCita(cita).subscribe(
+          response => {
+            this.obtenerCitas();
+            this.addSuccessMessage('Se ha anulado la cita correctamente.');
+          },
+          error => {
+            this.addErrorMessage(error.error.message);
+          }
+        );
+      }
+    });
+  }
+
+  /**
+   * Método encargado de mostrar una notificación con un mensaje de éxito
+   * @param msg Mensaje pasado por parámetro
+   */
+  public addSuccessMessage(msg: string): void {
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: msg });
   }
 
   /**
@@ -120,11 +157,11 @@ export class PerfilUsuarioComponent implements OnInit {
    */
   public formatearFecha(fecha: Date): string {
     const fecha2 = new Date(fecha);
-    const dia = fecha2.getDate();
-    const mes = fecha2.getMonth() + 1;
+    const dia = fecha2.getDate().toString().length < 2 ? '0' + fecha2.getDate() : fecha2.getDate();
+    const mes = (fecha2.getMonth() + 1).toString().length < 2 ? '0' + (fecha2.getMonth() + 1) : (fecha2.getMonth() + 1);
     const anyo = fecha2.getFullYear();
-    const hora = fecha2.getUTCHours();
-    const minutos = fecha2.getMinutes();
+    const hora = fecha2.getHours().toString().length < 2 ? '0' + fecha2.getHours() : fecha2.getHours();
+    const minutos = fecha2.getMinutes().toString().length < 2 ? '0' + fecha2.getMinutes() : fecha2.getMinutes();
 
     return dia + '/' + mes + '/' + anyo + ' ' + hora + ':' + minutos;
   }

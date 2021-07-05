@@ -55,7 +55,7 @@ export class CitaService {
 
   /**
    * Método encargado de llamar al api para consultar las citas de una mascota
-   * @param microchip Microchip de la mascota 
+   * @param microchip Microchip de la mascota
    * @returns Listado de citas de la mascota
    */
   public consultarCitasMascota(microchip: string): Observable<any> {
@@ -82,7 +82,7 @@ export class CitaService {
     const params = JSON.stringify(cita_to_update);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.token });
 
-    return this.httpClient.put(this.url + 'anular-cita', params, { headers: headers });
+    return this.httpClient.put(this.url + 'anular-cita/' + cita_to_update.id_cita, params, { headers: headers });
   }
 
   /**
@@ -98,7 +98,17 @@ export class CitaService {
       body: params
     }
 
-    return this.httpClient.delete(this.url + 'eliminar-cita', options);
+    return this.httpClient.delete(this.url + 'eliminar-cita/' + cita_to_delete.id_cita, options);
+  }
+
+  /**
+   * Método encargado de llamar al api para obtener el motivo de la cita
+   * @param idCita Id de la cita
+   * @returns Motivo de la cita
+   */
+  public obtenerMotivoCita(idCita: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', this.token);
+    return this.httpClient.get(this.url + 'obtener-motivo-cita/' + idCita, { headers: headers});
   }
 
 }

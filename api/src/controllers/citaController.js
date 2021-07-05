@@ -2,6 +2,7 @@
 
 // Importaciones
 const Cita = require('../models/Cita');
+const CitaDocumento = require('../models/CitaDocumento');
 
 /**
  * Método encargado de crear una nueva cita
@@ -14,18 +15,32 @@ async function nuevaCita(req, res) {
     const fechaActual = new Date().valueOf();
 
     if ((fecha > fechaActual) && (params.microchip && params.propietario && params.fecha)) {
+
+        const idCita = new Date().getTime().toString();
+
         await Cita.findOne({ where: { fecha: params.fecha, activa: 'S' } }).then(async function (cita) {
             if (!cita) {
                 await Cita.create({
+                    id_cita: idCita,
                     microchip: params.microchip,
                     propietario: params.propietario,
                     fecha: params.fecha,
                     activa: 'S'
-                }).then(function (cita) {
+                }).then(async function (cita) {
                     if (!cita) {
                         res.status(404).send({ message: 'No se ha creado la cita.' });
                     } else {
-                        res.status(200).send({ cita });
+                        await CitaDocumento.create({ _id: cita.id_cita, motivo: params.motivo }, (err, doc) => {
+                            if (err) {
+                                res.status(500).send({ message: 'Error al establecer el motivo de la cita.' });
+                            } else {
+                                if (!doc) {
+                                    res.status(404).send({ message: 'No se ha establecido el motivo de la cita.' });
+                                } else {
+                                    res.status(200).send({ cita, doc });
+                                }
+                            }
+                        });
                     }
                 }).catch(() => {
                     res.status(500).send({ message: 'Error al crear una cita.' });
@@ -45,7 +60,7 @@ async function nuevaCita(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function consultarCitas(req, res) {
-    await Cita.findAll({ where: { activa: 'S' } }).then(function (citas) {
+    await Cita.findAll().then(function (citas) {
         if (!citas) {
             res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {
@@ -64,7 +79,7 @@ async function consultarCitas(req, res) {
 async function consultarCita(req, res) {
     const idCita = req.params.id;
 
-    await Cita.find({ where: { id_cita: idCita } }).then(function (cita) {
+    await Cita.findOne({ where: { id_cita: idCita } }).then(function (cita) {
         if (!cita) {
             res.status(404).send({ message: 'No se ha podido encontrar la cita.' });
         } else {
@@ -123,9 +138,7 @@ async function anularCita(req, res) {
 
     await Cita.update({ activa: 'N' }, {
         where: {
-            microchip: params.microchip,
-            propietario: params.propietario,
-            fecha: params.fecha
+            id_cita: params.id_cita
         }
     }).then(function (citaCanceled) {
         if (!citaCanceled) {
@@ -147,13 +160,25 @@ async function eliminarCita(req, res) {
     const params = req.body;
 
     if (params.activa == 'N') {
-        await Cita.destroy({ where: {
-            fecha: params.fecha
-        } }).then(function (citaDeleted) {
+        await Cita.destroy({
+            where: {
+                id_cita: params.id_cita
+            }
+        }).then(async function (citaDeleted) {
             if (!citaDeleted) {
                 res.status(404).send({ message: 'No se ha podido eliminar la cita.' });
             } else {
-                res.status(200).send({ cita: citaDeleted });
+                await CitaDocumento.deleteOne({ _id: params.id_cita }, (err, docDel) => {
+                    if (err) {
+                        res.status(500).send({ message: 'Error al intentar eliminar la cita.' });
+                    } else {
+                        if (!docDel) {
+                            res.status(404).send({ message: 'No se ha eliminado la cita correctamente.' });
+                        } else {
+                            res.status(200).send({ cita: citaDeleted });
+                        }
+                    }
+                });
             }
         }).catch((err) => {
             res.status(500).send({ message: 'Error al eliminar la cita.' });
@@ -163,6 +188,27 @@ async function eliminarCita(req, res) {
     }
 }
 
+/**
+ * Método encargado de obtener el motivo de una cita mediante su id
+ * @param {*} req Consulta para obtener el motivo de una cita
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function obtenerMotivoCita(req, res) {
+    const idCita = req.params.id;
+
+    await CitaDocumento.findOne({ _id: idCita}, (err, doc) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al obtener el motivo de la cita.' });
+        } else {
+            if (!doc) {
+                res.status(404).send({ message: 'No se ha encontrado el motivo de la cita.' });
+            } else {
+                res.status(200).send({ doc });
+            }
+        }
+    });
+}
+
 module.exports = {
     nuevaCita,
     consultarCitas,
@@ -170,5 +216,6 @@ module.exports = {
     consultarCitasMascota,
     consultarCitasPropietario,
     anularCita,
-    eliminarCita
+    eliminarCita,
+    obtenerMotivoCita
 }

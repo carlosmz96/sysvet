@@ -1,3 +1,12 @@
+<p-confirmDialog #cd [style]="{width: '20em'}">
+  <ng-template pTemplate="footer">
+      <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
+      <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
+  </ng-template>
+</p-confirmDialog>
+
+<p-toast></p-toast>
+
 <app-navegacion></app-navegacion>
 
 <div class="container">
@@ -54,13 +63,26 @@
                                 class="p-button-text p-button-rounded p-button-plain"
                                 [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
-                        <td>{{cita.microchip}}</td>
-                        <td>{{cita.propietario}}</td>
+                        <td><a routerLink="datos-mascota/{{cita.microchip}}" title="Consultar mascota">{{cita.microchip}}</a></td>
+                        <td><a routerLink="usuario/{{cita.propietario}}" title="Consultar propietario">{{cita.propietario}}</a></td>
                         <td>{{cita.fechaStr}}</td>
-                        <td>{{cita.activa}}</td>
-                        <td>
-                            <i class="fas fa-lg fa-eye consultar" routerLink="/cita/{{cita.id_cita}}"
-                                style="display: block; text-align: center; cursor: pointer;"></i>
+                        <td *ngIf="cita.activa == 'S'">Si</td>
+                        <td *ngIf="cita.activa == 'N'">No</td>
+                        <td *ngIf="cita.activa == 'S'">
+                          <div class="espaciado-icono">
+                            <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}"
+                              title="Consultar cita" style="cursor: pointer;"></i>
+                            <i class="far fa-lg fa-calendar-times consultar" title="Anular cita" (click)="anularCita(cita)"
+                                style="cursor: pointer;"></i>
+                          </div>
+                        </td>
+                        <td *ngIf="cita.activa == 'N'">
+                          <div class="espaciado-icono">
+                            <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}"
+                              title="Consultar cita" style="cursor: pointer;"></i>
+                              <i class="fas fa-lg fa-trash-alt consultar" title="Eliminar cita" (click)="eliminarCita(cita)"
+                              style="cursor: pointer;"></i>
+                          </div>
                         </td>
                     </tr>
                 </ng-template>

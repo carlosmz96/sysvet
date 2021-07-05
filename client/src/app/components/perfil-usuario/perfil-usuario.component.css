@@ -147,7 +147,7 @@
     margin-top: 0.5em;
 }
 
-.card-mascota-vacia {
+.card-mascota-vacia, .card-cita-vacia {
     display: flex;
     padding: 1em;
     align-items: center;
@@ -221,4 +221,41 @@
 
 .consultar:hover {
     color: #72bd78;
+}
+
+.btn-nueva-cita {
+    text-align: right;
+    margin-bottom: 1em;
+}
+
+@media (min-width: 523px) {
+
+  .espaciado-icono {
+    text-align: center;
+  }
+
+  .izq {
+    margin-right: 1em;
+  }
+
+}
+
+@media (max-width: 522px) {
+
+  .izq {
+    margin-right: 0.3em;
+  }
+
+}
+
+@media (max-width: 460px) {
+
+  .espaciado-icono {
+    text-align: center;
+  }
+
+  .izq {
+    margin-right: 0em;
+  }
+
 }

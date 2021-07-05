@@ -1,132 +1,173 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background: rgb(243, 243, 243);
-    overflow-y: auto;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: rgb(243, 243, 243);
+  overflow-y: auto;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .page-item .page-link {
-    color: #72bd78;
+  color: #72bd78;
 }
 
 .page-item.disabled .page-link {
-    color: #6c757d;
+  color: #6c757d;
 }
 
 .page-item.active .page-link {
-    background-color: #72bd78;
-    border-color: #72bd78;
-    color: white;
+  background-color: #72bd78;
+  border-color: #72bd78;
+  color: white;
 }
 
 /* CABECERA DEL LOGIN */
 
 .title {
-    text-align: center;
-    color: white;
-    font-size: 40pt;
-    font-weight: bold;
-    margin-top: 7%;
+  text-align: center;
+  color: white;
+  font-size: 40pt;
+  font-weight: bold;
+  margin-top: 7%;
 }
 
 /* CUERPO DEL LOGIN */
 
 form {
-    padding: 0.5em;
+  padding: 0.5em;
 }
 
 .goBack>i {
-    float: left;
-    cursor: pointer;
+  float: left;
+  cursor: pointer;
 }
 
 /* ESTILOS TARJETAS (CARDS) */
 
 @media (min-width: 410px) {
-    .login {
-        width: 25em;
-    }
+  .login {
+    width: 25em;
+  }
 }
 
 @media (min-width: 810px) {
-    .registro {
-        width: 50em;
-    }
+  .registro {
+    width: 50em;
+  }
 }
 
 @media (min-width: 480px) {
-    .recordar-clave, .cambiar-clave {
-        width: 30em;
-    }
+  .recordar-clave, .cambiar-clave {
+    width: 30em;
+  }
 }
 
 @media (min-width: 992px) {
-    .modificar-usuario {
-        width: 50em;
-    }
-    .eliminar-usuario {
-        width: 50em;
-    }
-    .alta-mascota {
-        width: 60em;
-    }
-    .modificar-mascota {
-        width: 50em;
-    }
-    .eliminar-mascota {
-        width: 50em;
-    }
+  .modificar-usuario {
+    width: 50em;
+  }
+  .eliminar-usuario {
+    width: 50em;
+  }
+  .alta-mascota {
+    width: 60em;
+  }
+  .modificar-mascota {
+    width: 50em;
+  }
+  .eliminar-mascota {
+    width: 50em;
+  }
+  .nueva-cita {
+    width: 60em;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .container {
-        padding: 0;
-    }
-    .card {
-        padding: 0 !important;
-    }
+  .container {
+    padding: 0;
+  }
+  .card {
+    padding: 0 !important;
+  }
 }
 
 /* ESTILO DE LAS TABLAS */
 
 th {
-    background: #72bd78 !important;
-    color: white !important;
+  background: #72bd78 !important;
+  color: white !important;
 }
 
 .p-sortable-column-icon {
-    color: white !important
+  color: white !important
 }
 
 .p-datatable .p-datatable-thead>tr>th {
-    border: 1px solid #68af6e;
+  border: 1px solid #68af6e;
 }
 
 /* ESTILO PERFILES */
 
 .imagen-perfil-usuario {
-    width: 150px;
-    border-radius: 50%;
+  width: 150px;
+  border-radius: 50%;
 }
 
 .imagen-perfil-mascota {
-    width: 110px;
-    border-radius: 50%;
+  width: 110px;
+  border-radius: 50%;
 }
 
 /* ESTILO BOTONES */
+
 .btn-success {
-    background-color: #72bd78 !important;
-    border-color: inherit;
+  background-color: #72bd78 !important;
+  border-color: #63a868;
 }
 
 .btn-success:hover {
-    background-color: #63a868 !important;
-    border-color: inherit;
+  background-color: #63a868 !important;
+  border-color: #63a868;
+}
+
+.form-group .p-button {
+  background: #72bd78 !important;
+  border-color: #63a868;
+}
+
+/* ESTILO CALENDAR */
+
+@media (min-width: 770px) {
+  .p-datepicker table th {
+    padding-left: 1.5rem !important;
+  }
+}
+
+.p-datepicker table th {
+  padding-left: 1rem;
+}
+
+/* GENERALES */
+
+.display-none {
+  display: none;
+}
+
+a {
+  color: #5da863;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #509655;
+  text-decoration: none;
+}
+
+.title>a {
+  font-weight: bold;
 }

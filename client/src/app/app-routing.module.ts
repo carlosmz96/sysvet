@@ -1,3 +1,4 @@
+import { ConsultarCitaComponent } from './components/consultar-cita/consultar-cita.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CambiarClaveComponent } from './components/cambiar-clave/cambiar-clave.component';
@@ -16,6 +17,8 @@ import { DatosMascotaComponent } from './components/datos-mascota/datos-mascota.
 import { BajaMascotaComponent } from './components/baja-mascota/baja-mascota.component';
 import { AltaMascotaComponent } from './components/alta-mascota/alta-mascota.component';
 import { ListadoCitasComponent } from './components/listado-citas/listado-citas.component';
+import { NuevaCitaComponent } from './components/nueva-cita/nueva-cita.component';
+import { CitaSolicitadaComponent } from './components/cita-solicitada/cita-solicitada.component';
 
 const routes: Routes = [
   {
@@ -87,6 +90,21 @@ const routes: Routes = [
   {
     path: 'listado-citas',
     component: ListadoCitasComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'nueva-cita',
+    component: NuevaCitaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'cita-solicitada',
+    component: CitaSolicitadaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'cita/:id_cita',
+    component: ConsultarCitaComponent,
     canActivate: [AuthGuard]
   },
   {

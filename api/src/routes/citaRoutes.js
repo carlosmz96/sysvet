@@ -14,8 +14,9 @@ api.get('/citas', md_auth.ensureAuth, CitaController.consultarCitas);
 api.get('/citas/:id', md_auth.ensureAuth, CitaController.consultarCita);
 api.get('/citas-mascota/:microchip', md_auth.ensureAuth, CitaController.consultarCitasMascota);
 api.get('/citas-propietario/:dni', md_auth.ensureAuth, CitaController.consultarCitasPropietario);
-api.put('/anular-cita', md_auth.ensureAuth, CitaController.anularCita);
-api.delete('/eliminar-cita', md_auth.ensureAuth, CitaController.eliminarCita);
+api.put('/anular-cita/:id', md_auth.ensureAuth, CitaController.anularCita);
+api.delete('/eliminar-cita/:id', md_auth.ensureAuth, CitaController.eliminarCita);
+api.get('/obtener-motivo-cita/:id', md_auth.ensureAuth, CitaController.obtenerMotivoCita);
 
 // Se exporta la api de rutas de cita
 module.exports = api;

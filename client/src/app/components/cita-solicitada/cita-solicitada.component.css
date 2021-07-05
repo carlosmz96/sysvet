@@ -1,0 +1,15 @@
+.img-correcto {
+    width: 18em;
+}
+
+.datos-motivo {
+    padding: 1em;
+    background: rgb(240, 240, 240);
+    border-radius: 0.25rem;
+    border: none;
+    margin-top: 0.5em;
+}
+
+.motivo {
+    font-size: 15pt;
+}

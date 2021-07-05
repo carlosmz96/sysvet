@@ -11,8 +11,7 @@ const Servicio = sequelize.define('Servicio', {
     },
     codigo: {
         type: DataTypes.STRING(10),
-        primaryKey: true,
-        autoIncrementIdentity: true
+        primaryKey: true
     },
     nombre: {
         type: DataTypes.STRING(20),

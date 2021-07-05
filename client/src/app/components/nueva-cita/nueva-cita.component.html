@@ -1,0 +1,62 @@
+<p-toast></p-toast>
+
+<app-navegacion></app-navegacion>
+
+<div class="container">
+    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded nueva-cita">
+        <div class="card-body" style="text-align: justify;">
+            <form #newCitaForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-nueva-cita" ngNativeValidate>
+                <div style="margin-bottom: 0.5em;">
+                    <p>Por favor, rellena todos los campos obligatorios (*) para poder
+                        solicitar una nueva cita.</p>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label for="mascota" class="col-sm-4 col-form-label"><strong>* Mascota</strong></label>
+                        <p-dropdown [options]="mascotas" [(ngModel)]="mascota" optionLabel="nombre" [filter]="true"
+                            filterBy="nombre" [showClear]="true" placeholder="Selecciona una mascota" id="mascota"
+                            name="mascota" autoWidth="false" [style]="{'width': '100%'}"
+                            class="select-mascota col-sm-8 ml-0 mr-0">
+                            <ng-template pTemplate="selectedItem">
+                                <div *ngIf="mascota.microchip != ''">
+                                    <div>{{mascota.microchip + ' - ' + mascota.nombre}}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-mascota pTemplate="item">
+                                <div>{{mascota.microchip + ' - ' + mascota.nombre}}</div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div class="row" style="width: 100% !important;">
+                    <div class="form-group">
+                        <label for="fecha" class="col-form-label col-sm-auto"><strong>* Fecha</strong></label>
+                        <p-calendar [(ngModel)]="fecha" class="col-sm-auto mr-5" name="fecha"
+                            [disabledDates]="invalidDates" [disabledDays]="[0,6]" [readonlyInput]="true"
+                            placeholder="Elige el día" [showIcon]="true" inputId="disabledays" dateFormat="dd/mm/yy"
+                            [firstDayOfWeek]="1" (ngModelChange)="filtrarHoras()"></p-calendar>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hora" class="col-form-label col-sm-auto mr-2"><strong>* Hora</strong></label>
+                        <p-dropdown [options]="horas" class="col-sm-auto" name="hora" placeholder="Elige la hora"
+                            [(ngModel)]="horaSeleccionada" optionLabel="label" optionValue="value"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="motivo"><strong>* Motivo</strong></label>
+                    <textarea class="form-control" id="motivo" rows="3" #motivo="ngModel" name="motivo"
+                        [(ngModel)]="cita.motivo" placeholder="Escribe el motivo de la cita"></textarea>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-block">Solicitar cita</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

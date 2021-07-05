@@ -1,0 +1,18 @@
+<app-navegacion></app-navegacion>
+
+<div class="container">
+    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded nueva-cita">
+        <div class="card-body" style="text-align: justify;">
+            <div *ngIf="message != 'default message'">
+                <div style="text-align: center;">
+                    <img class="img-correcto" src="../../../assets/images/correcto.png" alt="Imagen de indicación de éxito">
+                    <p>Hola {{ usuario.nombre }}, has solicitado cita para {{ mascota.nombre }} el día {{ datos.fecha }} con éxito.</p>
+                    <div class="datos-motivo justify-content-center">
+                        <div class="motivo"><strong>MOTIVO</strong></div>
+                        <span>{{ datos.motivo }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
