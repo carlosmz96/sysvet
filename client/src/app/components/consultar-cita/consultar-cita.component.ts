@@ -40,11 +40,7 @@ export class ConsultarCitaComponent implements OnInit {
     this.obtenerCita(this.idCita);
   }
 
-  ngOnInit(): void {
-    if (this.identity.rol != 'administrador' && this.identity.rol != 'veterinario' && this.identity.dni != this.cita.propietario) {
-      this.router.navigate(['acceso-denegado']);
-    }
-  }
+  ngOnInit(): void { }
 
   /**
    * Método encargado de obtener la cita mediante su id
@@ -60,6 +56,7 @@ export class ConsultarCitaComponent implements OnInit {
             this.cita.motivo = response.doc.motivo;
             this.obtenerPropietario(this.cita.propietario);
             this.obtenerMascota(this.cita.microchip);
+            this.compruebaUsuario();
           },
           error => {
             this.addErrorMessage(error.error.message);
@@ -123,6 +120,16 @@ export class ConsultarCitaComponent implements OnInit {
    */
   public goBack(): void {
     this.location.back();
+  }
+
+  /**
+   * Método encargado de comprobar el usuario
+   * Si el usuario no es el adecuado, le mandará a acceso denegado
+   */
+  public compruebaUsuario(): void {
+    if (this.identity.rol != 'administrador' && this.identity.rol != 'veterinario' && this.identity.dni != this.cita.propietario) {
+      this.router.navigate(['acceso-denegado']);
+    }
   }
 
   /**

@@ -36,13 +36,13 @@
                     </tr>
                     <tr>
                         <th class="acordeon" style="display: none;"></th>
-                        <th pSortableColumn="dni">Dni <p-sortIcon field="dni"></p-sortIcon>
+                        <th pSortableColumn="dni" title="Ordenar por dni">Dni <p-sortIcon field="dni"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+                        <th pSortableColumn="nombre" title="Ordenar por nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="apellidos">Apellidos <p-sortIcon field="apellidos"></p-sortIcon>
+                        <th pSortableColumn="apellidos" title="Ordenar por apellidos">Apellidos <p-sortIcon field="apellidos"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="rol">Rol <p-sortIcon field="rol"></p-sortIcon>
+                        <th pSortableColumn="rol" title="Ordenar por rol">Rol <p-sortIcon field="rol"></p-sortIcon>
                         </th>
                         <th>Acción</th>
                     </tr>
@@ -72,8 +72,8 @@
                     </tr>
                     <tr class="rowsmall">
                         <td colspan="3">
+                            <p class="coldni"><strong>Dni: </strong>{{usuario.dni}}</p>
                             <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
-                            <p class="colapellidos"><strong>Apellidos: </strong>{{usuario.apellidos}}</p>
                             <p class="colrol"><strong>Rol: </strong>{{usuario.rol}}</p>
                         </td>
                     </tr>

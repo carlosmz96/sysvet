@@ -19,9 +19,9 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class NuevaCitaComponent implements OnInit, OnDestroy {
   public identity: any;
-  public token: any;
   public cita: Cita;
-  public usuario: Usuario;
+  public usuarios: Usuario[] = [];
+  public usuario: any;
   public mascotas: Mascota[] = [];
   public mascota: any;
   public dniUsuario: string = '';
@@ -32,6 +32,8 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
   public invalidDates: Array<Date> = [];
   public horas: SelectItem[] = [];
   public horaSeleccionada: string = '';
+  public calActivo: boolean = false;
+  public dropActivo: boolean = false;
 
   public message: string = '';
   public subscription: Subscription = new Subscription();
@@ -49,9 +51,12 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
     this.identity = this.usuarioService.getIdentity();
 
     this.cita = new Cita('', '', '', new Date(), '', '', '');
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
 
-    this.obtenerUsuario();
+    if (this.identity.rol != 'veterinario') {
+      this.obtenerUsuario();
+    } else {
+      this.obtenerPropietarios();
+    }
     this.obtenerCitas();
   }
 
@@ -66,12 +71,15 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
     this.generarHoras();
   }
 
+  /**
+   * Método on destroy que permite desuscribirse del servicio de mensajería
+   */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   /**
-   * Método submit
+   * Método encargado de solicitar la cita
    */
   public onSubmit(): void {
     if (this.validarCampos() == 0) {
@@ -86,9 +94,9 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       this.citaService.nuevaCita(this.cita).subscribe(
         response => {
           const datos: any = {
-            dni : this.dniUsuario,
-            microchip : this.mascota.microchip,
-            fecha : this.cita.fecha,
+            dni: this.dniUsuario,
+            microchip: this.mascota.microchip,
+            fecha: this.cita.fecha,
             motivo: this.cita.motivo
           }
           this.dataService.changeMessage(JSON.stringify(datos));
@@ -105,7 +113,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
    * Método encargado de obtener el usuario
    */
   public obtenerUsuario(): void {
-    if (this.identity) {
+    if (this.identity && this.identity.rol != 'veterinario') {
       this.usuarioService.consultarUsuario(this.identity.dni).subscribe(
         response => {
           if (!response) {
@@ -121,6 +129,29 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  /**
+   * Método encargado de obtener todos los usuarios propietarios del sistema
+   */
+  public obtenerPropietarios(): void {
+    this.usuarioService.listarUsuarios().subscribe(
+      response => {
+        this.usuarios = response.users as Usuario[];
+        this.usuarios = this.usuarios.filter(u => u.rol == 'cliente');
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    )
+  }
+
+  /**
+   * Método encargado de asignar el dni de usuario
+   */
+  public obtenerMascotas(): void {
+    this.dniUsuario = this.usuario.dni;
+    this.obtenerMascotasDelUsuario();
   }
 
   /**
@@ -165,17 +196,51 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
 
   /**
    * Método encargado de filtrar las horas que estén disponibles
+   * 1) si la fecha elegida es del mismo día o anterior, pinta un error
+   * 2) si la mascota ya tiene cita en la fecha elegida, pinta un error
+   * 3) si no, filtra el número de horas disponibles
    */
   public filtrarHoras(): void {
+    if (new Date(this.fecha) < new Date()) {
+      this.addErrorMessage('Debe elegir una fecha futura');
+      this.dropActivo = false;
+    } else {
+      if (this.mascota) {
+        if (!this.tieneCitaEnFecha()) {
+          this.citas.forEach(cita => {
+            if (this.fecha.toString().substring(0, 15) == new Date(cita.fecha).toString().substring(0, 15) && cita.activa == 'S') {
+              const fecha = new Date(cita.fecha);
+              const hora = fecha.getHours().toString().length < 2 ? '0' + fecha.getHours().toString() : fecha.getHours();
+              const minutos = fecha.getMinutes().toString().length < 2 ? '0' + fecha.getMinutes().toString() : fecha.getMinutes();
+              const horaTotal = hora + ':' + minutos;
+              this.horas = this.horas.filter(hora => hora.value != horaTotal);
+            }
+          });
+          this.dropActivo = true;
+        } else {
+          this.addErrorMessage('La mascota ya tiene una cita para la fecha seleccionada.');
+        }
+      }
+    }
+  }
+
+  /**
+   * Método encargado de comprobar si la mascota ya tiene cita en la fecha seleccionada
+   * @returns TRUE/FALSE
+   */
+  public tieneCitaEnFecha(): boolean {
+    let tiene = false;
+
     this.citas.forEach(cita => {
-      if (this.fecha.toString().substring(0,15) == new Date(cita.fecha).toString().substring(0,15)) {
-        const fecha = new Date(cita.fecha);
-        const hora = fecha.getHours().toString().length < 2 ? '0' + fecha.getHours().toString() : fecha.getHours();
-        const minutos = fecha.getMinutes().toString().length < 2 ? '0' + fecha.getMinutes().toString() : fecha.getMinutes();
-        const horaTotal = hora + ':' + minutos;
-        this.horas = this.horas.filter(hora => hora.value != horaTotal);
+      const fecha = new Date(cita.fecha);
+      const fecha1 = fecha.getDate() + '/' + fecha.getMonth() + '/' + fecha.getFullYear();
+      const fecha2 = this.fecha.getDate() + '/' + this.fecha.getMonth() + '/' + this.fecha.getFullYear();
+      if (fecha1 == fecha2 && cita.microchip == this.mascota.microchip && cita.activa == 'S') {
+        tiene = true;
       }
     });
+
+    return tiene;
   }
 
   /**
@@ -288,6 +353,14 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
     }
 
     return cont;
+  }
+
+  /**
+   * Método encargado de habilitar el calendario
+   */
+  public habilitarCalendario(): void {
+    this.calActivo = true;
+    console.log('cambiado')
   }
 
   /**

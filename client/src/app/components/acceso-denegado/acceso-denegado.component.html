@@ -1,13 +1,17 @@
 <div>
-    <h1 class="title">
-        <a (click)="goLogin()" style="color: white; cursor: pointer;">{{title}}</a>
-    </h1>
+  <h1 class="title">
+    <a (click)="goLogin()" style="color: white; cursor: pointer;">{{title}}</a>
+  </h1>
 </div>
 
 <div class="card mx-auto shadow p-3 mb-5 bg-white rounded recordar-clave" style="margin-top: 3%;">
-    <div class="card-body">
-        <div class="d-flex justify-content-center">
-            <span>No tienes los privilegios suficientes para acceder.</span>
-        </div>
+  <div class="card-body">
+    <div class="d-flex justify-content-center">
+      <span>No tienes los privilegios suficientes para acceder.</span>
     </div>
+    <hr>
+    <div class="d-flex justify-content-center">
+      <button type="button" class="btn btn-success" (click)="goLogin()">Volver a la página principal</button>
+    </div>
+  </div>
 </div>

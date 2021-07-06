@@ -1,7 +1,7 @@
 <p-confirmDialog #cd [style]="{width: '20em'}">
   <ng-template pTemplate="footer">
-      <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
-      <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
+    <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
+    <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
   </ng-template>
 </p-confirmDialog>
 
@@ -10,98 +10,104 @@
 <app-navegacion></app-navegacion>
 
 <div class="container">
-    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body" style="text-align: justify;">
-            <p-table #dtcitas [value]="citas" dataKey="id_cita" styleClass="p-datatable-gridlines" [paginator]="true"
-                stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-                [rowsPerPageOptions]="[10,25,50]">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th class="acordeon" style="width: 4.4rem; display: none;"></th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtcitas.filter(getValueInput($event.target), 'microchip', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtcitas.filter(getValueInput($event.target), 'propietario', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtcitas.filter(getValueInput($event.target), 'fechaStr', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtcitas.filter(getValueInput($event.target), 'activa', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body" style="text-align: justify;">
+      <p-table #dtcitas [value]="citas" dataKey="id_cita" styleClass="p-datatable-gridlines" [paginator]="true"
+        stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+        [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="acordeon" style="width: 4.4rem; display: none;"></th>
+            <th>
+              <input pInputText type="text"
+                (input)="dtcitas.filter(getValueInput($event.target), 'microchip', 'contains')" placeholder="Buscar..."
+                class="p-column-filter">
+            </th>
+            <th>
+              <input pInputText type="text"
+                (input)="dtcitas.filter(getValueInput($event.target), 'propietario', 'contains')"
+                placeholder="Buscar..." class="p-column-filter">
+            </th>
+            <th>
+              <input pInputText type="text"
+                (input)="dtcitas.filter(getValueInput($event.target), 'fechaStr', 'contains')" placeholder="Buscar..."
+                class="p-column-filter">
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dtcitas.filter(getValueInput($event.target), 'activa', 'contains')"
+                placeholder="Buscar..." class="p-column-filter">
+            </th>
+            <th>
 
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="acordeon" style="display: none;"></th>
-                        <th pSortableColumn="microchip">Mascota <p-sortIcon field="microchip"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="propietario">Propietario <p-sortIcon field="propietario"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="fechaStr">Fecha <p-sortIcon field="fechaStr"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="activa">Activa <p-sortIcon field="activa"></p-sortIcon>
-                        </th>
-                        <th>Acción</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-cita let-expanded="expanded">
-                    <tr>
-                        <td class="acordeon" style="display: none;">
-                            <button type="button" pButton pRipple [pRowToggler]="cita"
-                                class="p-button-text p-button-rounded p-button-plain"
-                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                        </td>
-                        <td><a routerLink="datos-mascota/{{cita.microchip}}" title="Consultar mascota">{{cita.microchip}}</a></td>
-                        <td><a routerLink="usuario/{{cita.propietario}}" title="Consultar propietario">{{cita.propietario}}</a></td>
-                        <td>{{cita.fechaStr}}</td>
-                        <td *ngIf="cita.activa == 'S'">Si</td>
-                        <td *ngIf="cita.activa == 'N'">No</td>
-                        <td *ngIf="cita.activa == 'S'">
-                          <div class="espaciado-icono">
-                            <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}"
-                              title="Consultar cita" style="cursor: pointer;"></i>
-                            <i class="far fa-lg fa-calendar-times consultar" title="Anular cita" (click)="anularCita(cita)"
-                                style="cursor: pointer;"></i>
-                          </div>
-                        </td>
-                        <td *ngIf="cita.activa == 'N'">
-                          <div class="espaciado-icono">
-                            <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}"
-                              title="Consultar cita" style="cursor: pointer;"></i>
-                              <i class="fas fa-lg fa-trash-alt consultar" title="Eliminar cita" (click)="eliminarCita(cita)"
-                              style="cursor: pointer;"></i>
-                          </div>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="rowexpansion" let-cita>
-                    <tr class="rowmedia">
-                        <td colspan="5">
-                            <p class="colmascota"><strong>Mascota: </strong>{{cita.microchip}}</p>
-                        </td>
-                    </tr>
-                    <tr class="rowsmall">
-                        <td colspan="3">
-                            <p class="colmascota"><strong>Mascota: </strong>{{cita.microchip}}</p>
-                            <p class="colpropietario"><strong>Propietario: </strong>{{cita.propietario}}</p>
-                            <p class="colfecha"><strong>Fecha: </strong>{{cita.fechaStr}}</p>
-                            <p class="colactiva"><strong>Activa: </strong>{{cita.activa}}</p>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+            </th>
+          </tr>
+          <tr>
+            <th class="acordeon" style="display: none;"></th>
+            <th pSortableColumn="microchip" title="Ordenar por microchip">Mascota <p-sortIcon field="microchip">
+              </p-sortIcon>
+            </th>
+            <th pSortableColumn="propietario" title="Ordenar por dni">Propietario <p-sortIcon field="propietario">
+              </p-sortIcon>
+            </th>
+            <th pSortableColumn="fechaStr" title="Ordenar por fecha">Fecha <p-sortIcon field="fechaStr"></p-sortIcon>
+            </th>
+            <th pSortableColumn="activa" title="Ordenar por estado (activo)">Activa <p-sortIcon field="activa">
+              </p-sortIcon>
+            </th>
+            <th>Acción</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cita let-expanded="expanded">
+          <tr>
+            <td class="acordeon" style="display: none;">
+              <button type="button" pButton pRipple [pRowToggler]="cita"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td><a routerLink="/datos-mascota/{{cita.microchip}}" title="Consultar mascota">{{cita.microchip}}</a></td>
+            <td><a routerLink="/usuario/{{cita.propietario}}" title="Consultar propietario">{{cita.propietario}}</a>
+            </td>
+            <td>{{cita.fechaStr}}</td>
+            <td *ngIf="cita.activa == 'S'">Si</td>
+            <td *ngIf="cita.activa == 'N'">No</td>
+            <td *ngIf="cita.activa == 'S'">
+              <div class="espaciado-icono">
+                <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}" title="Consultar cita"
+                  style="cursor: pointer;"></i>
+                <i class="far fa-lg fa-calendar-times consultar" title="Anular cita" (click)="anularCita(cita)"
+                  style="cursor: pointer;"></i>
+              </div>
+            </td>
+            <td *ngIf="cita.activa == 'N'">
+              <div class="espaciado-icono">
+                <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}" title="Consultar cita"
+                  style="cursor: pointer;"></i>
+                <i class="fas fa-lg fa-trash-alt consultar" title="Eliminar cita" (click)="eliminarCita(cita)"
+                  style="cursor: pointer;"></i>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-cita>
+          <tr class="rowmedia">
+            <td colspan="5">
+              <p class="colmascota"><strong>Mascota: </strong>{{cita.microchip}}</p>
+            </td>
+          </tr>
+          <tr class="rowsmall">
+            <td colspan="3">
+              <p class="colmascota"><strong>Mascota: </strong><a routerLink="/datos-mascota/{{cita.microchip}}"
+                  title="Consultar mascota">{{cita.microchip}}</a></p>
+              <p class="colpropietario"><strong>Propietario: </strong><a routerLink="/usuario/{{cita.propietario}}"
+                  title="Consultar propietario">{{cita.propietario}}</a></p>
+              <p class="colfecha"><strong>Fecha: </strong>{{cita.fechaStr}}</p>
+              <p class="colactiva" *ngIf="cita.activa == 'S'"><strong>Activa: </strong>Si</p>
+              <p class="colactiva" *ngIf="cita.activa == 'N'"><strong>Activa: </strong>No</p>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
+  </div>
 </div>

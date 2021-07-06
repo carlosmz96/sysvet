@@ -1,0 +1,8 @@
+.botonera {
+  float: right;
+  padding: 1.3em 0em 0.5em 0em;
+}
+
+.botonera .btn {
+  margin-left: 0.5em;
+}
