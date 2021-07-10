@@ -9,7 +9,9 @@ export class Usuario {
         public rol: string,
         public telefono: string,
         public direccion: string,
-        public foto: string
+        public foto: string,
+        public roles: string,
+        public activo: string
     ) { }
 
 }

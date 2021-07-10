@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -77,7 +78,8 @@ import { ConsultarCitaComponent } from './components/consultar-cita/consultar-ci
     EditorModule,
     ToastModule,
     ConfirmDialogModule,
-    CalendarModule
+    CalendarModule,
+    DialogModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

@@ -12,7 +12,7 @@ const api = express.Router();
 api.post('/nueva-cita', md_auth.ensureAuth, CitaController.nuevaCita);
 api.get('/citas', md_auth.ensureAuth, CitaController.consultarCitas);
 api.get('/citas/:id', md_auth.ensureAuth, CitaController.consultarCita);
-api.get('/citas-mascota/:microchip', md_auth.ensureAuth, CitaController.consultarCitasMascota);
+api.get('/citas-mascota/:idMascota', md_auth.ensureAuth, CitaController.consultarCitasMascota);
 api.get('/citas-propietario/:dni', md_auth.ensureAuth, CitaController.consultarCitasPropietario);
 api.put('/anular-cita/:id', md_auth.ensureAuth, CitaController.anularCita);
 api.delete('/eliminar-cita/:id', md_auth.ensureAuth, CitaController.eliminarCita);

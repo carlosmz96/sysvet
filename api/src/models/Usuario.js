@@ -42,6 +42,14 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    roles: {
+        type: DataTypes.STRING(40),
+        allowNull: false
+    },
+    activo: {
+        type: DataTypes.STRING(1),
+        allowNull: false
+    },
     fecha_modificacion: {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

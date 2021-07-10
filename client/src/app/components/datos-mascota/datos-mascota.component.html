@@ -21,10 +21,10 @@
             <input type="text" #nombre="ngModel" name="nombre" id="nombre" [(ngModel)]="mascota.nombre"
               class="form-control" placeholder="Nombre de la mascota" maxlength="25" required>
           </div>
-          <label for="microchip" class="col-sm-2 col-form-label"><strong>Microchip</strong></label>
+          <label for="identificador" class="col-sm-2 col-form-label"><strong>Identificador</strong></label>
           <div class="col-sm-4">
-            <input type="text" #microchip="ngModel" name="microchip" id="microchip" [(ngModel)]="mascota.microchip"
-              class="form-control" maxlength="10" placeholder="Microchip de la mascota" disabled required>
+            <input type="text" #identificador="ngModel" name="identificador" id="identificador" [(ngModel)]="mascota.identificador"
+              class="form-control" maxlength="10" placeholder="Identificador de la mascota" disabled required>
           </div>
         </div>
         <div class="form-group row">
@@ -154,7 +154,7 @@
         <div class="btn-submit">
           <button type="button" class="btn btn-danger" (click)="goBack()"><i class="fas fa-arrow-circle-left"
               style="margin-right: 0.1em;"></i> Volver</button>
-          <button type="button" class="btn btn-danger" routerLink="/baja-mascota/{{mascota.microchip}}"><i
+          <button type="button" class="btn btn-danger" routerLink="/baja-mascota/{{mascota.identificador}}"><i
               class="fas fa-trash-alt" style="margin-right: 0.1em;"></i> Dar de
             baja</button>
           <button type="submit" class="btn btn-success success"><i class="fas fa-check-circle"
@@ -177,10 +177,10 @@
             <input type="text" #nombre="ngModel" name="nombre" id="nombre" [(ngModel)]="mascota.nombre"
               class="form-control" placeholder="Nombre de la mascota" disabled required>
           </div>
-          <label for="microchip" class="col-sm-2 col-form-label"><strong>Microchip</strong></label>
+          <label for="identificador" class="col-sm-2 col-form-label"><strong>Identificador</strong></label>
           <div class="col-sm-4">
-            <input type="text" #microchip="ngModel" name="microchip" id="microchip" [(ngModel)]="mascota.microchip"
-              class="form-control" placeholder="Microchip de la mascota" disabled required>
+            <input type="text" #identificador="ngModel" name="identificador" id="identificador" [(ngModel)]="mascota.identificador"
+              class="form-control" placeholder="Identificador de la mascota" disabled required>
           </div>
         </div>
         <div class="form-group row">

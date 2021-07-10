@@ -87,7 +87,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       this.fechaCompleta = new Date(fechaStr);
 
       // asignación de datos a la cita
-      this.cita.microchip = this.mascota.microchip;
+      this.cita.mascota = this.mascota.identificador;
       this.cita.propietario = this.dniUsuario;
       this.cita.fecha = this.fechaCompleta;
 
@@ -95,7 +95,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
         response => {
           const datos: any = {
             dni: this.dniUsuario,
-            microchip: this.mascota.microchip,
+            idMascota: this.mascota.identificador,
             fecha: this.cita.fecha,
             motivo: this.cita.motivo
           }
@@ -235,7 +235,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       const fecha = new Date(cita.fecha);
       const fecha1 = fecha.getDate() + '/' + fecha.getMonth() + '/' + fecha.getFullYear();
       const fecha2 = this.fecha.getDate() + '/' + this.fecha.getMonth() + '/' + this.fecha.getFullYear();
-      if (fecha1 == fecha2 && cita.microchip == this.mascota.microchip && cita.activa == 'S') {
+      if (fecha1 == fecha2 && cita.mascota == this.mascota.identificador && cita.activa == 'S') {
         tiene = true;
       }
     });

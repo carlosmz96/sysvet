@@ -10,7 +10,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./baja-mascota.component.css']
 })
 export class BajaMascotaComponent implements OnInit {
-  public microchip: string = "";
+  public identificador: string = "";
   public identity: any;
 
   constructor(
@@ -25,11 +25,11 @@ export class BajaMascotaComponent implements OnInit {
 
   /**
    * Método que se ejecuta al visualizar el componente
-   * Obtiene el microchip de la mascota (si no hay ninguno, redirecciona a la página principal)
+   * Obtiene el identificador de la mascota (si no hay ninguno, redirecciona a la página principal)
    */
   ngOnInit(): void {
-    this.microchip = this.route.snapshot.paramMap.get('microchip')!;
-    if (this.microchip == "") {
+    this.identificador = this.route.snapshot.paramMap.get('idMascota')!;
+    if (this.identificador == "") {
       this.router.navigate(['index']);
     }
     if (this.identity.rol != "veterinario" && this.identity.rol != "administrador") {
@@ -42,7 +42,7 @@ export class BajaMascotaComponent implements OnInit {
    * Tras eliminar a la mascota, redirecciona al listado de mascotas
    */
   public darDeBaja(): void {
-    this.mascotaService.bajaMascota(this.microchip).subscribe(
+    this.mascotaService.bajaMascota(this.identificador).subscribe(
       response => {
         this.router.navigate(['listado-mascotas']);
       },

@@ -31,7 +31,7 @@ export class ModificarUsuarioComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', 'default-image.png');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', 'default-image.png', '', '');
     this.token = this.usuarioService.getToken();
     this.url = GLOBAL.url;
   }
@@ -142,7 +142,8 @@ export class ModificarUsuarioComponent implements OnInit {
           } else {
             this.usuario = response.user;
             this.usuario.pass = "";
-            
+            this.sinErrores = true;
+
             if (this.sinErrores) {
               this.addSuccessMessage('Se han actualizado los datos con éxito.');
             }

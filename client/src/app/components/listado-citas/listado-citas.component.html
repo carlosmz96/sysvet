@@ -21,7 +21,7 @@
             <th class="acordeon" style="width: 4.4rem; display: none;"></th>
             <th>
               <input pInputText type="text"
-                (input)="dtcitas.filter(getValueInput($event.target), 'microchip', 'contains')" placeholder="Buscar..."
+                (input)="dtcitas.filter(getValueInput($event.target), 'mascota', 'contains')" placeholder="Buscar..."
                 class="p-column-filter">
             </th>
             <th>
@@ -44,7 +44,7 @@
           </tr>
           <tr>
             <th class="acordeon" style="display: none;"></th>
-            <th pSortableColumn="microchip" title="Ordenar por microchip">Mascota <p-sortIcon field="microchip">
+            <th pSortableColumn="mascota" title="Ordenar por identificador">Mascota <p-sortIcon field="mascota">
               </p-sortIcon>
             </th>
             <th pSortableColumn="propietario" title="Ordenar por dni">Propietario <p-sortIcon field="propietario">
@@ -65,7 +65,7 @@
                 class="p-button-text p-button-rounded p-button-plain"
                 [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
-            <td><a routerLink="/datos-mascota/{{cita.microchip}}" title="Consultar mascota">{{cita.microchip}}</a></td>
+            <td><a routerLink="/datos-mascota/{{cita.mascota}}" title="Consultar mascota">{{cita.mascota}}</a></td>
             <td><a routerLink="/usuario/{{cita.propietario}}" title="Consultar propietario">{{cita.propietario}}</a>
             </td>
             <td>{{cita.fechaStr}}</td>
@@ -92,13 +92,13 @@
         <ng-template pTemplate="rowexpansion" let-cita>
           <tr class="rowmedia">
             <td colspan="5">
-              <p class="colmascota"><strong>Mascota: </strong>{{cita.microchip}}</p>
+              <p class="colmascota"><strong>Mascota: </strong>{{cita.mascota}}</p>
             </td>
           </tr>
           <tr class="rowsmall">
             <td colspan="3">
-              <p class="colmascota"><strong>Mascota: </strong><a routerLink="/datos-mascota/{{cita.microchip}}"
-                  title="Consultar mascota">{{cita.microchip}}</a></p>
+              <p class="colmascota"><strong>Mascota: </strong><a routerLink="/datos-mascota/{{cita.mascota}}"
+                  title="Consultar mascota">{{cita.mascota}}</a></p>
               <p class="colpropietario"><strong>Propietario: </strong><a routerLink="/usuario/{{cita.propietario}}"
                   title="Consultar propietario">{{cita.propietario}}</a></p>
               <p class="colfecha"><strong>Fecha: </strong>{{cita.fechaStr}}</p>

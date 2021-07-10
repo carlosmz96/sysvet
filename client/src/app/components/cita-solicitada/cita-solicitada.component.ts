@@ -28,7 +28,7 @@ export class CitaSolicitadaComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private router: Router
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '');
     this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', '', '', '', '', '');
   }
 
@@ -47,7 +47,7 @@ export class CitaSolicitadaComponent implements OnInit, OnDestroy {
         }
       );
 
-      this.mascotaService.consultarMascota(this.datos.microchip).subscribe(
+      this.mascotaService.consultarMascota(this.datos.idMascota).subscribe(
         response => {
           this.mascota = response.pet;
         },

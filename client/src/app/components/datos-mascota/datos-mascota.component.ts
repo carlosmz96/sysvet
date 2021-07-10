@@ -19,7 +19,7 @@ export class DatosMascotaComponent implements OnInit {
   public mascotaDocumental: any;
   public token: any; // token del usuario
   public identity: any; // identidad logueada
-  public microchipMascota: string = "";
+  public idMascota: string = "";
   public url: string; // url raíz de la api
   public usuarios: Usuario[] = [];
   public propietarios: Usuario[] = [];
@@ -55,17 +55,17 @@ export class DatosMascotaComponent implements OnInit {
 
   /**
    * Método que se ejecuta al visualizar el componente
-   * 1) Obtiene el microchip de la mascota (si no hay ninguno, redirecciona a la página principal)
+   * 1) Obtiene el identificador de la mascota (si no hay ninguno, redirecciona a la página principal)
    * 2) Consulta la mascota
    * 3) Si tiene propietario y veterinario, los consulta
    */
   ngOnInit(): void {
-    this.microchipMascota = this.route.snapshot.paramMap.get("microchip")!;
-    if (this.microchipMascota == "") {
+    this.idMascota = this.route.snapshot.paramMap.get("idMascota")!;
+    if (this.idMascota == "") {
       this.router.navigate(['index']);
     } else {
       // consulta datos mascota
-      this.mascotaService.consultarMascota(this.microchipMascota).subscribe(
+      this.mascotaService.consultarMascota(this.idMascota).subscribe(
         response => {
           this.mascota = response.pet;
           // si tiene asignado un propietario, lo obtiene
@@ -97,7 +97,7 @@ export class DatosMascotaComponent implements OnInit {
       );
 
       // consulta observaciones mascota
-      this.mascotaService.obtenerObservacionesMascota(this.microchipMascota).subscribe(
+      this.mascotaService.obtenerObservacionesMascota(this.idMascota).subscribe(
         response => {
           if (response.pet != null) {
             this.mascotaDocumental = response.pet;
@@ -116,7 +116,7 @@ export class DatosMascotaComponent implements OnInit {
   public onSubmit(): void {
     // si se ha elegido una foto, se guarda
     if (this.nuevaFoto) {
-      this.subirFotoPerfil(this.url + 'subir-foto-mascota/' + this.mascota.microchip, [], this.foto).then(
+      this.subirFotoPerfil(this.url + 'subir-foto-mascota/' + this.mascota.identificador, [], this.foto).then(
         (result: any) => {
           this.mascota.imagen = result.image;
           this.fotoCambiada = true;
@@ -173,7 +173,7 @@ export class DatosMascotaComponent implements OnInit {
       }
     );
 
-    this.mascotaDocumental.microchip = this.mascota.microchip;
+    this.mascotaDocumental.identificador = this.mascota.identificador;
 
     // se actualizan los datos documentales de la mascota
     this.mascotaService.modificarObservacionesMascota(this.mascotaDocumental).subscribe(
@@ -242,7 +242,7 @@ export class DatosMascotaComponent implements OnInit {
     this.confirmationService.confirm({
       message: '¿Estás seguro de querer eliminar la foto de perfil?',
       accept: () => {
-        this.mascotaService.eliminarFotoMascota(this.microchipMascota).subscribe(
+        this.mascotaService.eliminarFotoMascota(this.idMascota).subscribe(
           response => {
             this.mascota = response.pet;
             this.mascota.imagen = "default-image.png";

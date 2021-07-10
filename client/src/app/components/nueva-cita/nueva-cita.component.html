@@ -38,12 +38,12 @@
               autoWidth="false" [style]="{'width': '100%'}" class="select-mascota col-sm-8 ml-0 mr-0"
               (ngModelChange)="habilitarCalendario()">
               <ng-template pTemplate="selectedItem">
-                <div *ngIf="mascota.microchip != ''">
-                  <div>{{mascota.microchip + ' - ' + mascota.nombre}}</div>
+                <div *ngIf="mascota.identificador != ''">
+                  <div>{{mascota.identificador + ' - ' + mascota.nombre}}</div>
                 </div>
               </ng-template>
               <ng-template let-mascota pTemplate="item">
-                <div>{{mascota.microchip + ' - ' + mascota.nombre}}</div>
+                <div>{{mascota.identificador + ' - ' + mascota.nombre}}</div>
               </ng-template>
             </p-dropdown>
           </div>

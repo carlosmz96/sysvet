@@ -55,7 +55,7 @@ describe('Alta de usuario (POST -- /registro) y Baja de usuario (DELETE -- /baja
                     done();
                 } else {
                     request(app)
-                        .delete('/api/baja-usuario/'+ `${user.dni}`)
+                        .delete('/api/baja-usuario/' + `${user.dni}`)
                         .set('Accept', 'application/json')
                         .set({ Authorization: `${token}` })
                         .expect('Content-Type', /json/)
@@ -74,11 +74,11 @@ describe('Alta de usuario (POST -- /registro) y Baja de usuario (DELETE -- /baja
 
     it('devolver un json que contenga el usuario registrado', done => {
         request(app)
-        .post('/api/registro')
-        .set('Accept', 'application/json')
-        .send(user)
-        .expect('Content-Type', /json/)
-        .expect(200, done)
+            .post('/api/registro')
+            .set('Accept', 'application/json')
+            .send(user)
+            .expect('Content-Type', /json/)
+            .expect(200, done)
     });
 
 })
@@ -87,7 +87,7 @@ describe('Alta de usuario (POST -- /registro) y Baja de usuario (DELETE -- /baja
  * Inicia sesión con los parámetros dni y contraseña
  */
 describe('Inicio de sesión (POST -- /login)', () => {
-    
+
     it('devolver un json que contenga el token de autenticación', done => {
         request(app)
             .post('/api/login')

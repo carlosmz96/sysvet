@@ -33,7 +33,7 @@ export class PerfilUsuarioComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '');
     this.url = GLOBAL.url;
     this.identity = this.usuarioService.getIdentity();
     // permite suscribirse al cambio de ruta para poder recargar el componente sin recargar la página

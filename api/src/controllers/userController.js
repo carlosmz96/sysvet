@@ -8,6 +8,8 @@ const Usuario = require('../models/Usuario');
 const jwt = require('../services/jwt');
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
+const Propietario = require('../models/Propietario');
+const Veterinario = require('../models/Veterinario');
 
 /**
  * Método encargado del registro de usuarios en BBDD
@@ -16,6 +18,19 @@ const smtpTransport = require('nodemailer-smtp-transport');
  */
 async function altaUsuario(req, res) {
     const params = req.body;
+    let rolesStr = '';
+    let activoStr = '';
+
+    if (params.rol == 'administrador') {
+        rolesStr = 'administrador, cliente, veterinario';
+        activoStr = 'S';
+    } else if (params.rol == 'cliente') {
+        rolesStr = 'cliente';
+        activoStr = 'S';
+    } else {
+        rolesStr = 'veterinario';
+        activoStr = 'N';
+    }
 
     if (params.pass) {
         // Encriptación de contraseña
@@ -28,15 +43,27 @@ async function altaUsuario(req, res) {
                 apellidos: params.apellidos,
                 email: params.email,
                 pass: hash,
-                rol: params.rol
+                rol: params.rol,
+                roles: rolesStr,
+                activo: activoStr
             }).then(function (user) {
                 if (!user) {
                     res.status(404).send({ message: 'No se ha guardado el usuario.' });
                 } else {
+                    if (params.rol == 'administrador') {
+                        Propietario.create({ dni: params.dni }).catch((err) => {
+                            console.error(err)
+                        });
+                        Veterinario.create({ dni: params.dni });
+                    } else if (params.rol == 'cliente') {
+                        Propietario.create({ dni: params.dni });
+                    } else {
+                        Veterinario.create({ dni: params.dni });
+                    }
                     res.status(200).send({ user });
                 }
-            }).catch(() => {
-                res.status(500).send({ message: 'Error al dar de alta al usuario.' })
+            }).catch((err) => {
+                res.status(500).send({ message: 'Error al dar de alta al usuario.' });
             });
         } else {
             res.status(200).send({ message: 'Por favor, rellena todos los campos del formulario de registro.' });
@@ -153,14 +180,76 @@ async function modificarUsuario(req, res) {
 async function bajaUsuario(req, res) {
     const userDni = req.params.dni;
 
-    await Usuario.destroy({ where: { dni: userDni } }).then(function (userDeleted) {
-        if (!userDeleted) {
-            res.status(404).send({ message: 'No se ha podido dar de baja al usuario.' });
+    await Usuario.findOne({ where: { dni: userDni } }).then(async function (user) {
+        if (!user) {
+            res.status(404).send({ message: 'No se ha podido encontrar al usuario.' });
         } else {
-            res.status(200).send({ user: userDeleted });
+            if (user.rol == 'administrador') {
+                await Propietario.destroy({ where: { dni: userDni } }).then(async function(pro) {
+                    if (!pro) {
+                        res.status(404).send({ message: 'No se ha podido dar de baja al propietario.' });
+                    } else {
+                        await Veterinario.destroy({ where: { dni: userDni } }).then(async function(vet) {
+                            if (!vet) {
+                                res.status(404).send({ message: 'No se ha podido dar de baja al veterinario.' });
+                            } else {
+                                await Usuario.destroy({ where: { dni: userDni } }).then(function (userDeleted) {
+                                    if (!userDeleted) {
+                                        res.status(404).send({ message: 'No se ha podido dar de baja al usuario.' });
+                                    } else {
+                                        res.status(200).send({ user: userDeleted });
+                                    }
+                                }).catch((err) => {
+                                    res.status(500).send({ message: 'Error al dar de baja al usuario.' });
+                                });
+                            }
+                        }).catch(() => {
+                            res.status(500).send({ message: 'Error al eliminar el veterinario.' });
+                        });
+                    }
+                }).catch(() => {
+                    res.status(500).send({ message: 'Error al eliminar el propietario.' });
+                });
+            } else if (user.rol == 'cliente') {
+                await Propietario.destroy({ where: { dni: userDni } }).then(async function(pro) {
+                    if (!pro) {
+                        res.status(404).send({ message: 'No se ha podido dar de baja al propietario.' });
+                    } else {
+                        await Usuario.destroy({ where: { dni: userDni } }).then(function (userDeleted) {
+                            if (!userDeleted) {
+                                res.status(404).send({ message: 'No se ha podido dar de baja al usuario.' });
+                            } else {
+                                res.status(200).send({ user: userDeleted });
+                            }
+                        }).catch((err) => {
+                            res.status(500).send({ message: 'Error al dar de baja al usuario.' });
+                        });
+                    }
+                }).catch(() => {
+                    res.status(500).send({ message: 'Error al eliminar el propietario.' });
+                });
+            } else {
+                await Veterinario.destroy({ where: { dni: userDni } }).then(async function(vet) {
+                    if (!vet) {
+                        res.status(404).send({ message: 'No se ha podido dar de baja al veterinario.' });
+                    } else {
+                        await Usuario.destroy({ where: { dni: userDni } }).then(function (userDeleted) {
+                            if (!userDeleted) {
+                                res.status(404).send({ message: 'No se ha podido dar de baja al usuario.' });
+                            } else {
+                                res.status(200).send({ user: userDeleted });
+                            }
+                        }).catch((err) => {
+                            res.status(500).send({ message: 'Error al dar de baja al usuario.' });
+                        });
+                    }
+                }).catch(() => {
+                    res.status(500).send({ message: 'Error al eliminar el veterinario.' });
+                });
+            }
         }
-    }).catch((err) => {
-        res.status(500).send({ message: 'Error al dar de baja al usuario.' });
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al consultar el usuario.' });
     });
 }
 

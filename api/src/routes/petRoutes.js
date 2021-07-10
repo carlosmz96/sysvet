@@ -11,15 +11,15 @@ const api = express.Router();
 
 // Rutas de mascota
 api.post('/alta-mascota', md_auth.ensureAuth, PetController.altaMascota);
-api.get('/mascotas/:microchip', md_auth.ensureAuth, PetController.consultarMascota);
+api.get('/mascotas/:id', md_auth.ensureAuth, PetController.consultarMascota);
 api.get('/mascotas', md_auth.ensureAuth, PetController.consultarMascotas);
-api.put('/modificar-mascota/:microchip', md_auth.ensureAuth, PetController.modificarMascota);
-api.delete('/baja-mascota/:microchip', md_auth.ensureAuth, PetController.bajaMascota);
-api.post('/subir-foto-mascota/:microchip', [md_auth.ensureAuth, md_upload.single('imagen')], PetController.subirFotoMascota);
-api.post('/eliminar-foto-mascota/:microchip', md_auth.ensureAuth, PetController.eliminarFotoMascota);
+api.put('/modificar-mascota/:id', md_auth.ensureAuth, PetController.modificarMascota);
+api.delete('/baja-mascota/:id', md_auth.ensureAuth, PetController.bajaMascota);
+api.post('/subir-foto-mascota/:id', [md_auth.ensureAuth, md_upload.single('imagen')], PetController.subirFotoMascota);
+api.post('/eliminar-foto-mascota/:id', md_auth.ensureAuth, PetController.eliminarFotoMascota);
 api.get('/obtener-foto-mascota/:fotoMascota', PetController.obtenerFotoMascota);
-api.get('/observaciones-mascota/:microchip', md_auth.ensureAuth, PetController.obtenerObservacionesMascota);
-api.put('/modificar-observaciones-mascota/:microchip', md_auth.ensureAuth, PetController.modificarObservacionesMascota);
+api.get('/observaciones-mascota/:id', md_auth.ensureAuth, PetController.obtenerObservacionesMascota);
+api.put('/modificar-observaciones-mascota/:id', md_auth.ensureAuth, PetController.modificarObservacionesMascota);
 
 // Se exporta la api de rutas de mascota
 module.exports = api;

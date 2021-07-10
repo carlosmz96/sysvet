@@ -16,7 +16,7 @@ async function altaMascota(req, res) {
 
     // Creacion de mascota en BBDD
     await Mascota.create({
-        microchip: params.microchip,
+        identificador: params.identificador,
         nombre: params.nombre,
         especie: params.especie,
         raza: params.raza,
@@ -46,9 +46,9 @@ async function altaMascota(req, res) {
  * @param {*} res Respuesta resultado de la operación
  */
 async function consultarMascota(req, res) {
-    const petMicrochip = req.params.microchip;
+    const petId = req.params.id;
 
-    await Mascota.findOne({ where: { microchip: petMicrochip } }).then(function (pet) {
+    await Mascota.findOne({ where: { identificador: petId } }).then(function (pet) {
         if (!pet) {
             res.status(404).send({ message: 'No se ha podido encontrar la mascota.' });
         } else {
@@ -82,7 +82,7 @@ async function consultarMascotas(req, res) {
  * @param {*} res Respuesta generada tras la modificación de los datos de la mascota
  */
 async function modificarMascota(req, res) {
-    const petMicrochip = req.params.microchip;
+    const petId = req.params.id;
     const update = req.body;
 
     await Mascota.update({
@@ -98,11 +98,11 @@ async function modificarMascota(req, res) {
         propietario: update.propietario,
         veterinario: update.veterinario,
         dni_modificacion: update.dni_modificacion
-    }, { where: { microchip: petMicrochip } }).then(async function (petUpdated) {
+    }, { where: { identificador: petId } }).then(async function (petUpdated) {
         if (!petUpdated) {
             res.status(404).send({ message: 'No se ha podido actualizar la mascota.' });
         } else {
-            await Mascota.findByPk(petMicrochip).then((petUpdated) => {
+            await Mascota.findByPk(petId).then((petUpdated) => {
                 res.status(200).send({ pet: petUpdated });
             });
         }
@@ -117,14 +117,14 @@ async function modificarMascota(req, res) {
  * @param {*} res Respuesta generada tras la baja de la mascota
  */
 async function bajaMascota(req, res) {
-    const petMicrochip = req.params.microchip;
+    const petId = req.params.id;
 
-    await Mascota.destroy({ where: { microchip: petMicrochip } }).then(async function (petDeleted) {
+    await Mascota.destroy({ where: { identificador: petId } }).then(async function (petDeleted) {
         if (!petDeleted) {
             res.status(404).send({ message: 'No se ha podido dar de baja a la mascota.' });
         } else {
             res.status(200).send({ pet: petDeleted });
-            await MascotaDocumental.findByIdAndRemove({ _id: petMicrochip }, (err) => {
+            await MascotaDocumental.findByIdAndRemove({ _id: petId }, (err) => {
                 if (err) {
                     res.status(500).send({ message: 'Error al eliminar la mascota documental' });
                 }
@@ -141,7 +141,7 @@ async function bajaMascota(req, res) {
  * @param {*} res Respuesta generada tras la subida del archivo
  */
 async function subirFotoMascota(req, res) {
-    const petMicrochip = req.params.microchip;
+    const petId = req.params.id;
 
     if (req.file) {
         const file_name = req.file.filename;
@@ -150,7 +150,7 @@ async function subirFotoMascota(req, res) {
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
             await Mascota.update({
                 imagen: file_name
-            }, { where: { microchip: petMicrochip } }).then(function (petUpdated) {
+            }, { where: { identificador: petId } }).then(function (petUpdated) {
                 if (!petUpdated) {
                     res.status(404).send({ message: 'No se ha podido subir la foto de perfil de la mascota.' });
                 } else {
@@ -173,9 +173,9 @@ async function subirFotoMascota(req, res) {
  * @param {*} res Respuesta generada tras la acción
  */
 async function eliminarFotoMascota(req, res) {
-    const petMicrochip = req.params.microchip;
+    const petId = req.params.id;
 
-    const mascota = await Mascota.findByPk(petMicrochip);
+    const mascota = await Mascota.findByPk(petId);
     const file_name = mascota.imagen;
     
     // eliminación de la foto en el directorio
@@ -185,11 +185,11 @@ async function eliminarFotoMascota(req, res) {
 
     await Mascota.update({
         imagen: null
-    }, { where: { microchip: petMicrochip } }).then(async function (petUpdated) {
+    }, { where: { identificador: petId } }).then(async function (petUpdated) {
         if (!petUpdated) {
             res.status(404).send({ message: 'No se ha podido eliminar la foto de perfil de la mascota.' });
         } else {
-            await Mascota.findByPk(petMicrochip).then((petUpdated) => {
+            await Mascota.findByPk(petId).then((petUpdated) => {
                 res.status(200).send({ pet: petUpdated });
             });
         }
@@ -228,9 +228,9 @@ function obtenerFotoMascota(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function obtenerObservacionesMascota(req, res) {
-    const microchip = req.params.microchip;
+    const petId = req.params.id;
     
-    await MascotaDocumental.findOne({_id: microchip}, (err, pet) => {
+    await MascotaDocumental.findOne({_id: petId}, (err, pet) => {
         if (err) {
             res.status(500).send({ message: 'Error al obtener los datos.' });
         } else {
@@ -246,14 +246,14 @@ async function obtenerObservacionesMascota(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function modificarObservacionesMascota(req, res) {
-    const microchip = req.params.microchip;
+    const petId = req.params.id;
     const params = req.body;
 
-    await MascotaDocumental.updateOne({_id: microchip}, { observaciones: params.observaciones }, { upsert: true }, async function (err) {
+    await MascotaDocumental.updateOne({_id: petId}, { observaciones: params.observaciones }, { upsert: true }, async function (err) {
         if (err) {
             res.status(500).send({ message: 'Error al actualizar los datos.' });
         } else {
-            await MascotaDocumental.findById({_id: microchip}, (err, pet) => {
+            await MascotaDocumental.findById({_id: petId}, (err, pet) => {
                 if (err) {
                     res.status(500).send({ message: 'Error al obtener los datos.' });
                 } else {

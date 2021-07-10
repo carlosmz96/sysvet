@@ -14,7 +14,7 @@ async function nuevaCita(req, res) {
     const fecha = new Date(params.fecha).valueOf();
     const fechaActual = new Date().valueOf();
 
-    if ((fecha > fechaActual) && (params.microchip && params.propietario && params.fecha)) {
+    if ((fecha > fechaActual) && (params.mascota && params.propietario && params.fecha)) {
 
         const idCita = new Date().getTime().toString();
 
@@ -22,7 +22,7 @@ async function nuevaCita(req, res) {
             if (!cita) {
                 await Cita.create({
                     id_cita: idCita,
-                    microchip: params.microchip,
+                    mascota: params.mascota,
                     propietario: params.propietario,
                     fecha: params.fecha,
                     activa: 'S'
@@ -96,9 +96,9 @@ async function consultarCita(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function consultarCitasMascota(req, res) {
-    const petMicrochip = req.params.microchip;
+    const petId = req.params.idMascota;
 
-    await Cita.findAll({ where: { microchip: petMicrochip, activa: 'S' } }).then(function (citas) {
+    await Cita.findAll({ where: { mascota: petId, activa: 'S' } }).then(function (citas) {
         if (!citas) {
             res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {

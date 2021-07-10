@@ -62,7 +62,7 @@ export class AltaMascotaComponent implements OnInit {
 
     this.mascotaService.altaMascota(this.mascota).subscribe(
       response => {
-        this.router.navigate(['datos-mascota', response.pet.microchip]);
+        this.router.navigate(['datos-mascota', response.pet.identificador]);
       },
       error => {
         this.addErrorMessage(error.error.message);

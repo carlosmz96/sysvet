@@ -121,7 +121,7 @@
                       </div>
                       <div class="nombre-mascota">
                         <span class="nombre">{{ mascota.nombre }}</span>
-                        <button type="button" routerLink="/datos-mascota/{{ mascota.microchip }}"
+                        <button type="button" routerLink="/datos-mascota/{{ mascota.identificador }}"
                           class="btn btn-success btn-consultar"><i class="fas fa-eye" style="margin-right: 0.1em;"></i> Consultar</button>
                       </div>
                     </div>
@@ -160,8 +160,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-cita let-expanded="expanded">
                       <tr>
-                        <td><a routerLink="/datos-mascota/{{cita.microchip}}"
-                            title="Consultar mascota">{{cita.microchip}}</a></td>
+                        <td><a routerLink="/datos-mascota/{{cita.mascota}}"
+                            title="Consultar mascota">{{cita.mascota}}</a></td>
                         <td>{{cita.fechaStr}}</td>
                         <td>
                           <div class="espaciado-icono">

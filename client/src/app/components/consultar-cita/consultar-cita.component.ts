@@ -31,7 +31,7 @@ export class ConsultarCitaComponent implements OnInit {
     private location: Location
   ) {
     this.cita = new Cita('', '', '', new Date(), '', '', '');
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '');
     this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', 'default-image.png', '', '', '', null);
 
     this.identity = this.usuarioService.getIdentity();
@@ -55,7 +55,7 @@ export class ConsultarCitaComponent implements OnInit {
           response => {
             this.cita.motivo = response.doc.motivo;
             this.obtenerPropietario(this.cita.propietario);
-            this.obtenerMascota(this.cita.microchip);
+            this.obtenerMascota(this.cita.mascota);
             this.compruebaUsuario();
           },
           error => {
@@ -85,11 +85,11 @@ export class ConsultarCitaComponent implements OnInit {
   }
 
   /**
-   * Método encargado de obtener los datos de la mascota mediante el microchip
-   * @param microchip Microchip de la mascota
+   * Método encargado de obtener los datos de la mascota mediante el identificador
+   * @param identificador Identificador de la mascota
    */
-  public obtenerMascota(microchip: string): void {
-    this.mascotaService.consultarMascota(microchip).subscribe(
+  public obtenerMascota(identificador: string): void {
+    this.mascotaService.consultarMascota(identificador).subscribe(
       response => {
         this.mascota = response.pet;
       },

@@ -46,12 +46,12 @@ export class MascotaService {
 
   /**
    * Método encargado de llamar al api para consultar los datos de una mascota
-   * @param microchip Microchip de la mascota a consultar
+   * @param identificador Identificador de la mascota a consultar
    * @returns Mascota consultada
    */
-  public consultarMascota(microchip: string): Observable<any> {
+  public consultarMascota(identificador: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', this.token);
-    return this.httpClient.get(this.url + 'mascotas/' + microchip, { headers: headers });
+    return this.httpClient.get(this.url + 'mascotas/' + identificador, { headers: headers });
   }
 
   /**
@@ -63,47 +63,47 @@ export class MascotaService {
     const params = JSON.stringify(pet_to_update);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.token });
 
-    return this.httpClient.put(this.url + 'modificar-mascota/' + pet_to_update.microchip, params, { headers: headers });
+    return this.httpClient.put(this.url + 'modificar-mascota/' + pet_to_update.identificador, params, { headers: headers });
   }
 
   /**
    * Método encargado de llamar al api para eliminar la foto de perfil de la mascota
-   * @param microchip Microchip de la mascota
+   * @param identificador Identificador de la mascota
    * @returns Respuesta tras la eliminación de la foto de perfil
    */
-  public eliminarFotoMascota(microchip: string): Observable<any> {
+  public eliminarFotoMascota(identificador: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.token });
 
-    return this.httpClient.post(this.url + 'eliminar-foto-mascota/' + microchip, {}, { headers: headers });
+    return this.httpClient.post(this.url + 'eliminar-foto-mascota/' + identificador, {}, { headers: headers });
   }
 
   /**
    * Método encargado de llamar al api para eliminar una mascota por completo
-   * @param microchip Microchip de la mascota
+   * @param identificador Identificador de la mascota
    * @returns Mascota eliminada
    */
-  public bajaMascota(microchip: string): Observable<any> {
+  public bajaMascota(identificador: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.token });
     const options = {
       headers: headers
     }
 
-    return this.httpClient.delete(this.url + 'baja-mascota/' + microchip, options);
+    return this.httpClient.delete(this.url + 'baja-mascota/' + identificador, options);
   }
 
   /**
    * Método encargado de llamar al api para obtener las observaciones de una mascota
-   * @param microchip Microchip de la mascota
+   * @param identificador Identificador de la mascota
    * @returns Observaciones de la mascota
    */
-  public obtenerObservacionesMascota(microchip: string): Observable<any> {
+  public obtenerObservacionesMascota(identificador: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', this.token);
-    return this.httpClient.get(this.url + 'observaciones-mascota/' + microchip, { headers: headers });
+    return this.httpClient.get(this.url + 'observaciones-mascota/' + identificador, { headers: headers });
   }
 
   /**
    * Método encargado de llamar al api para modificar las observaciones de una mascota
-   * @param microchip Microchip de la mascota
+   * @param identificador Identificador de la mascota
    * @param observaciones Observaciones de la mascota
    * @returns Observaciones actualizadas
    */
@@ -112,7 +112,7 @@ export class MascotaService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': this.token });
-    return this.httpClient.put(this.url + 'modificar-observaciones-mascota/' + pet_to_update.microchip, params, { headers: headers });
+    return this.httpClient.put(this.url + 'modificar-observaciones-mascota/' + pet_to_update.identificador, params, { headers: headers });
   }
 
 }

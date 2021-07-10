@@ -3,9 +3,11 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { sequelize } = require('../database/db');
 const Usuario = require('./Usuario');
+const Propietario = require('./Propietario');
+const Veterinario = require('./Veterinario');
 
 const Mascota = sequelize.define('Mascota', {
-    microchip: {
+    identificador: {
         type: DataTypes.STRING(10),
         allowNull: false,
         primaryKey: true
@@ -54,7 +56,7 @@ const Mascota = sequelize.define('Mascota', {
         type: DataTypes.STRING(9),
         allowNull: true,
         references: {
-            model: Usuario,
+            model: Propietario,
             key: 'dni'
         }
     },
@@ -62,7 +64,7 @@ const Mascota = sequelize.define('Mascota', {
         type: DataTypes.STRING(9),
         allowNull: true,
         references: {
-            model: Usuario,
+            model: Veterinario,
             key: 'dni'
         }
     },

@@ -32,10 +32,10 @@ before((done) => {
  * 3) Si está ya creada, la borra
  * 4) Crea la mascota
  */
-describe('Alta de mascota (POST -- /alta-mascota) y Baja de mascota (DELETE -- /baja-mascota/:microchip)', () => {
+describe('Alta de mascota (POST -- /alta-mascota) y Baja de mascota (DELETE -- /baja-mascota/:id)', () => {
 
     const mascota = {
-        microchip: '1111111111',
+        identificador: '1111111111',
         nombre: 'Mascota de prueba',
         especie: 'Especie de prueba',
         raza: 'Raza de prueba',
@@ -52,7 +52,7 @@ describe('Alta de mascota (POST -- /alta-mascota) y Baja de mascota (DELETE -- /
 
     before((done) => {
         request(app)
-            .get('/api/mascotas/' + `${mascota.microchip}`)
+            .get('/api/mascotas/' + `${mascota.identificador}`)
             .set('Accept', 'application/json')
             .set({ Authorization: `${token}` })
             .expect('Content-Type', /json/)
@@ -62,7 +62,7 @@ describe('Alta de mascota (POST -- /alta-mascota) y Baja de mascota (DELETE -- /
                     done();
                 } else {
                     request(app)
-                        .delete('/api/baja-mascota/' + `${mascota.microchip}`)
+                        .delete('/api/baja-mascota/' + `${mascota.identificador}`)
                         .set('Accept', 'application/json')
                         .set({ Authorization: `${token}` })
                         .expect('Content-Type', /json/)
@@ -110,7 +110,7 @@ describe('Consulta de todas las mascotas (GET -- /mascotas)', () => {
 /**
  * Consulta una mascota en específico
  */
-describe('Consulta de una mascota (GET -- /mascotas/:microchip)', () => {
+describe('Consulta de una mascota (GET -- /mascotas/:id)', () => {
 
     it('devolver un json que contenga una única mascota', done => {
         request(app)
@@ -126,10 +126,10 @@ describe('Consulta de una mascota (GET -- /mascotas/:microchip)', () => {
 /**
  * Modifica una mascota en específico
  */
-describe('Modificación de una mascota (PUT -- /modificar-mascota/:microchip)', () => {
+describe('Modificación de una mascota (PUT -- /modificar-mascota/:id)', () => {
 
     const mascota = {
-        microchip: '1111111111',
+        identificador: '1111111111',
         nombre: 'Mascota modificada',
         especie: 'Especie de prueba',
         raza: 'Raza de prueba',
@@ -157,7 +157,7 @@ describe('Modificación de una mascota (PUT -- /modificar-mascota/:microchip)', 
 /**
  * Subida de imagen de una mascota
  */
-describe('Subida de imagen de mascota (POST -- /subir-foto-mascota/:microchip)', () => {
+describe('Subida de imagen de mascota (POST -- /subir-foto-mascota/:id)', () => {
 
     it('devolver un json que contenga la imagen subida y la mascota actualizada', done => {
         request(app)
@@ -174,7 +174,7 @@ describe('Subida de imagen de mascota (POST -- /subir-foto-mascota/:microchip)',
 /**
  * Eliminación de imagen de una mascota
  */
-describe('Eliminación de imagen de una mascota (POST -- /eliminar-foto-mascota/:microchip)', () => {
+describe('Eliminación de imagen de una mascota (POST -- /eliminar-foto-mascota/:id)', () => {
 
     it('devolver un json que contenga la mascota actualizada', done => {
         request(app)
@@ -205,7 +205,7 @@ describe('Obtención de imagen de una mascota (GET -- /obtener-foto-mascota/:fot
 /**
  * Obtener las observaciones de una mascota
  */
-describe('Obtención de observaciones de una mascota (GET -- /observaciones-mascota/:microchip)', () => {
+describe('Obtención de observaciones de una mascota (GET -- /observaciones-mascota/:id)', () => {
 
     it('devolver un json que contenga las observaciones de la mascota', done => {
         request(app)
@@ -221,7 +221,7 @@ describe('Obtención de observaciones de una mascota (GET -- /observaciones-masc
 /**
  * Modificar las observaciones de una mascota
  */
-describe('Modificación de observaciones de una mascota (PUT -- /modificar-observaciones-mascota/:microchip)', () => {
+describe('Modificación de observaciones de una mascota (PUT -- /modificar-observaciones-mascota/:id)', () => {
 
     it('devolver un json que contenga las observaciones modificadas de la mascota', done => {
         request(app)

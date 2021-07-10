@@ -34,15 +34,15 @@ export class CambiarClaveComponent implements OnInit {
     if(this.identity) {
       this.router.navigate(['index']);
     }
-    
+
     // obtengo el parametro token
     const myRawToken: string = this.route.snapshot.paramMap.get('token')!;
     const helper = new JwtHelperService();
     // decodifica el token
-    const decodedToken = helper.decodeToken(myRawToken); 
+    const decodedToken = helper.decodeToken(myRawToken);
     this.payload = decodedToken;
-    
-    this.usuario = new Usuario(decodedToken.sub, '', '', '', '', '', '', '', '');
+
+    this.usuario = new Usuario(decodedToken.sub, '', '', '', '', '', '', '', '', '', '');
   }
 
   ngOnInit(): void {

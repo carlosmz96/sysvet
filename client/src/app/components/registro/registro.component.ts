@@ -21,7 +21,7 @@ export class RegistroComponent implements OnInit {
     private elementRef: ElementRef,
     private messageService: MessageService
   ) {
-    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
+    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '');
     this.identity = this.usuarioService.getIdentity();
 
     // si el usuario ya está logueado, redirecciona a index
@@ -44,12 +44,12 @@ export class RegistroComponent implements OnInit {
           response => {
             const user = response.user;
             this.usuario_registro = user;
-  
+
             if (!user.dni) {
               this.addErrorMessage('Error al registrarse');
             } else {
               this.addSuccessMessage('Te has registrado correctamente');
-              this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '');
+              this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '');
               this.rePass = "";
             }
           },
@@ -102,7 +102,7 @@ export class RegistroComponent implements OnInit {
 
     if (exp_regular_dni.test(dni) == true) {
       numero = dni.substr(0, dni.length - 1);
-      letra = dni.substr(dni.length-1, 1);
+      letra = dni.substr(dni.length - 1, 1);
       numero = numero % 23;
       letras = 'TRWAGMYFPDXBNJZSQVHLCKET';
       letras = letras.substr(numero, 1);

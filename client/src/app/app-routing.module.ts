@@ -78,12 +78,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'datos-mascota/:microchip',
+    path: 'datos-mascota/:idMascota',
     component: DatosMascotaComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'baja-mascota/:microchip',
+    path: 'baja-mascota/:idMascota',
     component: BajaMascotaComponent,
     canActivate: [AuthGuard]
   },

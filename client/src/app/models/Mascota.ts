@@ -1,7 +1,7 @@
 export class Mascota {
 
     constructor(
-        public microchip: string,
+        public identificador: string,
         public nombre: string,
         public especie: string,
         public raza: string,

@@ -55,12 +55,12 @@ export class CitaService {
 
   /**
    * Método encargado de llamar al api para consultar las citas de una mascota
-   * @param microchip Microchip de la mascota
+   * @param identificador Identificador de la mascota
    * @returns Listado de citas de la mascota
    */
-  public consultarCitasMascota(microchip: string): Observable<any> {
+  public consultarCitasMascota(identificador: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', this.token);
-    return this.httpClient.get(this.url + 'citas-mascota/' + microchip, { headers: headers });
+    return this.httpClient.get(this.url + 'citas-mascota/' + identificador, { headers: headers });
   }
 
   /**

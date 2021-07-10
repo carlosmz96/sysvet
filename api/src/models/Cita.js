@@ -2,19 +2,29 @@
 
 const { DataTypes, Sequelize } = require('sequelize');
 const { sequelize } = require('../database/db');
+const Mascota = require('./Mascota');
+const Propietario = require('./Propietario');
 
 const Cita = sequelize.define('Cita', {
     id_cita: {
         type: DataTypes.STRING(15),
         primaryKey: true
     },
-    microchip: {
+    mascota: {
         type: DataTypes.STRING(10),
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: Mascota,
+            key: 'identificador'
+        }
     },
     propietario: {
         type: DataTypes.STRING(9),
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: Propietario,
+            key: 'dni'
+        }
     },
     fecha: {
         type: DataTypes.DATE,
