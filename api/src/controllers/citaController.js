@@ -59,7 +59,7 @@ async function nuevaCita(req, res) {
  * @param {*} req Consulta de todas las citas del sistema
  * @param {*} res Respuesta generada tras la consulta
  */
-async function consultarCitas(req, res) {
+async function listarCitas(req, res) {
     await Cita.findAll().then(function (citas) {
         if (!citas) {
             res.status(404).send({ message: 'No se han podido encontrar las citas.' });
@@ -95,7 +95,7 @@ async function consultarCita(req, res) {
  * @param {*} req Consulta de todas las citas de una mascota
  * @param {*} res Respuesta generada tras la consulta
  */
-async function consultarCitasMascota(req, res) {
+async function listarCitasMascota(req, res) {
     const petId = req.params.idMascota;
 
     await Cita.findAll({ where: { mascota: petId, activa: 'S' } }).then(function (citas) {
@@ -114,7 +114,7 @@ async function consultarCitasMascota(req, res) {
  * @param {*} req Consulta de todas las citas de un propietario
  * @param {*} res Respuesta generada tras la consulta
  */
-async function consultarCitasPropietario(req, res) {
+async function listarCitasPropietario(req, res) {
     const dniPropietario = req.params.dni;
 
     await Cita.findAll({ where: { propietario: dniPropietario, activa: 'S' } }).then(function (citas) {
@@ -211,10 +211,10 @@ async function obtenerMotivoCita(req, res) {
 
 module.exports = {
     nuevaCita,
-    consultarCitas,
+    listarCitas,
     consultarCita,
-    consultarCitasMascota,
-    consultarCitasPropietario,
+    listarCitasMascota,
+    listarCitasPropietario,
     anularCita,
     eliminarCita,
     obtenerMotivoCita
