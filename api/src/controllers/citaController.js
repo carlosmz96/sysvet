@@ -42,7 +42,8 @@ async function nuevaCita(req, res) {
                             }
                         });
                     }
-                }).catch(() => {
+                }).catch((err) => {
+                    console.error(err)
                     res.status(500).send({ message: 'Error al crear una cita.' });
                 });
             } else {

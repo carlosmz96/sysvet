@@ -4,6 +4,8 @@ const { DataTypes, Sequelize } = require('sequelize');
 const { sequelize } = require('../database/db');
 const Mascota = require('./Mascota');
 const Propietario = require('./Propietario');
+const Veterinario = require('./Veterinario');
+const Servicio = require('./Servicio');
 
 const Cita = sequelize.define('Cita', {
     id_cita: {
@@ -29,6 +31,22 @@ const Cita = sequelize.define('Cita', {
     fecha: {
         type: DataTypes.DATE,
         allowNull: false
+    },
+    servicio: {
+        type: DataTypes.INTEGER(11),
+        allowNull: false,
+        references: {
+            model: Servicio,
+            key: 'id_servicio'
+        }
+    },
+    veterinario: {
+        type: DataTypes.STRING(9),
+        allowNull: false,
+        references: {
+            model: Veterinario,
+            key: 'dni'
+        }
     },
     activa: {
         type: DataTypes.STRING(1),

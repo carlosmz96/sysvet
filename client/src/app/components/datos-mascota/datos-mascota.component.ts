@@ -257,6 +257,25 @@ export class DatosMascotaComponent implements OnInit {
   }
 
   /**
+   * Método encargado de dar de baja a la mascota
+   */
+   public bajaMascota(id: string): void {
+    this.confirmationService.confirm({
+      message: '¿Estás seguro?',
+      accept: () => {
+        this.mascotaService.bajaMascota(id).subscribe(
+          response => {
+            this.router.navigate(['listado-mascotas']);
+          },
+          error => {
+            this.addErrorMessage(error.error.message);
+          }
+        );
+      }
+    });
+  }
+
+  /**
    * Método encargado de obtener todos los usuarios del sistema
    */
   private obtenerUsuarios(): void {

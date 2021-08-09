@@ -28,7 +28,7 @@ export class CitaSolicitadaComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private router: Router
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
     this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', '', '', '', '', '');
   }
 

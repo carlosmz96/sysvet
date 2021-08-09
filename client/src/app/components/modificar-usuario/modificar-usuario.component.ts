@@ -31,7 +31,7 @@ export class ModificarUsuarioComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', 'default-image.png', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', 'default-image.png', '', '', '');
     this.token = this.usuarioService.getToken();
     this.url = GLOBAL.url;
   }

@@ -29,11 +29,9 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
-import { BajaUsuarioComponent } from './components/baja-usuario/baja-usuario.component';
 import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
 import { ListadoMascotasComponent } from './components/listado-mascotas/listado-mascotas.component';
 import { DatosMascotaComponent } from './components/datos-mascota/datos-mascota.component';
-import { BajaMascotaComponent } from './components/baja-mascota/baja-mascota.component';
 import { AltaMascotaComponent } from './components/alta-mascota/alta-mascota.component';
 import { MessageService } from 'primeng/api';
 import { ListadoCitasComponent } from './components/listado-citas/listado-citas.component';
@@ -53,11 +51,9 @@ import { ConsultarCitaComponent } from './components/consultar-cita/consultar-ci
     ListadoUsuariosComponent,
     PerfilUsuarioComponent,
     ModificarUsuarioComponent,
-    BajaUsuarioComponent,
     AccesoDenegadoComponent,
     ListadoMascotasComponent,
     DatosMascotaComponent,
-    BajaMascotaComponent,
     AltaMascotaComponent,
     ListadoCitasComponent,
     NuevaCitaComponent,

@@ -21,7 +21,7 @@ export class RecordarClaveComponent implements OnInit {
     private elementRef: ElementRef,
     private messageService: MessageService
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
     this.identity = this.usuarioService.getIdentity();
 
     // si el usuario ya está logueado, redirecciona a index

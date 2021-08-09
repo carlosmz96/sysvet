@@ -14,6 +14,11 @@ const Veterinario = sequelize.define('Veterinario', {
             key: 'dni'
         }
     },
+    num_colegiado: {
+        type: DataTypes.STRING(4),
+        allowNull: false,
+        unique: true
+    },
     fecha_modificacion: {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

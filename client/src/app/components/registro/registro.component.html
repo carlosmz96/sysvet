@@ -74,6 +74,17 @@
                     </div>
                 </div>
             </div>
+            <div class="form-row" *ngIf="usuario_registro.rol == 'veterinario'">
+                <div class="form-group col-auto">
+                    <div class="form-inline">
+                        <label for="num_colegiado" class="col-form-label" style="margin-right: 1.5em;"><strong>* Número
+                                de colegiado</strong></label>
+                        <input type="text" #num_colegiado="ngModel" name="num_colegiado" id="num_colegiado"
+                            [(ngModel)]="usuario_registro.num_colegiado" class="form-control"
+                            placeholder="Número de colegiado" maxlength="4" required>
+                    </div>
+                </div>
+            </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-success btn-block">Regístrate</button>
             </div>

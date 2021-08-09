@@ -11,7 +11,8 @@ export class Usuario {
         public direccion: string,
         public foto: string,
         public roles: string,
-        public activo: string
+        public activo: string,
+        public num_colegiado: string
     ) { }
 
 }

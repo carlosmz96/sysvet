@@ -34,7 +34,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" [routerLink]="['/usuario/', identity.dni]">Mi perfil</a>
-            <div *ngIf="identity.roles == 'administrador, cliente, veterinario'">
+            <div *ngIf="identity.roles == 'administrador, veterinario, cliente'">
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" (click)="showResponsiveDialog()" style="cursor: pointer;">Cambiar rol</a>
             </div>

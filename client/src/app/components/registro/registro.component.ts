@@ -21,7 +21,7 @@ export class RegistroComponent implements OnInit {
     private elementRef: ElementRef,
     private messageService: MessageService
   ) {
-    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '');
+    this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '', '');
     this.identity = this.usuarioService.getIdentity();
 
     // si el usuario ya está logueado, redirecciona a index
@@ -49,7 +49,7 @@ export class RegistroComponent implements OnInit {
               this.addErrorMessage('Error al registrarse');
             } else {
               this.addSuccessMessage('Te has registrado correctamente');
-              this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '');
+              this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '', '');
               this.rePass = "";
             }
           },

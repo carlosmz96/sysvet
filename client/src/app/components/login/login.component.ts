@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private messageService: MessageService
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', ''); // usuario de inicio de sesion
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '', ''); // usuario de inicio de sesion
     this.identity = this.usuarioService.getIdentity();
     this.token = this.usuarioService.getToken();
 

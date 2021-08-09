@@ -42,7 +42,7 @@ export class CambiarClaveComponent implements OnInit {
     const decodedToken = helper.decodeToken(myRawToken);
     this.payload = decodedToken;
 
-    this.usuario = new Usuario(decodedToken.sub, '', '', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario(decodedToken.sub, '', '', '', '', '', '', '', '', '', '', '');
   }
 
   ngOnInit(): void {

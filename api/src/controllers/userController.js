@@ -22,7 +22,7 @@ async function altaUsuario(req, res) {
     let activoStr = '';
 
     if (params.rol == 'administrador') {
-        rolesStr = 'administrador, cliente, veterinario';
+        rolesStr = 'administrador, veterinario, cliente';
         activoStr = 'S';
     } else if (params.rol == 'cliente') {
         rolesStr = 'cliente';
@@ -58,7 +58,7 @@ async function altaUsuario(req, res) {
                     } else if (params.rol == 'cliente') {
                         Propietario.create({ dni: params.dni });
                     } else {
-                        Veterinario.create({ dni: params.dni });
+                        Veterinario.create({ dni: params.dni, num_colegiado: params.num_colegiado });
                     }
                     res.status(200).send({ user });
                 }

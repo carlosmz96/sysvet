@@ -31,7 +31,7 @@ export class ConsultarCitaComponent implements OnInit {
     private location: Location
   ) {
     this.cita = new Cita('', '', '', new Date(), '', '', '');
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
     this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', 'default-image.png', '', '', '', null);
 
     this.identity = this.usuarioService.getIdentity();

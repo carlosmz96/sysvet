@@ -33,7 +33,7 @@ export class PerfilUsuarioComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {
-    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '');
+    this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
     this.url = GLOBAL.url;
     this.identity = this.usuarioService.getIdentity();
     // permite suscribirse al cambio de ruta para poder recargar el componente sin recargar la página
@@ -110,6 +110,30 @@ export class PerfilUsuarioComponent implements OnInit {
   subscribeRouteChange() {
     this.activatedRoute.params.subscribe((params = {}) => {
       this.ngOnInit();
+    });
+  }
+
+  /**
+   * Método encargado de dar de baja al usuario
+   * @param dni Dni del usuario a dar de baja
+   */
+   public bajaUsuario(dni: string): void {
+    this.confirmationService.confirm({
+      message: '¿Estás seguro?',
+      accept: () => {
+        this.usuarioService.bajaUsuario(dni).subscribe(
+          response => {
+            if (this.identity.dni == dni) {
+              this.router.navigate(['index']);
+            } else {
+              this.router.navigate(['listado-usuarios']);
+            }
+          },
+          error => {
+            this.addErrorMessage(error.error.message);
+          }
+        )
+      }
     });
   }
 
