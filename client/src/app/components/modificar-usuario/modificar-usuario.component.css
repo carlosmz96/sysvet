@@ -1,7 +1,7 @@
 .apartado-imagen {
     display: flex;
     align-items: center;
-    margin-top: 2em;
+    margin-top: 1em;
     width: 100%;
 }
 
@@ -34,7 +34,7 @@
 
 .btn-submit {
     float: right;
-    margin-top: 1.5em;
+    margin-top: 1em;
     margin-bottom: 1em;
 }
 

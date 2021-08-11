@@ -1,0 +1,84 @@
+<p-confirmDialog #cd [style]="{width: '20em'}" [closable]="false">
+  <ng-template pTemplate="footer">
+    <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
+    <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
+  </ng-template>
+</p-confirmDialog>
+
+<app-navegacion></app-navegacion>
+
+<div class="container">
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body" style="text-align: justify;">
+      <h1>Listado de servicios</h1>
+      <p>Listado de gestión de todos los servicios del sistema.</p>
+      <hr>
+      <div class="nuevo-servicio">
+        <button type="button" class="btn btn-success" title="Nuevo servicio" routerLink="/alta-servicio"><i
+            class="fas fa-plus-circle"></i> Nuevo servicio</button>
+      </div>
+      <p-table #dtservices [value]="servicios" dataKey="id_servicio" styleClass="p-datatable-gridlines" [paginator]="true"
+        stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+        [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="acordeon" style="width: 4.4rem; display: none;"></th>
+            <th>
+              <input pInputText type="text" (input)="dtservices.filter(getValueInput($event.target), 'codigo', 'contains')"
+                placeholder="Buscar..." class="p-column-filter">
+            </th>
+            <th>
+              <input pInputText type="text"
+                (input)="dtservices.filter(getValueInput($event.target), 'nombre', 'contains')" placeholder="Buscar..."
+                class="p-column-filter">
+            </th>
+            <th>
+
+            </th>
+          </tr>
+          <tr>
+            <th class="acordeon" style="display: none;"></th>
+            <th pSortableColumn="codigo" title="Ordenar por código">Código <p-sortIcon field="codigo">
+              </p-sortIcon>
+            </th>
+            <th pSortableColumn="nombre" title="Ordenar por nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+            </th>
+            <th>Acción</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-servicio let-expanded="expanded">
+          <tr>
+            <td class="acordeon" style="display: none;">
+              <button type="button" pButton pRipple [pRowToggler]="servicio"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td>{{servicio.codigo}}</td>
+            <td>{{servicio.nombre}}</td>
+            <td>
+              <div class="espaciado-icono">
+                <i class="fas fa-lg fa-edit consultar izq" routerLink="/modificar-servicio/{{servicio.id_servicio}}" title="Editar servicio"
+                  style="cursor: pointer;"></i>
+                <i class="fas fa-lg fa-trash-alt consultar" title="Eliminar servicio" (click)="eliminarServicio(servicio)"
+                  style="cursor: pointer;"></i>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-servicio>
+          <tr class="rowmedia">
+            <td colspan="5">
+              <p class="colcodigo"><strong>Codigo: </strong>{{servicio.codigo}}</p>
+            </td>
+          </tr>
+          <tr class="rowsmall">
+            <td colspan="3">
+              <p class="colnombre"><strong>Nombre: </strong>{{servicio.nombre}}</p>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

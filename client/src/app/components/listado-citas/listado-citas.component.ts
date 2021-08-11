@@ -32,6 +32,9 @@ export class ListadoCitasComponent implements OnInit {
     this.obtenerCitas();
   }
 
+  /**
+   * Método encargado de obtener todas las citas
+   */
   public obtenerCitas(): void {
     this.citaService.listarCitas().subscribe(
       response => {

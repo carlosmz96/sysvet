@@ -7,6 +7,10 @@ body {
   overflow-y: auto;
 }
 
+h1 {
+  font-size: 1.8em;
+}
+
 a {
   text-decoration: none;
 }
@@ -67,22 +71,10 @@ form {
 }
 
 @media (min-width: 992px) {
-  .modificar-usuario {
+  .modificar-usuario, .modificar-mascota {
     width: 50em;
   }
-  .eliminar-usuario {
-    width: 50em;
-  }
-  .alta-mascota {
-    width: 60em;
-  }
-  .modificar-mascota {
-    width: 50em;
-  }
-  .eliminar-mascota {
-    width: 50em;
-  }
-  .nueva-cita {
+  .alta-mascota, .nueva-cita, .alta-servicio, .modificar-servicio {
     width: 60em;
   }
 }

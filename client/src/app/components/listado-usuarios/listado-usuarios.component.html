@@ -1,84 +1,85 @@
 <app-navegacion></app-navegacion>
 
 <div class="container">
-    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body" style="text-align: justify;">
-            <p-table #dtusers [value]="usuarios" dataKey="dni" styleClass="p-datatable-gridlines" [paginator]="true"
-                stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-                [rowsPerPageOptions]="[10,25,50]">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th class="acordeon" style="width: 4.4rem; display: none;"></th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtusers.filter(getValueInput($event.target), 'dni', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtusers.filter(getValueInput($event.target), 'nombre', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtusers.filter(getValueInput($event.target), 'apellidos', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
-                            <input pInputText type="text"
-                                (input)="dtusers.filter(getValueInput($event.target), 'rol', 'contains')"
-                                placeholder="Buscar..." class="p-column-filter">
-                        </th>
-                        <th>
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body" style="text-align: justify;">
+      <h1>Listado de usuarios</h1>
+      <p>Listado de gestión de todos los usuarios del sistema.</p>
+      <hr>
+      <p-table #dtusers [value]="usuarios" dataKey="dni" styleClass="p-datatable-gridlines" [paginator]="true"
+        stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+        [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="acordeon" style="width: 4.4rem; display: none;"></th>
+            <th>
+              <input pInputText type="text" (input)="dtusers.filter(getValueInput($event.target), 'dni', 'contains')"
+                placeholder="Buscar..." class="p-column-filter">
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dtusers.filter(getValueInput($event.target), 'nombre', 'contains')"
+                placeholder="Buscar..." class="p-column-filter">
+            </th>
+            <th>
+              <input pInputText type="text"
+                (input)="dtusers.filter(getValueInput($event.target), 'apellidos', 'contains')" placeholder="Buscar..."
+                class="p-column-filter">
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dtusers.filter(getValueInput($event.target), 'rol', 'contains')"
+                placeholder="Buscar..." class="p-column-filter">
+            </th>
+            <th>
 
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="acordeon" style="display: none;"></th>
-                        <th pSortableColumn="dni" title="Ordenar por dni">Dni <p-sortIcon field="dni"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="nombre" title="Ordenar por nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="apellidos" title="Ordenar por apellidos">Apellidos <p-sortIcon field="apellidos"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="rol" title="Ordenar por rol">Rol <p-sortIcon field="rol"></p-sortIcon>
-                        </th>
-                        <th>Acción</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-usuario let-expanded="expanded">
-                    <tr>
-                        <td class="acordeon" style="display: none;">
-                            <button type="button" pButton pRipple [pRowToggler]="usuario"
-                                class="p-button-text p-button-rounded p-button-plain"
-                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                        </td>
-                        <td>{{usuario.dni}}</td>
-                        <td>{{usuario.nombre}}</td>
-                        <td>{{usuario.apellidos}}</td>
-                        <td>{{usuario.rol}}</td>
-                        <td>
-                            <i class="fas fa-lg fa-eye consultar" title="Consultar usuario" routerLink="/usuario/{{usuario.dni}}"
-                                style="display: block; text-align: center; cursor: pointer;"></i>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="rowexpansion" let-usuario>
-                    <tr class="rowmedia">
-                        <td colspan="5">
-                            <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
-                        </td>
-                    </tr>
-                    <tr class="rowsmall">
-                        <td colspan="3">
-                            <p class="coldni"><strong>Dni: </strong>{{usuario.dni}}</p>
-                            <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
-                            <p class="colrol"><strong>Rol: </strong>{{usuario.rol}}</p>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+            </th>
+          </tr>
+          <tr>
+            <th class="acordeon" style="display: none;"></th>
+            <th pSortableColumn="dni" title="Ordenar por dni">Dni <p-sortIcon field="dni"></p-sortIcon>
+            </th>
+            <th pSortableColumn="nombre" title="Ordenar por nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+            </th>
+            <th pSortableColumn="apellidos" title="Ordenar por apellidos">Apellidos <p-sortIcon field="apellidos">
+              </p-sortIcon>
+            </th>
+            <th pSortableColumn="rol" title="Ordenar por rol">Rol <p-sortIcon field="rol"></p-sortIcon>
+            </th>
+            <th>Acción</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario let-expanded="expanded">
+          <tr>
+            <td class="acordeon" style="display: none;">
+              <button type="button" pButton pRipple [pRowToggler]="usuario"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td>{{usuario.dni}}</td>
+            <td>{{usuario.nombre}}</td>
+            <td>{{usuario.apellidos}}</td>
+            <td>{{usuario.rol}}</td>
+            <td>
+              <i class="fas fa-lg fa-eye consultar" title="Consultar usuario" routerLink="/usuario/{{usuario.dni}}"
+                style="display: block; text-align: center; cursor: pointer;"></i>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-usuario>
+          <tr class="rowmedia">
+            <td colspan="5">
+              <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
+            </td>
+          </tr>
+          <tr class="rowsmall">
+            <td colspan="3">
+              <p class="coldni"><strong>Dni: </strong>{{usuario.dni}}</p>
+              <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
+              <p class="colrol"><strong>Rol: </strong>{{usuario.rol}}</p>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
+  </div>
 </div>

@@ -1,0 +1,24 @@
+@media (min-width: 576px) and (max-width: 767px) {
+  .container {
+    max-width: 100% !important;
+    padding: 0em !important;
+  }
+  .card-body {
+    padding: 0em !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 600px) {
+  .card-body {
+    padding: 1rem !important;
+  }
+}
+
+.botonera {
+  float: right;
+  padding: 0.5em 0em 0.5em 0em;
+}
+
+.botonera .btn {
+  margin-left: 0.5em;
+}

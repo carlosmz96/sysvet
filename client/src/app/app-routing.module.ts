@@ -1,3 +1,7 @@
+import { ServiciosComponent } from './components/servicios/servicios.component';
+import { ModificarServicioComponent } from './components/modificar-servicio/modificar-servicio.component';
+import { AltaServicioComponent } from './components/alta-servicio/alta-servicio.component';
+import { ListadoServiciosComponent } from './components/listado-servicios/listado-servicios.component';
 import { ConsultarCitaComponent } from './components/consultar-cita/consultar-cita.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -93,6 +97,26 @@ const routes: Routes = [
   {
     path: 'cita/:id_cita',
     component: ConsultarCitaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'listado-servicios',
+    component: ListadoServiciosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'alta-servicio',
+    component: AltaServicioComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'modificar-servicio/:id',
+    component: ModificarServicioComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'servicios',
+    component: ServiciosComponent,
     canActivate: [AuthGuard]
   },
   {

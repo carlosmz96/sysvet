@@ -58,8 +58,12 @@
         <div class="tab-contenido">
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="mis-datos" role="tabpanel" aria-labelledby="mis-datos-tab">
+              <h1>Perfil del usuario</h1>
+              <p>En este panel se muestran todos tus datos.</p>
+
               <!-- Cabecera del perfil de usuario -->
-              <div class="cabecera-perfil-usuario" style="padding-top: 1em;"
+              <hr>
+              <div class="cabecera-perfil-usuario"
                 *ngIf="usuario.foto && usuario.foto != null">
                 <img class="imagen-perfil-usuario" src="{{ url + 'obtener-foto-perfil/' + usuario.foto }}"
                   alt="Imagen de perfil del usuario">
@@ -68,6 +72,7 @@
                   <span class="subtitulo-perfil-usuario">Usuario {{usuario.rol}}</span>
                 </div>
               </div>
+              <hr>
 
               <!-- Datos del perfil de usuario -->
               <form class="datos-usuario">
@@ -97,7 +102,7 @@
                   </div>
                 </div>
               </form>
-
+              <hr>
               <div class="botonera" *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
                 <button type="button" class="btn btn-danger" (click)="bajaUsuario(usuario.dni)"><i
                     class="fas fa-user-minus" style="margin-right: 0.1em;"></i> Date de
@@ -109,9 +114,10 @@
             </div>
             <div class="tab-pane fade" id="mis-mascotas" role="tabpanel" aria-labelledby="mis-mascotas-tab">
               <div class="cabecera-perfil-mascotas">
-                <h2 class="titulo-mascotas-usuario">Mis mascotas</h2>
+                <h1>Mis mascotas</h1>
                 <p>En este apartado se muestran los datos de tus mascotas registradas en el sistema.</p>
               </div>
+              <hr>
               <div class="listado-mascotas">
                 <div *ngIf="mascotas.length > 0">
                   <div *ngFor="let mascota of mascotas">
@@ -138,9 +144,10 @@
             </div>
             <div class="tab-pane fade" id="mis-citas" role="tabpanel" aria-labelledby="mis-citas-tab">
               <div class="cabecera-perfil-citas">
-                <h2 class="titulo-citas-usuario">Mis citas</h2>
+                <h1>Mis citas</h1>
                 <p>En este apartado se muestran tus citas activas.</p>
               </div>
+              <hr>
               <div class="listado-citas">
                 <div class="btn-nueva-cita" *ngIf="identity.rol == 'veterinario'">
                   <button type="button" routerLink="/nueva-cita" title="Crear nueva cita" class="btn btn-success"><i

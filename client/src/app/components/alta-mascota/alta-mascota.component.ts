@@ -13,7 +13,6 @@ import { Usuario } from '../../models/Usuario';
 })
 export class AltaMascotaComponent implements OnInit {
   public identity: any;
-  public token: any;
   public mascota: Mascota;
   public usuarios: Usuario[] = [];
   public propietario: any;
@@ -28,7 +27,7 @@ export class AltaMascotaComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.identity = this.usuarioService.getIdentity();
-    this.mascota = new Mascota('','','','','','','', 0, 0, '', '', '', '', null, '');
+    this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', '', '', '', null, '');
     // obtiene todos los usuarios del sistema
     this.obtenerUsuarios();
   }
@@ -59,8 +58,6 @@ export class AltaMascotaComponent implements OnInit {
     if (this.identity != null) {
       this.mascota.dni_creacion = this.identity.dni;
     }
-
-    console.log(this.mascota)
 
     this.mascotaService.altaMascota(this.mascota).subscribe(
       response => {
@@ -96,8 +93,8 @@ export class AltaMascotaComponent implements OnInit {
    * Método encargado de mostrar una notificación con un mensaje de error
    * @param msg Mensaje pasado por parámetro
    */
-   public addErrorMessage(msg: string): void {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  public addErrorMessage(msg: string): void {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
   }
 
 }

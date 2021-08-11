@@ -17,6 +17,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
+import { TreeModule } from 'primeng/tree';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -38,6 +39,10 @@ import { ListadoCitasComponent } from './components/listado-citas/listado-citas.
 import { NuevaCitaComponent } from './components/nueva-cita/nueva-cita.component';
 import { CitaSolicitadaComponent } from './components/cita-solicitada/cita-solicitada.component';
 import { ConsultarCitaComponent } from './components/consultar-cita/consultar-cita.component';
+import { ServiciosComponent } from './components/servicios/servicios.component';
+import { ListadoServiciosComponent } from './components/listado-servicios/listado-servicios.component';
+import { AltaServicioComponent } from './components/alta-servicio/alta-servicio.component';
+import { ModificarServicioComponent } from './components/modificar-servicio/modificar-servicio.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +63,11 @@ import { ConsultarCitaComponent } from './components/consultar-cita/consultar-ci
     ListadoCitasComponent,
     NuevaCitaComponent,
     CitaSolicitadaComponent,
-    ConsultarCitaComponent
+    ConsultarCitaComponent,
+    ServiciosComponent,
+    ListadoServiciosComponent,
+    AltaServicioComponent,
+    ModificarServicioComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +84,8 @@ import { ConsultarCitaComponent } from './components/consultar-cita/consultar-ci
     ToastModule,
     ConfirmDialogModule,
     CalendarModule,
-    DialogModule
+    DialogModule,
+    TreeModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

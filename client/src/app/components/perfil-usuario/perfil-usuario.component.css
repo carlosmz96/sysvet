@@ -1,269 +1,249 @@
 /* Toda la fila de contenido */
 
 .row, .row-horizontal {
-    margin: -1em;
+  margin: -1em;
 }
 
 /* Contenido CARD */
 
 .card .side-menu-perfil {
-    background: rgb(240, 240, 240);
-    border: none;
-    padding: 1em;
-    width: 25%;
+  background: rgb(240, 240, 240);
+  border: none;
+  padding: 1em;
+  width: 25%;
 }
 
 .card .top-menu-perfil {
-    background: rgb(240, 240, 240);
-    border: none;
-    padding: 1em;
-    width: 100%;
-    margin-bottom: 2em;
+  background: rgb(240, 240, 240);
+  border: none;
+  padding: 1em;
+  width: 100%;
+  margin-bottom: 2em;
 }
 
-/* .card .top-menu-perfil-adicional {
-  background: rgb(240, 240, 240);
-    border: none;
-    padding: 1em;
-    width: 100%;
-    margin-bottom: 1em;
-} */
-
 .mb-3 {
-    margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 @media (min-width: 898px) and (max-width: 991px) {
-    .container {
-        max-width: 100% !important;
-    }
+  .container {
+    max-width: 100% !important;
+  }
 }
 
 @media (max-width: 897px) {
-    .container {
-        max-width: 100% !important;
-    }
-    .card {
-        padding: 1em !important;
-    }
-    .card .side-menu-perfil {
-        display: none;
-    }
-    .card .top-menu-perfil {
-        display: block !important;
-    }
-    .tab-contenido {
-        width: 100% !important;
-    }
-    .tab-content {
-        padding: 0em !important;
-    }
+  .container {
+    max-width: 100% !important;
+  }
+  .card {
+    padding: 1em !important;
+  }
+  .card .side-menu-perfil {
+    display: none;
+  }
+  .card .top-menu-perfil {
+    display: block !important;
+  }
+  .tab-contenido {
+    width: 100% !important;
+  }
+  .tab-content {
+    padding: 0em !important;
+  }
 }
 
 @media (max-width: 423px) {
-    .tab-content {
-        padding: 0em !important;
-    }
+  .tab-content {
+    padding: 0em !important;
+  }
 }
 
 /* Menú lateral (izquierda) */
 
 .col-3 {
-    max-width: 100%;
-    padding: 0;
+  max-width: 100%;
+  padding: 0;
 }
 
 /* Enlaces del menu lateral */
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color: white;
-    background: #72bd78;
+  color: white;
+  background: #72bd78;
 }
 
 .col-3 a, .nav-item a {
-    color: #474747;
+  color: #474747;
 }
 
 /* Tab de contenido (derecha) */
 
 .tab-contenido {
-    width: 75%;
+  width: 75%;
 }
 
 .tab-content {
-    padding: 0.5em 1em 1em 2em;
+  padding: 0.5em 1em 1em 2em;
 }
 
 /* Cabecera del perfil de usuario */
 
 .cabecera-perfil-usuario {
-    display: flex;
-    align-items: center;
-    padding-left: 1em;
+  display: flex;
+  align-items: center;
+  padding-left: 1em;
 }
 
 .imagen-perfil-usuario {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
 }
 
 .titulo-perfil-usuario {
-    margin-left: 1em;
-    margin-bottom: 0;
-    text-align: left;
-    font-size: 18pt;
+  margin-left: 1em;
+  margin-bottom: 0;
+  text-align: left;
+  font-size: 18pt;
 }
 
 .subtitulo-perfil-usuario {
-    margin-left: 1.3em;
-    text-align: left;
-    font-size: 14pt;
+  margin-left: 1.3em;
+  text-align: left;
+  font-size: 14pt;
 }
 
 /* Datos del usuario */
 
 .datos-usuario {
-    margin-top: 2em;
-    width: 100%;
+  width: 100%;
 }
 
 .form-row {
-    margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 
 /* Botonera */
 
 .botonera {
-    float: right;
-    padding: 1.3em 0.6em 1.3em 0em;
+  float: right;
+  padding: 0.5em 0.6em 1.3em 0em;
 }
 
 .botonera .btn {
-    margin-left: 0.5em;
+  margin-left: 0.5em;
 }
 
 /* Tarjetas de mascotas del usuario */
 
 .card-mascota {
-    display: flex;
-    padding: 1em;
-    align-items: center;
-    background: rgb(240, 240, 240);
-    border-radius: 0.25rem;
-    border: none;
-    margin-top: 0.5em;
+  display: flex;
+  padding: 1em;
+  align-items: center;
+  background: rgb(240, 240, 240);
+  border-radius: 0.25rem;
+  border: none;
+  margin-top: 0.5em;
 }
 
 .card-mascota-vacia, .card-cita-vacia {
-    display: flex;
-    padding: 1em;
-    align-items: center;
-    background: rgb(240, 240, 240);
-    border-radius: 0.25rem;
-    border: none;
-    margin-top: 0.5em;
+  display: flex;
+  padding: 1em;
+  align-items: center;
+  background: rgb(240, 240, 240);
+  border-radius: 0.25rem;
+  border: none;
+  margin-top: 0.5em;
 }
 
 .titulo-mascotas-usuario {
-    font-size: 18pt;
+  font-size: 18pt;
 }
 
 .imagen-perfil-mascota {
-    width: 110px;
-    height: 110px;
-    object-fit: cover;
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
 }
 
 .nombre-mascota {
-    margin-left: 1.5em;
-    font-size: 16pt;
-    width: 100%;
+  margin-left: 1.5em;
+  font-size: 16pt;
+  width: 100%;
 }
 
 .nombre {
-    float: left;
-    margin-right: 1em;
+  float: left;
+  margin-right: 1em;
 }
 
 .btn-consultar {
-    float: right;
-    margin-right: 0.5em;
+  float: right;
+  margin-right: 0.5em;
 }
 
 @media (max-width: 423px) {
-    .nombre-mascota {
-        margin-left: 1em;
-        font-size: 16pt;
-        width: 100%;
-    }
-
-    .nombre {
-        float: left;
-        margin-right: 1em;
-    }
-
-    .btn-consultar {
-        float: left;
-        margin-right: 0.5em;
-    }
+  .nombre-mascota {
+    margin-left: 1em;
+    font-size: 16pt;
+    width: 100%;
+  }
+  .nombre {
+    float: left;
+    margin-right: 1em;
+  }
+  .btn-consultar {
+    float: left;
+    margin-right: 0.5em;
+  }
 }
 
 @media (min-width: 424px) and (max-width: 444px) {
-    .nombre-mascota {
-        margin-left: 1em;
-        font-size: 16pt;
-    }
-
-    .btn-consultar {
-        float: left;
-        margin-right: 0.5em;
-    }
+  .nombre-mascota {
+    margin-left: 1em;
+    font-size: 16pt;
+  }
+  .btn-consultar {
+    float: left;
+    margin-right: 0.5em;
+  }
 }
 
 /* Citas */
 
 .titulo-citas-usuario {
-    font-size: 18pt;
+  font-size: 18pt;
 }
 
 .consultar:hover {
-    color: #72bd78;
+  color: #72bd78;
 }
 
 .btn-nueva-cita {
-    text-align: right;
-    margin-bottom: 1em;
+  text-align: right;
+  margin-bottom: 1em;
 }
 
 @media (min-width: 523px) {
-
   .espaciado-icono {
     text-align: center;
   }
-
   .izq {
     margin-right: 1em;
   }
-
 }
 
 @media (max-width: 522px) {
-
   .izq {
     margin-right: 0.3em;
   }
-
 }
 
 @media (max-width: 460px) {
-
   .espaciado-icono {
     text-align: center;
   }
-
   .izq {
     margin-right: 0em;
   }
-
 }

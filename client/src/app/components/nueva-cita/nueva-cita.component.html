@@ -6,11 +6,12 @@
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded nueva-cita">
     <div class="card-body" style="text-align: justify;">
       <form #newCitaForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-nueva-cita" ngNativeValidate>
+        <h1>Nueva cita</h1>
         <div style="margin-bottom: 0.5em;">
-          <p>Por favor, rellena todos los campos obligatorios (*) para poder
+          <p>Por favor, rellena todos los campos para poder
             solicitar una nueva cita.</p>
         </div>
-
+        <hr>
         <div class="form-group" *ngIf="identity.rol == 'veterinario'">
           <div class="row">
             <label for="mascota" class="col-sm-4 col-form-label"><strong>* Propietario</strong></label>

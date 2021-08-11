@@ -1,0 +1,45 @@
+.nuevo-servicio {
+  text-align: right;
+  margin-bottom: 0.5em;
+}
+
+.p-inputtext {
+  width: -webkit-fill-available;
+}
+
+.rowmedia, .rowsmall {
+  display: none;
+}
+
+/* Columna de la tabla para consultar */
+
+tr th:last-of-type {
+  width: 85px;
+}
+
+.consultar:hover {
+  color: #72bd78;
+}
+
+@media screen and (max-width: 600px) {
+  .acordeon {
+    display: table-cell !important;
+  }
+  .rowsmall {
+    display: table-row !important;
+  }
+  tr th:nth-of-type(3) {
+    display: none;
+  }
+  tr td:nth-of-type(3) {
+    display: none;
+  }
+}
+
+.espaciado-icono {
+  text-align: center;
+}
+
+.izq {
+  margin-right: 0.4em;
+}

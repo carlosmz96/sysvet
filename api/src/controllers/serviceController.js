@@ -67,9 +67,9 @@ async function consultarServicios(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function consultarServicio(req, res) {
-    const codigoServicio = req.params.codigo;
+    const idServicio = req.params.id;
 
-    await Servicio.findOne({ where: { codigo: codigoServicio } }).then(function (servicio) {
+    await Servicio.findOne({ where: { id_servicio: idServicio } }).then(function (servicio) {
         if (!servicio) {
             res.status(404).send({ message: 'No se ha encontrado el servicio.' });
         } else {
@@ -86,12 +86,13 @@ async function consultarServicio(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function modificarServicio(req, res) {
-    const codigoServicio = req.params.codigo;
+    const idServicio = req.params.id;
     const params = req.body;
 
     await Servicio.update({
+        codigo: params.codigo,
         nombre: params.nombre
-    }, { where: { codigo: codigoServicio } }).then(function (servicio) {
+    }, { where: { id_servicio: idServicio } }).then(function (servicio) {
         if (!servicio) {
             res.status(404).send({ message: 'No se ha encontrado el servicio a modificar.' });
         } else {
@@ -108,9 +109,9 @@ async function modificarServicio(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function bajaServicio(req, res) {
-    const codigoServicio = req.params.codigo;
+    const idServicio = req.params.id;
 
-    await Servicio.destroy({ where: { codigo: codigoServicio } }).then(function (servicio) {
+    await Servicio.destroy({ where: { id_servicio: idServicio } }).then(function (servicio) {
         if (!servicio) {
             res.status(404).send({ message: 'No se ha encontrado el servicio a eliminar.' });
         } else {
