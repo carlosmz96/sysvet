@@ -1,43 +1,47 @@
 .apartado-imagen {
-    display: flex;
-    align-items: center;
-    margin-top: 1em;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  width: 100%;
 }
 
 .recuadro-imagen {
-    width: 130px;
-    height: 130px;
-    margin-right: 2em;
+  width: 130px;
+  height: 130px;
+  margin-right: 2em;
 }
 
 .imagen-perfil-usuario {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
 }
 
 .botonera-imagen-usuario {
-    width: 100%;
+  width: 100%;
 }
 
 .subir-foto {
-    display: block;
-    width: 100% !important;
-    margin-bottom: 0.5em;
+  display: block;
+  width: 100% !important;
+  margin-bottom: 0.5em;
 }
 
 .eliminar-foto {
-    display: block;
-    width: 100% !important;
+  display: block;
+  width: 100% !important;
 }
 
 .btn-submit {
-    float: right;
-    margin-top: 1em;
-    margin-bottom: 1em;
+  float: right;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .btn-submit .btn-success {
-    margin-left: 0.5em;
+  margin-left: 0.5em;
+}
+
+.especializaciones-label {
+  margin-bottom: 1em;
 }

@@ -81,6 +81,17 @@
           </div>
         </div>
         <hr>
+        <div class="especializaciones"
+          *ngIf="(identity.rol == 'administrador' || identity.rol == 'veterinario') && usuario.rol == 'veterinario'">
+          <label for="especializaciones" class="col-form-label especializaciones-label"><strong>Especializaciones</strong></label>
+          <p-pickList [responsive]="true" [source]="servicios" [target]="asociados" sourceHeader="Todas"
+            targetHeader="Asociadas" [dragdrop]="true" [showSourceControls]="false" [showTargetControls]="false">
+            <ng-template let-servicio pTemplate="item">
+              <div>{{servicio.nombre}}</div>
+            </ng-template>
+          </p-pickList>
+        </div>
+        <hr>
         <div class="btn-submit">
           <button type="button" class="btn btn-danger" [routerLink]="['/usuario', usuario.dni]"><i
               class="fas fa-arrow-circle-left" style="margin-right: 0.1em;"></i> Volver</button>

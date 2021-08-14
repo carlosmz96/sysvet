@@ -185,11 +185,11 @@ async function bajaUsuario(req, res) {
             res.status(404).send({ message: 'No se ha podido encontrar al usuario.' });
         } else {
             if (user.rol == 'administrador') {
-                await Propietario.destroy({ where: { dni: userDni } }).then(async function(pro) {
+                await Propietario.destroy({ where: { dni: userDni } }).then(async function (pro) {
                     if (!pro) {
                         res.status(404).send({ message: 'No se ha podido dar de baja al propietario.' });
                     } else {
-                        await Veterinario.destroy({ where: { dni: userDni } }).then(async function(vet) {
+                        await Veterinario.destroy({ where: { dni: userDni } }).then(async function (vet) {
                             if (!vet) {
                                 res.status(404).send({ message: 'No se ha podido dar de baja al veterinario.' });
                             } else {
@@ -211,7 +211,7 @@ async function bajaUsuario(req, res) {
                     res.status(500).send({ message: 'Error al eliminar el propietario.' });
                 });
             } else if (user.rol == 'cliente') {
-                await Propietario.destroy({ where: { dni: userDni } }).then(async function(pro) {
+                await Propietario.destroy({ where: { dni: userDni } }).then(async function (pro) {
                     if (!pro) {
                         res.status(404).send({ message: 'No se ha podido dar de baja al propietario.' });
                     } else {
@@ -229,7 +229,7 @@ async function bajaUsuario(req, res) {
                     res.status(500).send({ message: 'Error al eliminar el propietario.' });
                 });
             } else {
-                await Veterinario.destroy({ where: { dni: userDni } }).then(async function(vet) {
+                await Veterinario.destroy({ where: { dni: userDni } }).then(async function (vet) {
                     if (!vet) {
                         res.status(404).send({ message: 'No se ha podido dar de baja al veterinario.' });
                     } else {
@@ -295,9 +295,9 @@ async function eliminarFotoPerfil(req, res) {
 
     const user = await Usuario.findByPk(userDni);
     const file_name = user.foto;
-    
+
     // eliminación de la foto en el directorio
-    if(file_name !== null && fs.existsSync(`${__dirname}/../public/images/` + file_name)) {
+    if (file_name !== null && fs.existsSync(`${__dirname}/../public/images/` + file_name)) {
         fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
     }
 
@@ -324,7 +324,7 @@ async function eliminarFotoPerfil(req, res) {
 function obtenerFotoPerfil(req, res) {
     const fotoPerfil = req.params.fotoPerfil;
     let path_file = "";
-    if(fotoPerfil == 'null'){
+    if (fotoPerfil == 'null') {
         path_file = './src/public/images/default-image.png';
     } else {
         path_file = './src/public/images/' + fotoPerfil;

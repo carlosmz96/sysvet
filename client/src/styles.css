@@ -163,3 +163,36 @@ a:hover {
 .title>a {
   font-weight: bold;
 }
+
+.p-accordion-header-link:focus {
+  z-index: 0 !important;
+}
+
+.p-button {
+  background: #72bd78;
+  border: 1px solid #63a868;
+}
+
+.p-button:hover {
+  background: #63a868 !important;
+  border: 1px solid #718572 !important;
+}
+
+.p-button:active {
+  background: #63a868 !important;
+  border: 1px solid #718572 !important;
+}
+
+/* ESTILO TOASTS */
+
+@media (min-width: 376px) and (max-width: 428px) {
+  .p-toast {
+    width: 23rem !important;
+  }
+}
+
+@media (max-width: 376px) {
+  .p-toast {
+    width: 21rem !important;
+  }
+}

@@ -123,6 +123,17 @@
   margin-top: 0.5em;
 }
 
+.espec {
+  background-color: #72bd78;
+  color: white;
+  display: inline-block;
+  font-size: 10pt;
+  padding: 0.2em 0.4em 0.2em 0.4em;
+  margin-right: 0.4em;
+  margin-bottom: 0.2em;
+  border-radius: 0.5em;
+}
+
 /* Botonera */
 
 .botonera {

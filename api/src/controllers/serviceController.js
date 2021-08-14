@@ -149,15 +149,15 @@ async function obtenerDescripcionServicio(req, res) {
  * @param {*} req Consulta para modificar la descripción del servicio
  * @param {*} res Respuesta generada tras la consulta
  */
- async function modificarDescripcionServicio(req, res) {
+async function modificarDescripcionServicio(req, res) {
     const serviceId = req.params.id;
     const params = req.body;
 
-    await ServicioDocumental.updateOne({_id: serviceId}, { descripcion: params.descripcion }, { upsert: true }, async function (err) {
+    await ServicioDocumental.updateOne({ _id: serviceId }, { descripcion: params.descripcion }, { upsert: true }, async function (err) {
         if (err) {
             res.status(500).send({ message: 'Error al actualizar los datos.' });
         } else {
-            await ServicioDocumental.findById({_id: serviceId}, (err, servicio) => {
+            await ServicioDocumental.findById({ _id: serviceId }, (err, servicio) => {
                 if (err) {
                     res.status(500).send({ message: 'Error al obtener los datos.' });
                 } else {
@@ -168,6 +168,31 @@ async function obtenerDescripcionServicio(req, res) {
     });
 }
 
+/**
+ * Método encargado de obtener los servicios mediante unos ids específicos
+ * @param {*} req Consulta para obtener los servicios
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function consultarServiciosByIds(req, res) {
+    const idsServicios = req.params.ids;
+
+    const array = idsServicios.split(",");
+
+    await Servicio.findAll({
+        where: {
+            id_servicio : array
+        }
+    }).then(function (servicios) {
+        if (!servicios) {
+            res.status(404).send({ message: 'No se han encontrado los servicios.' });
+        } else {
+            res.status(200).send({ servicios });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al obtener los servicios.' });
+    });
+}
+
 module.exports = {
     altaServicio,
     consultarServicios,
@@ -175,5 +200,6 @@ module.exports = {
     modificarServicio,
     bajaServicio,
     obtenerDescripcionServicio,
-    modificarDescripcionServicio
+    modificarDescripcionServicio,
+    consultarServiciosByIds
 }

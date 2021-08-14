@@ -1,3 +1,5 @@
+import { ServicioService } from './../../services/servicio.service';
+import { VeterinarioServicioService } from './../../services/veterinario-servicio.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../../models/Usuario';
@@ -9,6 +11,8 @@ import { MascotaService } from 'src/app/services/mascota.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Cita } from 'src/app/models/Cita';
 import { CitaService } from 'src/app/services/cita.service';
+import { Servicio } from 'src/app/models/Servicio';
+import { VeterinarioServicio } from 'src/app/models/VeterinarioServicio';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -22,11 +26,15 @@ export class PerfilUsuarioComponent implements OnInit {
   public dniUsuario: string = "";
   public url: string = "";
   public identity: any;
+  public especializaciones: Servicio[] = [];
+  public serviciosAsociados: VeterinarioServicio[] = [];
 
   constructor(
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
     private citaService: CitaService,
+    private servicioService: ServicioService,
+    private vetServService: VeterinarioServicioService,
     private router: Router,
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute,
@@ -45,7 +53,8 @@ export class PerfilUsuarioComponent implements OnInit {
    * 1) Obtiene el dni del usuario (si no hay ninguno, redirecciona a la página principal)
    * 2) Consulta el usuario
    * 3) Si la imagen del usuario es nula, se sustituye por la foto por defecto
-   * 4) Obtiene las mascotas asociadas al usuario
+   * 4) Obtención de las especializaciones del veterinario
+   * 5) Obtiene las mascotas asociadas al usuario
    */
   ngOnInit(): void {
     this.dniUsuario = this.route.snapshot.paramMap.get('dni')!;
@@ -57,6 +66,11 @@ export class PerfilUsuarioComponent implements OnInit {
           this.usuario = response.user;
           if (this.usuario.foto == null) {
             this.usuario.foto = 'default-image.png';
+          }
+
+          // si el usuario es veterinario, obtiene sus especializaciones
+          if (this.usuario.rol == 'veterinario') {
+            this.obtenerEspecializaciones();
           }
         },
         error => {
@@ -117,7 +131,7 @@ export class PerfilUsuarioComponent implements OnInit {
    * Método encargado de dar de baja al usuario
    * @param dni Dni del usuario a dar de baja
    */
-   public bajaUsuario(dni: string): void {
+  public bajaUsuario(dni: string): void {
     this.confirmationService.confirm({
       message: '¿Estás seguro?',
       accept: () => {
@@ -156,6 +170,39 @@ export class PerfilUsuarioComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**
+   * Método encargado de obtener todas las especializaciones del veterinario
+   */
+  public obtenerEspecializaciones(): void {
+    this.vetServService.listarEspecializacionesVeterinario(this.dniUsuario).subscribe(
+      response => {
+        this.serviciosAsociados = response.servicios as VeterinarioServicio[];
+
+        let idsServicios = '';
+        this.serviciosAsociados.forEach(servicio => {
+          if (idsServicios.length == 0) {
+            idsServicios += servicio.id_servicio;
+          } else {
+            idsServicios += ',' + servicio.id_servicio;
+          }
+        });
+
+        // obtenemos todos los servicios que tenga asociados el veterinario
+        this.servicioService.listarServiciosByIds(idsServicios).subscribe(
+          response => {
+            this.especializaciones = response.servicios as Servicio[];
+          },
+          error => {
+            this.addErrorMessage(error.error.message);
+          }
+        );
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
   }
 
   /**

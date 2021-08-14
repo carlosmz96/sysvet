@@ -1,10 +1,13 @@
+import { VeterinarioServicioService } from './../../services/veterinario-servicio.service';
+import { VeterinarioServicio } from './../../models/VeterinarioServicio';
+import { ServicioService } from './../../services/servicio.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Servicio } from 'src/app/models/Servicio';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GLOBAL } from '../../global';
 import { Usuario } from '../../models/Usuario';
-import { AccesoDenegadoComponent } from '../acceso-denegado/acceso-denegado.component';
 
 @Component({
   selector: 'app-modificar-usuario',
@@ -22,9 +25,15 @@ export class ModificarUsuarioComponent implements OnInit {
   public fotoCambiada: boolean = false;
   public identity: any;
   public sinErrores: boolean = false;
+  public servicios: Servicio[] = []; // todos los servicios
+  public asociados: Servicio[] = []; // asociados al veterinario
+  public asociadosAux: Servicio[] = []; // array auxiliar de asociados
+  public serviciosAsociados: VeterinarioServicio[] = []; // lista de relaciones entre veterinarios y servicios
 
   constructor(
     private usuarioService: UsuarioService,
+    private servicioService: ServicioService,
+    private vetServService: VeterinarioServicioService,
     private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
@@ -38,31 +47,24 @@ export class ModificarUsuarioComponent implements OnInit {
 
   /**
    * Método que se ejecuta al visualizar el componente
-   * 1) Obtiene el dni del usuario (si no hay ninguno, redirecciona a la página principal)
-   * 2) Consulta el usuario
-   * 3) Si la imagen del usuario es nula, se sustituye por la foto por defecto
-   * 4) Limpia el campo de contraseña
    */
   ngOnInit(): void {
+    // obtiene el dni del usuario a modificar
     this.dniUsuario = this.route.snapshot.paramMap.get('dni')!;
-    if(this.identity.dni != this.dniUsuario && this.identity.rol != "administrador"){
+    // si no tiene permisos, se redirige al acceso denegado
+    if (this.identity.dni != this.dniUsuario && this.identity.rol != "administrador") {
       this.router.navigate(['acceso-denegado']);
     }
+    // si el dni el usuario no está, se redirige al index
     if (this.dniUsuario == "") {
       this.router.navigate(['index']);
     } else {
-      this.usuarioService.consultarUsuario(this.dniUsuario).subscribe(
-        response => {
-          this.usuario = response.user;
-          this.usuario.pass = "";
-          if (this.usuario.foto == null) {
-            this.usuario.foto = 'default-image.png';
-          }
-        },
-        error => {
-          this.addErrorMessage('Error al obtener todos los datos del usuario.');
-        }
-      );
+      // obtencion de los datos del usuario a modificar
+      this.consultarUsuario();
+      // obtención de todos los servicios del sistema
+      this.listarServicios();
+      // obtención de todos los servicios asociados al veterinario
+      this.obtenerServiciosAsociados();
     }
   }
 
@@ -82,7 +84,6 @@ export class ModificarUsuarioComponent implements OnInit {
       ).catch(error => {
         this.addErrorMessage('Fichero demasiado pesado. El tamaño máximo es 1Mb.');
         this.sinErrores = false;
-        console.log(this.sinErrores);
       });
     }
 
@@ -120,6 +121,9 @@ export class ModificarUsuarioComponent implements OnInit {
                     this.addErrorMessage(error.error.message);
                   }
                 );
+
+                // actualización de los servicios asociados al veterinario
+                this.modificarEspecialidades();
               },
               error => {
                 this.addErrorMessage(error.error.message);
@@ -153,6 +157,9 @@ export class ModificarUsuarioComponent implements OnInit {
           this.addErrorMessage(error.error.message);
         }
       );
+
+      // actualización de los servicios asociados al veterinario
+      this.modificarEspecialidades();
     }
   }
 
@@ -226,6 +233,141 @@ export class ModificarUsuarioComponent implements OnInit {
   }
 
   /**
+   * Método encargado de consultar los datos del usuario
+   */
+  public consultarUsuario(): void {
+    this.usuarioService.consultarUsuario(this.dniUsuario).subscribe(
+      response => {
+        this.usuario = response.user;
+        this.usuario.pass = "";
+        if (this.usuario.foto == null) {
+          this.usuario.foto = 'default-image.png';
+        }
+      },
+      error => {
+        this.addErrorMessage('Error al obtener todos los datos del usuario.');
+      }
+    );
+  }
+
+  /**
+   * Método encargado de listar todos los servicios del sistema
+   */
+  public listarServicios(): void {
+    this.servicioService.listarServicios().subscribe(
+      response => {
+        this.servicios = response.servicios as Servicio[];
+        // ordena los servicios por orden alfabético
+        this.servicios.sort((a: Servicio, b: Servicio) => a.nombre.localeCompare(b.nombre));
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
+  }
+
+  /**
+   * Método encargado de obtener los servicios asociados al veterinario
+   */
+  public obtenerServiciosAsociados(): void {
+    this.vetServService.listarEspecializacionesVeterinario(this.dniUsuario).subscribe(
+      response => {
+        this.serviciosAsociados = response.servicios as VeterinarioServicio[];
+
+        // reparte los servicios entre las dos listas
+        this.repartirServicios();
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
+  }
+
+  /**
+   * Método encargado de repartir los servicios entre 'todos' y 'asociados'
+   */
+  public repartirServicios(): void {
+    // añade todos los servicios que tenga asociados a la lista de asociados
+    this.servicios.forEach(servicio => {
+      if (this.incluyeServicio(servicio.id_servicio!)) {
+        this.asociados.push(servicio);
+        this.asociadosAux.push(servicio);
+      }
+    });
+
+    // elimina todos los servicios que esten asociados de la lista de servicios original
+    this.servicios = this.servicios.filter(servicio => {
+      return this.asociados.indexOf(servicio) < 0;
+    });
+  }
+
+  /**
+   * Método encargado de comprobar que el array contiene al servicio
+   * @param id id del servicio
+   * @returns TRUE/FALSE
+   */
+  public incluyeServicio(id: number): boolean {
+    const res = this.serviciosAsociados.filter(servicio => servicio.id_servicio == id);
+    if (res.length == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Método encargado de modificar las especialidades del veterinario
+   */
+  public modificarEspecialidades(): void {
+    if (this.usuario.rol == 'veterinario') {
+      // nuevos servicios a asociar
+      const nuevos = this.asociados.filter(servicio => {
+        return !this.asociadosAux.includes(servicio);
+      });
+
+      // nuevos servicios a asociar
+      const paraEliminar = this.asociadosAux.filter(servicio => {
+        return !this.asociados.includes(servicio);
+      });
+
+      // si hay para agregar, se crean las relaciones
+      if (nuevos.length > 0) {
+        nuevos.forEach(nuevo => {
+          this.vetServService.crearRelacion(this.dniUsuario, nuevo.id_servicio!).subscribe(
+            response => {
+              // no hay que poner nada
+            },
+            error => {
+              this.addErrorMessage(error.error.message);
+            }
+          );
+
+          this.asociadosAux.push(nuevo);
+        });
+      }
+
+      // si hay para eliminar, se eliminan las relaciones
+      if (paraEliminar.length > 0) {
+        paraEliminar.forEach(del => {
+          this.vetServService.eliminarRelacion(this.dniUsuario, del.id_servicio!).subscribe(
+            response => {
+              // no hay que poner nada
+            },
+            error => {
+              this.addErrorMessage(error.error.message);
+            }
+          );
+
+          const index = this.asociadosAux.indexOf(del);
+          if (index > -1) {
+            this.asociadosAux.splice(index, 1);
+          }
+        });
+      }
+    }
+  }
+
+  /**
    * Método encargado de redireccionar a perfil usuario
    */
   public goPerfil(): void {
@@ -236,16 +378,16 @@ export class ModificarUsuarioComponent implements OnInit {
    * Método encargado de mostrar una notificación con un mensaje de error
    * @param msg Mensaje pasado por parámetro
    */
-   public addErrorMessage(msg: string): void {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  public addErrorMessage(msg: string): void {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
   }
 
   /**
    * Método encargado de mostrar una notificación con un mensaje de éxito
    * @param msg Mensaje pasado por parámetro
    */
-   public addSuccessMessage(msg: string): void {
-    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
+  public addSuccessMessage(msg: string): void {
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: msg });
   }
 
 }

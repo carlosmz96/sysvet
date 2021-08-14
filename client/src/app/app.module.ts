@@ -17,7 +17,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
-import { TreeModule } from 'primeng/tree';
+import { PickListModule } from 'primeng/picklist';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -85,7 +85,7 @@ import { ModificarServicioComponent } from './components/modificar-servicio/modi
     ConfirmDialogModule,
     CalendarModule,
     DialogModule,
-    TreeModule
+    PickListModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

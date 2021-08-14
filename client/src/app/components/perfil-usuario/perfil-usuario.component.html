@@ -101,6 +101,14 @@
                     <input type="email" class="form-control" id="direccion" value="{{usuario.direccion}}" disabled>
                   </div>
                 </div>
+                <div class="form-row" *ngIf="usuario.rol == 'veterinario'">
+                  <label for="especializaciones" class="col-sm-4 col-form-label"><strong>Especializado en</strong></label>
+                  <div class="col-sm-8 col-form-label">
+                    <div class="espec" *ngFor="let es of especializaciones">
+                      {{ es.nombre }}
+                    </div>
+                  </div>
+                </div>
               </form>
               <hr>
               <div class="botonera" *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
