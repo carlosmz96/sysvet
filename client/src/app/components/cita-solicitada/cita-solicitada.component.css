@@ -1,15 +1,23 @@
+.titulo {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
 .img-correcto {
-    width: 18em;
+  width: 3em;
+  height: 3em;
 }
 
 .datos-motivo {
-    padding: 1em;
-    background: rgb(240, 240, 240);
-    border-radius: 0.25rem;
-    border: none;
-    margin-top: 0.5em;
+  padding: 1em;
+  background: rgb(240, 240, 240);
+  border-radius: 0.25rem;
+  border: none;
+  margin-top: 0.5em;
 }
 
 .motivo {
-    font-size: 15pt;
+  font-size: 15pt;
 }

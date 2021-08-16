@@ -1,4 +1,4 @@
-<p-confirmDialog #cd [style]="{width: '20em'}">
+<p-confirmDialog #cd [style]="{width: '20em'}" [closable]="false">
   <ng-template pTemplate="footer">
     <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
     <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
@@ -25,21 +25,21 @@
             <th>
               <input pInputText type="text"
                 (input)="dtcitas.filter(getValueInput($event.target), 'mascota', 'contains')" placeholder="Buscar..."
-                class="p-column-filter">
+                class="p-column-filter" title="Buscar por identificador de la mascota">
             </th>
             <th>
               <input pInputText type="text"
                 (input)="dtcitas.filter(getValueInput($event.target), 'propietario', 'contains')"
-                placeholder="Buscar..." class="p-column-filter">
+                placeholder="Buscar..." class="p-column-filter" title="Buscar por dni del propietario">
             </th>
             <th>
               <input pInputText type="text"
                 (input)="dtcitas.filter(getValueInput($event.target), 'fechaStr', 'contains')" placeholder="Buscar..."
-                class="p-column-filter">
+                class="p-column-filter" title="Buscar por fecha">
             </th>
             <th>
               <input pInputText type="text" (input)="dtcitas.filter(getValueInput($event.target), 'activa', 'contains')"
-                placeholder="Buscar..." class="p-column-filter">
+                placeholder="Buscar..." class="p-column-filter" title="Buscar por estado (S/N)">
             </th>
             <th>
 
@@ -47,10 +47,10 @@
           </tr>
           <tr>
             <th class="acordeon" style="display: none;"></th>
-            <th pSortableColumn="mascota" title="Ordenar por identificador">Mascota <p-sortIcon field="mascota">
+            <th pSortableColumn="mascota" title="Ordenar por identificador de la mascota">Mascota <p-sortIcon field="mascota">
               </p-sortIcon>
             </th>
-            <th pSortableColumn="propietario" title="Ordenar por dni">Propietario <p-sortIcon field="propietario">
+            <th pSortableColumn="propietario" title="Ordenar por dni del propietario">Propietario <p-sortIcon field="propietario">
               </p-sortIcon>
             </th>
             <th pSortableColumn="fechaStr" title="Ordenar por fecha">Fecha <p-sortIcon field="fechaStr"></p-sortIcon>
@@ -58,7 +58,7 @@
             <th pSortableColumn="activa" title="Ordenar por estado (activo)">Activa <p-sortIcon field="activa">
               </p-sortIcon>
             </th>
-            <th>Acción</th>
+            <th title="Acciones">Acciones</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-cita let-expanded="expanded">

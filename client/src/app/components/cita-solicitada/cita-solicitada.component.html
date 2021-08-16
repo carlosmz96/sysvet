@@ -1,18 +1,42 @@
 <app-navegacion></app-navegacion>
 
 <div class="container">
-    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded nueva-cita">
-        <div class="card-body" style="text-align: justify;">
-            <div *ngIf="message != 'default message'">
-                <div style="text-align: center;">
-                    <img class="img-correcto" src="../../../assets/images/correcto.png" alt="Imagen de indicación de éxito">
-                    <p>Hola {{ usuario.nombre }}, has solicitado cita para {{ mascota.nombre }} el día {{ datos.fecha }} con éxito.</p>
-                    <div class="datos-motivo justify-content-center">
-                        <div class="motivo"><strong>MOTIVO</strong></div>
-                        <span>{{ datos.motivo }}</span>
-                    </div>
-                </div>
-            </div>
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded nueva-cita">
+    <div class="card-body" style="text-align: justify;">
+      <div *ngIf="message != 'default message'">
+        <div class="titulo">
+          <img class="img-correcto" src="../../../assets/images/correcto.png" alt="Imagen de indicación de éxito">
+          <h1 style="align-self: flex-end;">Cita solicitada</h1>
         </div>
+        <hr>
+        <div class="text-center">
+          <div class="row">
+            <label for="mascota" class="col text-right"><strong>Mascota:</strong></label>
+            <span class="col text-left">{{ mascota.nombre }}</span>
+          </div>
+          <div class="row">
+            <label for="mascota" class="col text-right"><strong>Propietario/a:</strong></label>
+            <span class="col text-left">{{ usuario.nombre }} {{ usuario.apellidos }}</span>
+          </div>
+          <div class="row">
+            <label for="mascota" class="col text-right"><strong>Fecha y hora:</strong></label>
+            <span class="col text-left">{{ datos.fecha }}</span>
+          </div>
+          <div class="row">
+            <label for="mascota" class="col text-right"><strong>Servicio:</strong></label>
+            <span class="col text-left">{{ servicio.nombre }}</span>
+          </div>
+          <div class="row">
+            <label for="mascota" class="col text-right"><strong>Veterinario:</strong></label>
+            <span class="col text-left">{{ veterinario.nombre }} {{ veterinario.apellidos }}</span>
+          </div>
+        </div>
+        <hr>
+        <div class="text-center datos-motivo justify-content-center">
+          <div class="motivo"><strong>MOTIVO</strong></div>
+          <span>{{ datos.motivo }}</span>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

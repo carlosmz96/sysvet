@@ -15,23 +15,25 @@
       <div class="row-horizontal">
         <div class="card top-menu-perfil" style="display: none;">
           <button type="button" class="btn btn-dark"
-            *ngIf="identity.rol == 'veterinario' && identity.dni == usuario.dni" routerLink="/nueva-cita">Nueva
+            *ngIf="identity.rol == 'veterinario' && identity.dni == usuario.dni" routerLink="/nueva-cita"
+            title="Nueva cita">Nueva
             cita</button>
           <div class="dropdown-divider" *ngIf="identity.rol == 'veterinario' && identity.dni == usuario.dni"
             style="border-color: #cccccc"></div>
           <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#mis-datos" role="tab"
-                aria-controls="pills-home" aria-selected="true">Mis datos</a>
+                aria-controls="pills-home" aria-selected="true" title="Datos del usuario">Datos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="pills-profile-tab" data-toggle="pill" *ngIf="identity.rol != 'administrador'"
-                href="#mis-mascotas" role="tab" aria-controls="pills-profile" aria-selected="false">Mis mascotas</a>
+                href="#mis-mascotas" role="tab" aria-controls="pills-profile" aria-selected="false"
+                title="Mascotas del usuario">Mascotas</a>
             </li>
             <li class="nav-item"
               *ngIf="identity.rol != 'veterinario' && identity.rol != 'administrador' && identity.dni == usuario.dni">
               <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-citas" role="tab"
-                aria-controls="pills-profile" aria-selected="false">Mis citas</a>
+                aria-controls="pills-profile" aria-selected="false" title="Citas del usuario">Citas</a>
             </li>
           </ul>
         </div>
@@ -41,17 +43,20 @@
           <div class="col-3">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
               <button type="button" class="btn btn-dark"
-                *ngIf="identity.rol == 'veterinario' && identity.dni == usuario.dni" routerLink="/nueva-cita">Nueva
+                *ngIf="identity.rol == 'veterinario' && identity.dni == usuario.dni" routerLink="/nueva-cita"
+                title="Nueva cita">Nueva
                 cita</button>
               <div class="dropdown-divider" *ngIf="identity.rol == 'veterinario' && identity.dni == usuario.dni"
                 style="border-color: #cccccc"></div>
               <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#mis-datos" role="tab"
-                aria-controls="v-mis-datos" aria-selected="true">Mis datos</a>
+                aria-controls="v-mis-datos" aria-selected="true" title="Datos del usuario">Datos</a>
               <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" *ngIf="identity.rol != 'administrador'"
-                href="#mis-mascotas" role="tab" aria-controls="v-mis-mascotas" aria-selected="false">Mis mascotas</a>
+                href="#mis-mascotas" role="tab" aria-controls="v-mis-mascotas" aria-selected="false"
+                title="Mascotas del usuario">Mascotas</a>
               <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill"
                 *ngIf="identity.rol != 'veterinario' && identity.rol != 'administrador' && identity.dni == usuario.dni"
-                href="#mis-citas" role="tab" aria-controls="v-mis-citas" aria-selected="false">Mis citas</a>
+                href="#mis-citas" role="tab" aria-controls="v-mis-citas" aria-selected="false"
+                title="Citas del usuario">Citas</a>
             </div>
           </div>
         </div>
@@ -63,8 +68,7 @@
 
               <!-- Cabecera del perfil de usuario -->
               <hr>
-              <div class="cabecera-perfil-usuario"
-                *ngIf="usuario.foto && usuario.foto != null">
+              <div class="cabecera-perfil-usuario" *ngIf="usuario.foto && usuario.foto != null">
                 <img class="imagen-perfil-usuario" src="{{ url + 'obtener-foto-perfil/' + usuario.foto }}"
                   alt="Imagen de perfil del usuario">
                 <div class="texto-cabecera-perfil">
@@ -79,30 +83,34 @@
                 <div class="form-row">
                   <label for="dni" class="col-sm-4 col-form-label"><strong>DNI</strong></label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="dni" value="{{usuario.dni}}" disabled>
+                    <input type="text" class="form-control" id="dni" value="{{usuario.dni}}" title="DNI" disabled>
                   </div>
                 </div>
                 <div class="form-row">
                   <label for="email" class="col-sm-4 col-form-label"><strong>Correo
                       electrónico</strong></label>
                   <div class="col-sm-8">
-                    <input type="email" class="form-control" id="email" value="{{usuario.email}}" disabled>
+                    <input type="email" class="form-control" id="email" value="{{usuario.email}}"
+                      title="Correo electrónico" disabled>
                   </div>
                 </div>
                 <div class="form-row">
                   <label for="telefono" class="col-sm-4 col-form-label"><strong>Teléfono</strong></label>
                   <div class="col-sm-8">
-                    <input type="email" class="form-control" id="telefono" value="{{usuario.telefono}}" disabled>
+                    <input type="email" class="form-control" id="telefono" value="{{usuario.telefono}}" title="Teléfono"
+                      disabled>
                   </div>
                 </div>
                 <div class="form-row">
                   <label for="direccion" class="col-sm-4 col-form-label"><strong>Dirección</strong></label>
                   <div class="col-sm-8">
-                    <input type="email" class="form-control" id="direccion" value="{{usuario.direccion}}" disabled>
+                    <input type="email" class="form-control" id="direccion" value="{{usuario.direccion}}"
+                      title="Dirección" disabled>
                   </div>
                 </div>
                 <div class="form-row" *ngIf="usuario.rol == 'veterinario'">
-                  <label for="especializaciones" class="col-sm-4 col-form-label"><strong>Especializado en</strong></label>
+                  <label for="especializaciones" class="col-sm-4 col-form-label"><strong>Especializado
+                      en</strong></label>
                   <div class="col-sm-8 col-form-label">
                     <div class="espec" *ngFor="let es of especializaciones">
                       {{ es.nombre }}
@@ -112,17 +120,17 @@
               </form>
               <hr>
               <div class="botonera" *ngIf="usuario.dni == identity.dni || identity.rol == 'administrador'">
-                <button type="button" class="btn btn-danger" (click)="bajaUsuario(usuario.dni)"><i
+                <button type="button" class="btn btn-danger" (click)="bajaUsuario(usuario.dni)" title="Date de baja"><i
                     class="fas fa-user-minus" style="margin-right: 0.1em;"></i> Date de
                   baja</button>
-                <button type="button" class="btn btn-success" routerLink="/modificar-usuario/{{usuario.dni}}"><i
-                    class="fas fa-edit" style="margin-right: 0.1em;"></i> Editar
+                <button type="button" class="btn btn-success" routerLink="/modificar-usuario/{{usuario.dni}}"
+                  title="Editar datos"><i class="fas fa-edit" style="margin-right: 0.1em;"></i> Editar
                   datos</button>
               </div>
             </div>
             <div class="tab-pane fade" id="mis-mascotas" role="tabpanel" aria-labelledby="mis-mascotas-tab">
               <div class="cabecera-perfil-mascotas">
-                <h1>Mis mascotas</h1>
+                <h1>Listado de mascotas</h1>
                 <p>En este apartado se muestran los datos de tus mascotas registradas en el sistema.</p>
               </div>
               <hr>
@@ -137,7 +145,8 @@
                       <div class="nombre-mascota">
                         <span class="nombre">{{ mascota.nombre }}</span>
                         <button type="button" routerLink="/datos-mascota/{{ mascota.identificador }}"
-                          class="btn btn-success btn-consultar"><i class="fas fa-eye" style="margin-right: 0.1em;"></i>
+                          class="btn btn-success btn-consultar" title="Consultar mascota"><i class="fas fa-eye"
+                            style="margin-right: 0.1em;"></i>
                           Consultar</button>
                       </div>
                     </div>
@@ -157,28 +166,28 @@
               </div>
               <hr>
               <div class="listado-citas">
-                <div class="btn-nueva-cita" *ngIf="identity.rol == 'veterinario'">
+                <!-- <div class="btn-nueva-cita" *ngIf="identity.rol == 'veterinario'">
                   <button type="button" routerLink="/nueva-cita" title="Crear nueva cita" class="btn btn-success"><i
                       class="fas fa-arrow-circle-right" style="margin-right: 0.1em;"></i> Nueva cita</button>
-                </div>
+                </div> -->
                 <div class="btn-nueva-cita" *ngIf="identity.rol != 'veterinario'">
                   <button type="button" routerLink="/nueva-cita" title="Pedir cita" class="btn btn-success"><i
                       class="fas fa-arrow-circle-right" style="margin-right: 0.1em;"></i> Pedir cita</button>
                 </div>
 
                 <div *ngIf="citas.length > 0">
-                  <p-table [value]="citas">
+                  <p-table [value]="citas" styleClass="p-datatable-gridlines">
                     <ng-template pTemplate="header">
                       <tr>
-                        <th>Mascota</th>
-                        <th>Fecha</th>
-                        <th style="width: 20%;"></th>
+                        <th title="Nombre de la mascota">Mascota</th>
+                        <th title="Fecha de la cita">Fecha</th>
+                        <th style="width: 98px;" title="Acciones">Acciones</th>
                       </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-cita let-expanded="expanded">
                       <tr>
                         <td><a routerLink="/datos-mascota/{{cita.mascota}}"
-                            title="Consultar mascota">{{cita.mascota}}</a></td>
+                            title="Consultar mascota">{{cita.nombreMascota}}</a></td>
                         <td>{{cita.fechaStr}}</td>
                         <td>
                           <div class="espaciado-icono">

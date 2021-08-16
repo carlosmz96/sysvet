@@ -25,7 +25,7 @@ export class ListadoCitasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.identity.rol != "administrador") {
+    if (this.identity.rol != "administrador" && this.identity.rol != "veterinario") {
       this.router.navigate(['acceso-denegado']);
     }
 

@@ -144,6 +144,27 @@ async function consultarUsuarios(req, res) {
 }
 
 /**
+ * Método encargado de consultar la lista de usuarios según una lista de dnis
+ * @param {*} req Consulta de todos los usuarios según una lista de dnis
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function consultarUsuariosByDnis(req, res) {
+    const dnis = req.params.dnis;
+
+    const array = dnis.split(",");
+
+    await Usuario.findAll({ where: { dni: array } }).then(function (users) {
+        if (!users) {
+            res.status(404).send({ message: 'No se ha podido encontrar la lista de usuarios.' });
+        } else {
+            res.status(200).send({ users });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al consultar la lista de usuarios.' });
+    });
+}
+
+/**
  * Método encargado de actualizar los datos del usuario en BBDD
  * @param {*} req Consulta de los datos modificados del usuario
  * @param {*} res Respuesta generada tras la modificación de los datos del usuario
@@ -444,6 +465,7 @@ module.exports = {
     iniciarSesion,
     consultarUsuario,
     consultarUsuarios,
+    consultarUsuariosByDnis,
     modificarUsuario,
     bajaUsuario,
     subirFotoPerfil,

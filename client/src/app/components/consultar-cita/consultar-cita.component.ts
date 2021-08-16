@@ -1,3 +1,5 @@
+import { ServicioService } from './../../services/servicio.service';
+import { Servicio } from './../../models/Servicio';
 import { Mascota } from 'src/app/models/Mascota';
 import { Usuario } from 'src/app/models/Usuario';
 import { Cita } from 'src/app/models/Cita';
@@ -18,21 +20,26 @@ export class ConsultarCitaComponent implements OnInit {
   public idCita: string = '';
   public cita: Cita;
   public usuario: Usuario;
+  public veterinario: Usuario;
   public mascota: Mascota;
+  public servicio: Servicio;
   public identity: any;
 
   constructor(
     private citaService: CitaService,
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
+    private servicioService: ServicioService,
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService,
     private location: Location
   ) {
-    this.cita = new Cita('', '', '', new Date(), '', '', '');
+    this.cita = new Cita('', '', '', '', new Date(), '', 0, '', '', '');
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
+    this.veterinario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
     this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', 'default-image.png', '', '', '', null);
+    this.servicio = new Servicio(null, '', '');
 
     this.identity = this.usuarioService.getIdentity();
 
@@ -55,7 +62,9 @@ export class ConsultarCitaComponent implements OnInit {
           response => {
             this.cita.motivo = response.doc.motivo;
             this.obtenerPropietario(this.cita.propietario);
+            this.obtenerVeterinario(this.cita.veterinario);
             this.obtenerMascota(this.cita.mascota);
+            this.obtenerServicio(this.cita.servicio);
             this.compruebaUsuario();
           },
           error => {
@@ -81,7 +90,22 @@ export class ConsultarCitaComponent implements OnInit {
       error => {
         this.addErrorMessage(error.error.message);
       }
-    )
+    );
+  }
+
+  /**
+   * Método encargado de obtener los datos de un usuario veterinario
+   * @param dni Dni del veterinario
+   */
+  public obtenerVeterinario(dni: string): void {
+    this.usuarioService.consultarUsuario(dni).subscribe(
+      response => {
+        this.veterinario = response.user;
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
   }
 
   /**
@@ -92,6 +116,21 @@ export class ConsultarCitaComponent implements OnInit {
     this.mascotaService.consultarMascota(identificador).subscribe(
       response => {
         this.mascota = response.pet;
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
+  }
+
+  /**
+   * Método encargado de obtener un servicio
+   * @param id Identificación del servicio
+   */
+  public obtenerServicio(id: number) {
+    this.servicioService.consultarServicio(id).subscribe(
+      response => {
+        this.servicio = response.servicio;
       },
       error => {
         this.addErrorMessage(error.error.message);

@@ -168,17 +168,17 @@ a:hover {
   z-index: 0 !important;
 }
 
-.p-button {
+.p-picklist-buttons .p-button {
   background: #72bd78;
   border: 1px solid #63a868;
 }
 
-.p-button:hover {
+.p-picklist-buttons .p-button:hover {
   background: #63a868 !important;
   border: 1px solid #718572 !important;
 }
 
-.p-button:active {
+.p-picklist-buttons .p-button:active {
   background: #63a868 !important;
   border: 1px solid #718572 !important;
 }

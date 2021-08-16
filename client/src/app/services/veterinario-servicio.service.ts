@@ -43,6 +43,16 @@ export class VeterinarioServicioService {
   }
 
   /**
+   * Método encargado de llamar al api para obtener todas las relaciones según la especialidad
+   * @param idServicio id del servicio o especialidad
+   * @returns Listado de relaciones por especialidad
+   */
+   public listarVeterinariosPorEspecialidad(idServicio: number): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', this.token);
+    return this.httpClient.get(this.url + 'veterinarios-por-especialidad/' + idServicio, { headers: headers });
+  }
+
+  /**
    * Método encargado de llamar al api para eliminar una relación
    * @param dni Dni del veterinario
    * @param idServicio Id del servicio

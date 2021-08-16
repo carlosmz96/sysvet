@@ -11,13 +11,15 @@
           <p>Por favor, rellena todos los campos para poder
             solicitar una nueva cita.</p>
         </div>
+
         <hr>
-        <div class="form-group" *ngIf="identity.rol == 'veterinario'">
-          <div class="row">
-            <label for="mascota" class="col-sm-4 col-form-label"><strong>* Propietario</strong></label>
+
+        <div class="form-row">
+          <div class="form-group col-sm-6" *ngIf="identity.rol == 'veterinario'">
+            <label for="propietario"><strong>Propietario</strong></label>
             <p-dropdown [options]="usuarios" [(ngModel)]="usuario" optionLabel="nombre" [filter]="true"
               filterBy="nombre,apellidos" [showClear]="true" placeholder="Selecciona un propietario" id="propietario"
-              name="propietario" autoWidth="false" [style]="{'width': '100%'}" class="select-usuario col-sm-8 ml-0 mr-0"
+              name="propietario" autoWidth="false" [style]="{'width': '100%'}" title="Propietario"
               (ngModelChange)="obtenerMascotas()">
               <ng-template pTemplate="selectedItem">
                 <div *ngIf="usuario.dni != ''">
@@ -29,15 +31,18 @@
               </ng-template>
             </p-dropdown>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label for="mascota" class="col-sm-4 col-form-label"><strong>* Mascota</strong></label>
+          <div class="form-group col-sm-6" *ngIf="identity.rol != 'veterinario'">
+            <label for="prop"><strong>Propietario</strong></label>
+            <input type="text" style="height: 2.6em;" class="form-control" id="prop"
+              value="{{ identity.nombre + ' ' + identity.apellidos }}" title="Propietario" disabled>
+          </div>
+
+          <div class="form-group col-sm-6">
+            <label for="mascota"><strong>Mascota</strong></label>
             <p-dropdown [options]="mascotas" [(ngModel)]="mascota" optionLabel="nombre" [filter]="true"
               filterBy="nombre" [showClear]="true" placeholder="Selecciona una mascota" id="mascota" name="mascota"
-              autoWidth="false" [style]="{'width': '100%'}" class="select-mascota col-sm-8 ml-0 mr-0"
-              (ngModelChange)="habilitarCalendario()">
+              autoWidth="false" [style]="{'width': '100%'}" title="Mascota">
               <ng-template pTemplate="selectedItem">
                 <div *ngIf="mascota.identificador != ''">
                   <div>{{mascota.identificador + ' - ' + mascota.nombre}}</div>
@@ -50,34 +55,64 @@
           </div>
         </div>
 
-        <div class="row" style="width: 100% !important;">
-          <div class="form-group">
-            <label for="fecha" class="col-form-label col-sm-auto"><strong>* Fecha</strong></label>
-            <p-calendar [(ngModel)]="fecha" class="col-sm-auto mr-5" name="fecha" [disabledDates]="invalidDates"
-              [disabledDays]="[0,6]" [readonlyInput]="true" placeholder="Elige el día" [showIcon]="true"
-              inputId="disabledays" dateFormat="dd/mm/yy" [firstDayOfWeek]="1" [disabled]="!calActivo"
-              (ngModelChange)="filtrarHoras()">
-            </p-calendar>
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <label for="fecha"><strong>Fecha</strong></label>
+            <p-calendar [(ngModel)]="fecha" name="fecha" id="fecha" [style]="{'width': '100%'}"
+              [disabledDates]="invalidDates" [disabledDays]="[0,6]" [readonlyInput]="true" placeholder="Elige el día"
+              [showIcon]="true" inputId="disabledays" dateFormat="dd/mm/yy" [firstDayOfWeek]="1" [disabled]="!mascota"
+              (ngModelChange)="filtrarHoras()" title="Fecha"></p-calendar>
           </div>
 
-          <div class="form-group">
-            <label for="hora" class="col-form-label col-sm-auto mr-2"><strong>* Hora</strong></label>
-            <p-dropdown [options]="horas" class="col-sm-auto" name="hora" placeholder="Elige la hora"
-              [(ngModel)]="horaSeleccionada" optionLabel="label" optionValue="value" [disabled]="!dropActivo">
+          <div class="form-group col-sm-6">
+            <label for="hora"><strong>Hora</strong></label>
+            <p-dropdown [options]="horas" [style]="{'width': '100%'}" name="hora" id="hora" placeholder="Elige la hora"
+              [(ngModel)]="horaSeleccionada" optionLabel="label" optionValue="value" title="Hora"
+              [disabled]="!dropActivo">
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <label for="servicio"><strong>Servicio</strong></label>
+            <p-dropdown [options]="servicios" [style]="{'width': '100%'}" name="servicio" id="servicio"
+              optionLabel="nombre" placeholder="Selecciona el servicio" [(ngModel)]="servicio" title="Servicio"
+              (ngModelChange)="habilitarDropVet()">
+            </p-dropdown>
+          </div>
+
+          <div class="form-group col-sm-6">
+            <label for="veterinario"><strong>Veterinario</strong></label>
+            <p-dropdown [options]="veterinarios" [(ngModel)]="veterinario" optionLabel="nombre" [filter]="true"
+              filterBy="nombre,apellidos" [showClear]="true" placeholder="Selecciona un veterinario" id="veterinario"
+              name="veterinario" autoWidth="false" [style]="{'width': '100%'}" title="Veterinario"
+              [disabled]="!vetActivo">
+              <ng-template pTemplate="selectedItem">
+                <div *ngIf="veterinario.dni != ''">
+                  <div>{{veterinario.nombre + ' ' + veterinario.apellidos}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-vet pTemplate="item">
+                <div>{{vet.nombre + ' ' + vet.apellidos}}</div>
+              </ng-template>
             </p-dropdown>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="motivo"><strong>* Motivo</strong></label>
+          <label for="motivo"><strong>Motivo</strong></label>
           <textarea class="form-control" id="motivo" rows="3" #motivo="ngModel" name="motivo" [(ngModel)]="cita.motivo"
-            placeholder="Escribe el motivo de la cita"></textarea>
+            placeholder="Escribe el motivo de la cita" title="Motivo"></textarea>
         </div>
 
+        <hr>
+
         <div class="botonera">
-          <button type="button" class="btn btn-danger" (click)="goBack()"><i class="fas fa-arrow-circle-left"
-              style="margin-right: 0.1em;"></i> Volver</button>
-          <button type="submit" class="btn btn-success"><i class="fas fa-check-circle" style="margin-right: 0.1em;"></i>
+          <button type="button" class="btn btn-danger" (click)="goBack()" title="Volver"><i
+              class="fas fa-arrow-circle-left" style="margin-right: 0.1em;"></i> Volver</button>
+          <button type="submit" class="btn btn-success" title="Solicitar cita"><i class="fas fa-check-circle"
+              style="margin-right: 0.1em;"></i>
             Solicitar cita</button>
         </div>
 

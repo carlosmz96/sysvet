@@ -15,20 +15,20 @@
             <th class="acordeon" style="width: 4.4rem; display: none;"></th>
             <th>
               <input pInputText type="text" (input)="dtusers.filter(getValueInput($event.target), 'dni', 'contains')"
-                placeholder="Buscar..." class="p-column-filter">
+                placeholder="Buscar..." class="p-column-filter" title="Buscar por dni">
             </th>
             <th>
               <input pInputText type="text" (input)="dtusers.filter(getValueInput($event.target), 'nombre', 'contains')"
-                placeholder="Buscar..." class="p-column-filter">
+                placeholder="Buscar..." class="p-column-filter" title="Buscar por nombre">
             </th>
             <th>
               <input pInputText type="text"
                 (input)="dtusers.filter(getValueInput($event.target), 'apellidos', 'contains')" placeholder="Buscar..."
-                class="p-column-filter">
+                class="p-column-filter" title="Buscar por apellidos">
             </th>
             <th>
               <input pInputText type="text" (input)="dtusers.filter(getValueInput($event.target), 'rol', 'contains')"
-                placeholder="Buscar..." class="p-column-filter">
+                placeholder="Buscar..." class="p-column-filter" title="Buscar por rol">
             </th>
             <th>
 

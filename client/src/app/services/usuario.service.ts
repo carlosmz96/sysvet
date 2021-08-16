@@ -58,6 +58,15 @@ export class UsuarioService {
   }
 
   /**
+   * Método encargado de llamar al api para obtener el listado de usuarios según una lista de dnis
+   * @returns Listado de usuarios
+   */
+   public listarUsuariosByDnis(dnis: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', this.getToken());
+    return this.httpClient.get(this.url + 'usuariosByDnis/' + dnis, { headers: headers });
+  }
+
+  /**
    * Método encargado de llamar al api para consultar los datos de un usuario
    * @param dni Dni del usuario a consultar
    * @returns Usuario consultado

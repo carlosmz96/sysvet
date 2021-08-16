@@ -17,21 +17,22 @@
         <button type="button" class="btn btn-success" title="Nuevo servicio" routerLink="/alta-servicio"><i
             class="fas fa-plus-circle"></i> Nuevo servicio</button>
       </div>
-      <p-table #dtservices [value]="servicios" dataKey="id_servicio" styleClass="p-datatable-gridlines" [paginator]="true"
-        stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
+      <p-table #dtservices [value]="servicios" dataKey="id_servicio" styleClass="p-datatable-gridlines"
+        [paginator]="true" stateStorage="local" stateKey="statedemo-local" [rows]="10" [showCurrentPageReport]="true"
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
         [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
           <tr>
             <th class="acordeon" style="width: 4.4rem; display: none;"></th>
             <th>
-              <input pInputText type="text" (input)="dtservices.filter(getValueInput($event.target), 'codigo', 'contains')"
-                placeholder="Buscar..." class="p-column-filter">
+              <input pInputText type="text"
+                (input)="dtservices.filter(getValueInput($event.target), 'codigo', 'contains')" placeholder="Buscar..."
+                class="p-column-filter" title="Buscar por código">
             </th>
             <th>
               <input pInputText type="text"
                 (input)="dtservices.filter(getValueInput($event.target), 'nombre', 'contains')" placeholder="Buscar..."
-                class="p-column-filter">
+                class="p-column-filter" title="Buscar por nombre">
             </th>
             <th>
 
@@ -44,7 +45,7 @@
             </th>
             <th pSortableColumn="nombre" title="Ordenar por nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
             </th>
-            <th>Acción</th>
+            <th title="Acciones">Acciones</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-servicio let-expanded="expanded">
@@ -58,10 +59,10 @@
             <td>{{servicio.nombre}}</td>
             <td>
               <div class="espaciado-icono">
-                <i class="fas fa-lg fa-edit consultar izq" routerLink="/modificar-servicio/{{servicio.id_servicio}}" title="Editar servicio"
-                  style="cursor: pointer;"></i>
-                <i class="fas fa-lg fa-trash-alt consultar" title="Eliminar servicio" (click)="eliminarServicio(servicio)"
-                  style="cursor: pointer;"></i>
+                <i class="fas fa-lg fa-edit consultar izq" routerLink="/modificar-servicio/{{servicio.id_servicio}}"
+                  title="Editar servicio" style="cursor: pointer;"></i>
+                <i class="fas fa-lg fa-trash-alt consultar" title="Eliminar servicio"
+                  (click)="eliminarServicio(servicio)" style="cursor: pointer;"></i>
               </div>
             </td>
           </tr>

@@ -25,12 +25,14 @@ async function nuevaCita(req, res) {
                     mascota: params.mascota,
                     propietario: params.propietario,
                     fecha: params.fecha,
+                    servicio: params.servicio,
+                    veterinario: params.veterinario,
                     activa: 'S'
                 }).then(async function (cita) {
                     if (!cita) {
                         res.status(404).send({ message: 'No se ha creado la cita.' });
                     } else {
-                        await CitaDocumento.create({ _id: cita.id_cita, motivo: params.motivo }, (err, doc) => {
+                        await CitaDocumento.create({ _id: idCita, motivo: params.motivo }, (err, doc) => {
                             if (err) {
                                 res.status(500).send({ message: 'Error al establecer el motivo de la cita.' });
                             } else {
@@ -43,7 +45,6 @@ async function nuevaCita(req, res) {
                         });
                     }
                 }).catch((err) => {
-                    console.error(err)
                     res.status(500).send({ message: 'Error al crear una cita.' });
                 });
             } else {

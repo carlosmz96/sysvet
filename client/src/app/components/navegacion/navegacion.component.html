@@ -6,44 +6,51 @@
 
 <nav class="navbar navbar-expand-lg" style="margin-bottom: 2em; position: sticky; top: 0; z-index: 1;">
   <div class="container">
-    <a class="navbar-brand" (click)="goHome()" style="cursor: pointer;">{{ title }}</a>
+    <a class="navbar-brand" (click)="goHome()" style="cursor: pointer;" title="Página principal">{{ title }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-        <li class="nav-item" *ngIf="identity.rol == 'veterinario'">
-          <a class="nav-link" href="#" id="navbarPets" role="button" routerLink="/listado-mascotas">Mascotas</a>
-        </li>
         <li class="nav-item dropdown" *ngIf="identity.rol == 'administrador'">
           <a class="nav-link dropdown-toggle" href="#" id="navbarTables" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+            aria-haspopup="true" aria-expanded="false" title="Gestión del sistema">
             Gestión
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" routerLink="/listado-usuarios">Usuarios</a>
-            <a class="dropdown-item" routerLink="/listado-mascotas">Mascotas</a>
-            <a class="dropdown-item" routerLink="/listado-citas">Citas</a>
-            <a class="dropdown-item" routerLink="/listado-servicios">Servicios</a>
+            <a class="dropdown-item" routerLink="/listado-usuarios" title="Gestión de usuarios">Usuarios</a>
+            <a class="dropdown-item" routerLink="/listado-mascotas" title="Gestión de mascotas">Mascotas</a>
+            <a class="dropdown-item" routerLink="/listado-citas" title="Gestión de citas">Citas</a>
+            <a class="dropdown-item" routerLink="/listado-servicios" title="Gestión de servicios">Servicios</a>
           </div>
         </li>
+        <li class="nav-item" *ngIf="identity.rol == 'veterinario'">
+          <a class="nav-link" href="#" id="navbarPets" role="button" routerLink="/listado-mascotas"
+            title="Gestión de mascotas">Mascotas</a>
+        </li>
+        <li class="nav-item" *ngIf="identity.rol == 'veterinario'">
+          <a class="nav-link" href="#" id="navbarCitas" role="button" routerLink="/listado-citas"
+            title="Gestión de citas">Citas</a>
+        </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" id="navbarServices" role="button" routerLink="/servicios">Servicios</a>
+          <a class="nav-link" href="#" id="navbarServices" role="button" routerLink="/servicios"
+            title="Gestión de servicios">Servicios</a>
         </li>
         <li class="nav-item dropdown usuario">
           <a class="nav-link dropdown-toggle" href="#" id="navbarUser" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+            aria-haspopup="true" aria-expanded="false" title="Opciones de usuario">
             Hola, {{ identity.nombre }}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" [routerLink]="['/usuario/', identity.dni]">Mi perfil</a>
+            <a class="dropdown-item" [routerLink]="['/usuario/', identity.dni]" title="Consulta tus datos">Mi perfil</a>
             <div *ngIf="identity.roles == 'administrador, veterinario, cliente'">
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" (click)="showResponsiveDialog()" style="cursor: pointer;">Cambiar rol</a>
+              <a class="dropdown-item" (click)="showResponsiveDialog()" style="cursor: pointer;"
+                title="Cambiar rol de usuario">Cambiar rol</a>
             </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Cerrar sesión</a>
+            <a class="dropdown-item" style="cursor: pointer;" (click)="logout()" title="Cerrar sesión">Cerrar sesión</a>
           </div>
         </li>
       </ul>

@@ -20,21 +20,21 @@
             <th>
               <input pInputText type="text"
                 (input)="dtpets.filter(getValueInput($event.target), 'identificador', 'contains')" placeholder="Buscar..."
-                class="p-column-filter">
+                class="p-column-filter" title="Buscar por identificador">
             </th>
             <th>
               <input pInputText type="text" (input)="dtpets.filter(getValueInput($event.target), 'nombre', 'contains')"
-                placeholder="Buscar..." class="p-column-filter">
+                placeholder="Buscar..." class="p-column-filter" title="Buscar por nombre">
             </th>
             <th>
               <input pInputText type="text"
                 (input)="dtpets.filter(getValueInput($event.target), 'propietario', 'contains')" placeholder="Buscar..."
-                class="p-column-filter">
+                class="p-column-filter" title="Buscar por dni del propietario">
             </th>
             <th>
               <input pInputText type="text"
                 (input)="dtpets.filter(getValueInput($event.target), 'veterinario', 'contains')" placeholder="Buscar..."
-                class="p-column-filter">
+                class="p-column-filter" title="Buscar por dni del veterinario">
             </th>
             <th>
 
@@ -47,13 +47,13 @@
             </th>
             <th pSortableColumn="nombre" title="Ordenar por nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
             </th>
-            <th pSortableColumn="propietario" title="Ordenar por dni de propietario">Propietario <p-sortIcon
+            <th pSortableColumn="propietario" title="Ordenar por dni del propietario">Propietario <p-sortIcon
                 field="propietario"></p-sortIcon>
             </th>
-            <th pSortableColumn="veterinario" title="Ordenar por dni de veterinario">Veterinario <p-sortIcon
+            <th pSortableColumn="veterinario" title="Ordenar por dni del veterinario">Veterinario <p-sortIcon
                 field="veterinario"></p-sortIcon>
             </th>
-            <th>Acción</th>
+            <th title="Acción">Acción</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-mascota let-expanded="expanded">

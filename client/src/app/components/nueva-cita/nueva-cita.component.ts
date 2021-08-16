@@ -1,3 +1,7 @@
+import { VeterinarioServicio } from './../../models/VeterinarioServicio';
+import { VeterinarioServicioService } from './../../services/veterinario-servicio.service';
+import { ServicioService } from './../../services/servicio.service';
+import { Servicio } from './../../models/Servicio';
 import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
@@ -22,8 +26,12 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
   public cita: Cita;
   public usuarios: Usuario[] = [];
   public usuario: any;
+  public veterinarios: Usuario[] = [];
+  public veterinario: any;
   public mascotas: Mascota[] = [];
   public mascota: any;
+  public servicios: Servicio[] = [];
+  public servicio: any;
   public dniUsuario: string = '';
   public fecha: any;
   public fechaCompleta: any;
@@ -32,8 +40,8 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
   public invalidDates: Array<Date> = [];
   public horas: SelectItem[] = [];
   public horaSeleccionada: string = '';
-  public calActivo: boolean = false;
   public dropActivo: boolean = false;
+  public vetActivo: boolean = false;
 
   public message: string = '';
   public subscription: Subscription = new Subscription();
@@ -41,6 +49,8 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
   constructor(
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
+    private servicioService: ServicioService,
+    private vetServService: VeterinarioServicioService,
     private citaService: CitaService,
     private dataService: DataService,
     private messageService: MessageService,
@@ -50,7 +60,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
   ) {
     this.identity = this.usuarioService.getIdentity();
 
-    this.cita = new Cita('', '', '', new Date(), '', '', '');
+    this.cita = new Cita('', '', '', '', new Date(), '', 0, '', '', '');
 
     if (this.identity.rol != 'veterinario') {
       this.obtenerUsuario();
@@ -58,6 +68,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       this.obtenerPropietarios();
     }
     this.obtenerCitas();
+    this.obtenerServicios();
   }
 
   /**
@@ -90,6 +101,9 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       this.cita.mascota = this.mascota.identificador;
       this.cita.propietario = this.dniUsuario;
       this.cita.fecha = this.fechaCompleta;
+      this.cita.servicio = this.servicio.id_servicio;
+      this.cita.veterinario = this.veterinario.dni;
+      console.log(this.cita)
 
       this.citaService.nuevaCita(this.cita).subscribe(
         response => {
@@ -97,6 +111,8 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
             dni: this.dniUsuario,
             idMascota: this.mascota.identificador,
             fecha: this.cita.fecha,
+            servicio: this.cita.servicio,
+            veterinario: this.cita.veterinario,
             motivo: this.cita.motivo
           }
           this.dataService.changeMessage(JSON.stringify(datos));
@@ -125,7 +141,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
           }
         },
         error => {
-          this.addErrorMessage('Error al obtener el usuario.');
+          this.addErrorMessage(error.error.message);
         }
       );
     }
@@ -143,7 +159,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       error => {
         this.addErrorMessage(error.error.message);
       }
-    )
+    );
   }
 
   /**
@@ -173,10 +189,24 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
           }
         },
         error => {
-          this.addErrorMessage('Error al intentar obtener el listado de mascotas.');
+          this.addErrorMessage(error.error.message);
         }
       )
     }
+  }
+
+  /**
+   * Método encargado de obtener todos los servicios del sistema
+   */
+  public obtenerServicios(): void {
+    this.servicioService.listarServicios().subscribe(
+      response => {
+        this.servicios = response.servicios as Servicio[];
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    )
   }
 
   /**
@@ -189,7 +219,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
         this.invalidarFechas();
       },
       error => {
-        this.addErrorMessage('No se han podido obtener las citas.');
+        this.addErrorMessage(error.error.message);
       }
     );
   }
@@ -356,11 +386,48 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Método encargado de habilitar el calendario
+   * Método encargado de habilitar el dropdown de veterinarios
    */
-  public habilitarCalendario(): void {
-    this.calActivo = true;
-    console.log('cambiado')
+  public habilitarDropVet(): void {
+    this.vetActivo = true;
+    this.obtenerVeterinariosPorEspecialidad();
+  }
+
+  public obtenerVeterinariosPorEspecialidad(): void {
+    if (this.servicio) {
+      this.vetServService.listarVeterinariosPorEspecialidad(this.servicio.id_servicio).subscribe(
+        response => {
+          const relaciones = response.relaciones as VeterinarioServicio[];
+
+          console.log(relaciones)
+
+          let dnis = '';
+          relaciones.forEach(rel => {
+            if (dnis.length == 0) {
+              dnis += rel.dni;
+            } else {
+              dnis += ',' + rel.dni;
+            }
+          });
+
+          if (dnis.length > 0) {
+            this.usuarioService.listarUsuariosByDnis(dnis).subscribe(
+              response => {
+                this.veterinarios = response.users as Usuario[];
+              },
+              error => {
+                this.addErrorMessage(error.error.message);
+              }
+            );
+          } else if (relaciones.length == 0) {
+            this.veterinarios = [];
+          }
+        },
+        error => {
+          this.addErrorMessage(error.error.message);
+        }
+      );
+    }
   }
 
   /**

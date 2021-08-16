@@ -110,7 +110,17 @@ export class PerfilUsuarioComponent implements OnInit {
     this.citaService.consultarCitasPropietario(this.dniUsuario).subscribe(
       response => {
         this.citas = response.citas as Cita[];
-        this.citas.forEach(cita => cita.fechaStr = this.formatearFecha(cita.fecha));
+        this.citas.forEach(cita => {
+          cita.fechaStr = this.formatearFecha(cita.fecha);
+          this.mascotaService.consultarMascota(cita.mascota).subscribe(
+            response => {
+              cita.nombreMascota = response.pet.nombre;
+            },
+            error => {
+              this.addErrorMessage(error.error.message);
+            }
+          )
+        });
       },
       error => {
         this.addErrorMessage('Error al obtener la lista de citas del propietario.');

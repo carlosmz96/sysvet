@@ -23,6 +23,25 @@ async function obtenerEspecializacionesVeterinario(req, res) {
 }
 
 /**
+ * Método encargado de obtener los veterinarios según una especialidad
+ * @param {*} req Consulta a los veterinarios según una especialidad
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function obtenerVeterinariosPorEspecialidad(req, res) {
+    const idServicio = req.params.id;
+
+    await Veterinario_Servicio.findAll({ where: { id_servicio: idServicio } }).then(function (relaciones) {
+        if (!relaciones) {
+            res.status(404).send({ message: 'No se pudieron obtener las relaciones.' });
+        } else {
+            res.status(200).send({ relaciones });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al intentar obtener las relaciones.' });
+    });
+}
+
+/**
  * Método encargado de crear una asociación entre veterinario y servicio
  * @param {*} req Consulta para la creación de una asociación entre veterinario y servicio
  * @param {*} res Respuesta generada tras la consulta
@@ -72,6 +91,7 @@ async function desasignarEspecializacionDeVeterinario(req, res) {
 
 module.exports = {
     obtenerEspecializacionesVeterinario,
+    obtenerVeterinariosPorEspecialidad,
     asignarEspecializacionAVeterinario,
     desasignarEspecializacionDeVeterinario
 }

@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <app-navegacion></app-navegacion>
 
 <div class="container">
@@ -8,7 +10,8 @@
         <div class="form-group col-md-6">
           <label for="propietario"><strong>Propietario</strong></label>
           <div>
-            <a routerLink="/usuario/{{usuario.dni}}" title="Consultar propietario">{{usuario.nombre}} {{usuario.apellidos}}</a>
+            <a routerLink="/usuario/{{usuario.dni}}" title="Consultar propietario">{{usuario.nombre}}
+              {{usuario.apellidos}}</a>
           </div>
         </div>
         <div class="form-group col-md-6">
@@ -37,12 +40,29 @@
         </div>
       </div>
 
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="servicio"><strong>Servicio</strong></label>
+          <div>
+            {{servicio.nombre}}
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="veterinario"><strong>Veterinario</strong></label>
+          <div>
+            <a routerLink="/usuario/{{veterinario.dni}}" title="Consultar veterinario">{{veterinario.nombre}}
+              {{veterinario.apellidos}}</a>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="motivo"><strong>Motivo</strong></label>
         <textarea class="form-control" id="motivo" rows="3" disabled>{{cita.motivo}}</textarea>
       </div>
 
-      <button type="button" class="btn btn-danger boton" (click)="goBack()"><i class="fas fa-arrow-circle-left" style="margin-right: 0.1em;"></i> Volver</button>
+      <button type="button" class="btn btn-danger boton" (click)="goBack()" title="Volver"><i class="fas fa-arrow-circle-left"
+          style="margin-right: 0.1em;"></i> Volver</button>
 
     </div>
   </div>

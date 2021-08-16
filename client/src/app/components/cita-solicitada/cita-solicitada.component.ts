@@ -1,3 +1,5 @@
+import { ServicioService } from './../../services/servicio.service';
+import { Servicio } from './../../models/Servicio';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -16,6 +18,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class CitaSolicitadaComponent implements OnInit, OnDestroy {
   public usuario: Usuario;
   public mascota: Mascota;
+  public servicio: Servicio;
+  public veterinario: Usuario;
   public datos: any;
 
   public message: string = '';
@@ -25,11 +29,14 @@ export class CitaSolicitadaComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private usuarioService: UsuarioService,
     private mascotaService: MascotaService,
+    private servicioService: ServicioService,
     private messageService: MessageService,
     private router: Router
   ) {
     this.usuario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
     this.mascota = new Mascota('', '', '', '', '', '', '', 0, 0, '', '', '', '', '', '');
+    this.servicio = new Servicio(null, '', '');
+    this.veterinario = new Usuario('', '', '', '', '', '', '', '', '', '', '', '');
   }
 
   ngOnInit(): void {
@@ -38,23 +45,10 @@ export class CitaSolicitadaComponent implements OnInit, OnDestroy {
     if (this.message != 'default message') {
       this.datos = JSON.parse(this.message);
 
-      this.usuarioService.consultarUsuario(this.datos.dni).subscribe(
-        response => {
-          this.usuario = response.user;
-        },
-        error => {
-          this.addErrorMessage(error.error.message);
-        }
-      );
-
-      this.mascotaService.consultarMascota(this.datos.idMascota).subscribe(
-        response => {
-          this.mascota = response.pet;
-        },
-        error => {
-          this.addErrorMessage(error.error.message);
-        }
-      );
+      this.obtenerPropietario();
+      this.obtenerMascota();
+      this.obtenerServicio();
+      this.obtenerVeterinario();
 
       const fecha = new Date(this.datos.fecha);
       const dia = fecha.getDate().toString().length < 2 ? '0' + fecha.getDate() : fecha.getDate();
@@ -71,6 +65,62 @@ export class CitaSolicitadaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  /**
+   * Método encargado de obtener los datos del propietario
+   */
+  public obtenerPropietario(): void {
+    this.usuarioService.consultarUsuario(this.datos.dni).subscribe(
+      response => {
+        this.usuario = response.user;
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
+  }
+
+  /**
+   * Método encargado de obtener los datos de la mascota
+   */
+  public obtenerMascota(): void {
+    this.mascotaService.consultarMascota(this.datos.idMascota).subscribe(
+      response => {
+        this.mascota = response.pet;
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
+  }
+
+  /**
+   * Método encargado de obtener los datos del servicio
+   */
+  public obtenerServicio(): void {
+    this.servicioService.consultarServicio(this.datos.servicio).subscribe(
+      response => {
+        this.servicio = response.servicio;
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
+  }
+
+  /**
+   * Método encargado de obtener los datos del veterinario
+   */
+  public obtenerVeterinario(): void {
+    this.usuarioService.consultarUsuario(this.datos.veterinario).subscribe(
+      response => {
+        this.veterinario = response.user;
+      },
+      error => {
+        this.addErrorMessage(error.error.message);
+      }
+    );
   }
 
   /**

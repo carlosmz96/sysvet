@@ -14,6 +14,7 @@ api.post('/registro', UserController.altaUsuario);
 api.post('/login', UserController.iniciarSesion);
 api.get('/usuarios/:dni', md_auth.ensureAuth, UserController.consultarUsuario);
 api.get('/usuarios', md_auth.ensureAuth, UserController.consultarUsuarios);
+api.get('/usuariosByDnis/:dnis', md_auth.ensureAuth, UserController.consultarUsuariosByDnis);
 api.put('/modificar-usuario/:dni', md_auth.ensureAuth, UserController.modificarUsuario);
 api.delete('/baja-usuario/:dni', md_auth.ensureAuth, UserController.bajaUsuario);
 api.post('/subir-foto-perfil/:dni', [md_auth.ensureAuth, md_upload.single('imagen')], UserController.subirFotoPerfil);
