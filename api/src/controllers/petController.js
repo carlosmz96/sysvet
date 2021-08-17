@@ -3,6 +3,7 @@
 // Importaciones
 const Mascota = require("../models/Mascota");
 const MascotaDocumental = require('../models/MascotaDocumental');
+const Historial = require("../models/Historial");
 const fs = require('fs');
 const path = require('path');
 
@@ -29,14 +30,22 @@ async function altaMascota(req, res) {
         propietario: params.propietario,
         veterinario: params.veterinario,
         dni_creacion: params.dni_creacion
-    }).then(function (pet) {
+    }).then(async function (pet) {
         if (!pet) {
             res.status(404).send({ message: 'No se ha guardado la mascota.' });
         } else {
-            res.status(200).send({ pet });
+            await Historial.create({ mascota: params.identificador }).then(function (historial) {
+                if (!historial) {
+                    res.status(404).send({ message: 'No se ha guardado el historial de la mascota.' });
+                } else {
+                    res.status(200).send({ pet, historial });
+                }
+            }).catch(() => {
+                res.status(500).send({ message: 'Error al dar de alta el historial de la mascota.' });
+            });
         }
     }).catch(() => {
-        res.status(500).send({ message: 'Error al dar de alta a la mascota.' })
+        res.status(500).send({ message: 'Error al dar de alta a la mascota.' });
     });
 }
 
@@ -123,12 +132,15 @@ async function bajaMascota(req, res) {
         if (!petDeleted) {
             res.status(404).send({ message: 'No se ha podido dar de baja a la mascota.' });
         } else {
-            res.status(200).send({ pet: petDeleted });
-            await MascotaDocumental.findByIdAndRemove({ _id: petId }, (err) => {
-                if (err) {
-                    res.status(500).send({ message: 'Error al eliminar la mascota documental' });
+            await MascotaDocumental.findByIdAndRemove({ _id: petId }).then(async function(docDel) {
+                if(!docDel) {
+                    res.status(404).send({ message: 'No se han podido dar de baja los datos documentales de la mascota.' });
+                } else {
+                    res.status(200).send({ pet: petDeleted });
                 }
-            })
+            }).catch(() => {
+                res.status(500).send({ message: 'Error al dar de baja los datos documentales de la mascota.' });
+            });
         }
     }).catch(() => {
         res.status(500).send({ message: 'Error al dar de baja a la mascota.' });
@@ -177,9 +189,9 @@ async function eliminarFotoMascota(req, res) {
 
     const mascota = await Mascota.findByPk(petId);
     const file_name = mascota.imagen;
-    
+
     // eliminación de la foto en el directorio
-    if(file_name !== null && fs.existsSync(`${__dirname}/../public/images/` + file_name)) {
+    if (file_name !== null && fs.existsSync(`${__dirname}/../public/images/` + file_name)) {
         fs.unlinkSync(`${__dirname}/../public/images/` + file_name);
     }
 
@@ -229,8 +241,8 @@ function obtenerFotoMascota(req, res) {
  */
 async function obtenerObservacionesMascota(req, res) {
     const petId = req.params.id;
-    
-    await MascotaDocumental.findOne({_id: petId}, (err, pet) => {
+
+    await MascotaDocumental.findOne({ _id: petId }, (err, pet) => {
         if (err) {
             res.status(500).send({ message: 'Error al obtener los datos.' });
         } else {
@@ -249,11 +261,11 @@ async function modificarObservacionesMascota(req, res) {
     const petId = req.params.id;
     const params = req.body;
 
-    await MascotaDocumental.updateOne({_id: petId}, { observaciones: params.observaciones }, { upsert: true }, async function (err) {
+    await MascotaDocumental.updateOne({ _id: petId }, { observaciones: params.observaciones }, { upsert: true }, async function (err) {
         if (err) {
             res.status(500).send({ message: 'Error al actualizar los datos.' });
         } else {
-            await MascotaDocumental.findById({_id: petId}, (err, pet) => {
+            await MascotaDocumental.findById({ _id: petId }, (err, pet) => {
                 if (err) {
                     res.status(500).send({ message: 'Error al obtener los datos.' });
                 } else {

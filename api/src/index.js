@@ -13,6 +13,7 @@ const petRoutes = require('./routes/petRoutes');
 const citaRoutes = require('./routes/citaRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const vetServRoutes = require('./routes/vetServRoutes');
+const entryRoutes = require('./routes/entryRoutes');
 dotenv.config();
 
 // Configuraciones
@@ -36,6 +37,7 @@ app.use('/api', petRoutes);
 app.use('/api', citaRoutes);
 app.use('/api', serviceRoutes);
 app.use('/api', vetServRoutes);
+app.use('/api', entryRoutes);
 
 // Iniciar el servidor
 app.listen(app.get('port'), () => {

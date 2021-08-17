@@ -111,11 +111,21 @@ async function modificarServicio(req, res) {
 async function bajaServicio(req, res) {
     const idServicio = req.params.id;
 
-    await Servicio.destroy({ where: { id_servicio: idServicio } }).then(function (servicio) {
+    await Servicio.destroy({ where: { id_servicio: idServicio } }).then(async function (servicio) {
         if (!servicio) {
             res.status(404).send({ message: 'No se ha encontrado el servicio a eliminar.' });
         } else {
-            res.status(200).send({ servicio });
+            await ServicioDocumental.deleteOne({ _id: idServicio }, (err, docDel) => {
+                if (err) {
+                    res.status(500).send({ message: 'Error al intentar eliminar los datos.' });
+                } else {
+                    if (!docDel) {
+                        res.status(404).send({ message: 'No se han eliminado los datos.' });
+                    } else {
+                        res.status(200).send({ servicio, docDel });
+                    }
+                }
+            });
         }
     }).catch(() => {
         res.status(500).send({ message: 'Error al eliminar el servicio.' });

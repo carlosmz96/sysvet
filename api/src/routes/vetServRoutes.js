@@ -14,5 +14,5 @@ api.get('/veterinarios-por-especialidad/:id', md_auth.ensureAuth, VetServControl
 api.post('/asignar-especializacion-veterinario/:dni/:idServicio', md_auth.ensureAuth, VetServController.asignarEspecializacionAVeterinario);
 api.delete('/desasignar-especializacion-veterinario/:dni/:idServicio', md_auth.ensureAuth, VetServController.desasignarEspecializacionDeVeterinario);
 
-// Se exporta la api de rutas de usuario
+// Se exporta la api de rutas de veterinario_servicio
 module.exports = api;

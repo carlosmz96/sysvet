@@ -51,10 +51,21 @@ async function altaUsuario(req, res) {
                     res.status(404).send({ message: 'No se ha guardado el usuario.' });
                 } else {
                     if (params.rol == 'administrador') {
-                        Propietario.create({ dni: params.dni }).catch((err) => {
-                            console.error(err)
+                        Propietario.create({ dni: params.dni }).then(function(pro) {
+                            if(!pro) {
+                                res.status(404).send({ message: 'No se ha creado el usuario propietario.' });
+                            } else {
+                                Veterinario.create({ dni: params.dni, num_colegiado: '0000' }).then(function(vet) {
+                                    if(!vet) {
+                                        res.status(404).send({ message: 'No se ha creado el usuario veterinario.' });
+                                    }
+                                }).catch((err) => {
+                                    console.error(err);
+                                });
+                            }
+                        }).catch((err) => {
+                            console.error(err);
                         });
-                        Veterinario.create({ dni: params.dni });
                     } else if (params.rol == 'cliente') {
                         Propietario.create({ dni: params.dni });
                     } else {
@@ -423,6 +434,7 @@ async function recordarContrasena(req, res) {
 
             await transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
+                    console.log('VUELVE A ACTIVAR LOS PERMISOS EN GOOGLE')
                     res.status(500).send({ message: 'Error al intentar enviar el email.' });
                 } else {
                     res.status(200).send({ message: 'Correo enviado correctamente.', user: user });
