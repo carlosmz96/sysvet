@@ -20,6 +20,7 @@ api.post('/eliminar-foto-mascota/:id', md_auth.ensureAuth, PetController.elimina
 api.get('/obtener-foto-mascota/:fotoMascota', PetController.obtenerFotoMascota);
 api.get('/observaciones-mascota/:id', md_auth.ensureAuth, PetController.obtenerObservacionesMascota);
 api.put('/modificar-observaciones-mascota/:id', md_auth.ensureAuth, PetController.modificarObservacionesMascota);
+api.get('/historial-mascota/:id', md_auth.ensureAuth, PetController.obtenerHistorial);
 
 // Se exporta la api de rutas de mascota
 module.exports = api;

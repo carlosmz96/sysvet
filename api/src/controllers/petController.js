@@ -276,6 +276,25 @@ async function modificarObservacionesMascota(req, res) {
     });
 }
 
+/**
+ * Método encargado de obtener el historial de la mascota
+ * @param {*} req Consulta para obtener el historial de la mascota
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function obtenerHistorial(req, res) {
+    const petId = req.params.id;
+
+    await Historial.findOne({ where : { mascota: petId } }).then(function(historial) {
+        if(!historial) {
+            res.status(404).send({ message: 'No se ha encontrado el historial de la mascota.' });
+        } else {
+            res.status(200).send({ historial });
+        }
+    }).catch(() => {
+        res.status(500).send({ message: 'Error al intentar obtener el historial de la mascota.' });
+    });
+}
+
 module.exports = {
     altaMascota,
     consultarMascota,
@@ -286,5 +305,6 @@ module.exports = {
     eliminarFotoMascota,
     obtenerFotoMascota,
     obtenerObservacionesMascota,
-    modificarObservacionesMascota
+    modificarObservacionesMascota,
+    obtenerHistorial
 }

@@ -1,0 +1,23 @@
+.card-entradas-vacia {
+  display: flex;
+  padding: 1em;
+  align-items: center;
+  background: rgb(240, 240, 240);
+  border-radius: 0.25rem;
+  border: none;
+  margin-top: 0.5em;
+}
+
+.fecha-creacion {
+  float: left;
+  margin-top: 0.4em;
+}
+
+.botonera-entrada {
+  float: right;
+}
+
+.botonera-entrada .btn {
+  padding: 0.1em 0.4em 0.1em 0.4em;
+  margin-left: 0.3em;
+}

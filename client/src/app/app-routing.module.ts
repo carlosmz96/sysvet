@@ -1,3 +1,7 @@
+import { ConsultarEntradaComponent } from './components/consultar-entrada/consultar-entrada.component';
+import { ModificarEntradaComponent } from './components/modificar-entrada/modificar-entrada.component';
+import { CrearEntradaComponent } from './components/crear-entrada/crear-entrada.component';
+import { HistorialMascotaComponent } from './components/historial-mascota/historial-mascota.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
 import { ModificarServicioComponent } from './components/modificar-servicio/modificar-servicio.component';
 import { AltaServicioComponent } from './components/alta-servicio/alta-servicio.component';
@@ -77,6 +81,26 @@ const routes: Routes = [
   {
     path: 'datos-mascota/:idMascota',
     component: DatosMascotaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'historial-mascota/:idMascota',
+    component: HistorialMascotaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'historial-mascota/:idMascota/crear-entrada',
+    component: CrearEntradaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'historial-mascota/:idMascota/modificar-entrada/:idEntrada',
+    component: ModificarEntradaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'historial-mascota/:idMascota/entrada/:idEntrada',
+    component: ConsultarEntradaComponent,
     canActivate: [AuthGuard]
   },
   {

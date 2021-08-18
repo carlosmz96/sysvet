@@ -259,7 +259,7 @@ export class DatosMascotaComponent implements OnInit {
   /**
    * Método encargado de dar de baja a la mascota
    */
-   public bajaMascota(id: string): void {
+  public bajaMascota(id: string): void {
     this.confirmationService.confirm({
       message: '¿Estás seguro?',
       accept: () => {
@@ -299,16 +299,16 @@ export class DatosMascotaComponent implements OnInit {
    * Método encargado de mostrar una notificación con un mensaje de error
    * @param msg Mensaje pasado por parámetro
    */
-   public addErrorMessage(msg: string): void {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  public addErrorMessage(msg: string): void {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
   }
 
   /**
    * Método encargado de mostrar una notificación con un mensaje de éxito
    * @param msg Mensaje pasado por parámetro
    */
-   public addSuccessMessage(msg: string): void {
-    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
+  public addSuccessMessage(msg: string): void {
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: msg });
   }
 
 }

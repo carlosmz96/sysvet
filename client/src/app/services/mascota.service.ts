@@ -111,8 +111,19 @@ export class MascotaService {
     const params = JSON.stringify(pet_to_update);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': this.token });
+      'Authorization': this.token
+    });
     return this.httpClient.put(this.url + 'modificar-observaciones-mascota/' + pet_to_update.identificador, params, { headers: headers });
+  }
+
+  /**
+   * Método encargado de llamar al api para obtener el historial de la mascota
+   * @param identificador Identificador de la mascota
+   * @returns Historial de la mascota
+   */
+  public obtenerHistorial(identificador: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', this.token);
+    return this.httpClient.get(this.url + 'historial-mascota/' + identificador, { headers: headers });
   }
 
 }

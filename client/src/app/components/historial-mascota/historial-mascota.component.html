@@ -1,0 +1,59 @@
+<p-confirmDialog #cd [style]="{width: '20em'}" [closable]="false">
+  <ng-template pTemplate="footer">
+    <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
+    <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
+  </ng-template>
+</p-confirmDialog>
+
+<p-toast></p-toast>
+
+<app-navegacion></app-navegacion>
+
+<div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded historial-mascota">
+    <div class="card-body" style="text-align: justify;">
+      <button type="button" class="btn btn-danger" (click)="goBack()" title="Volver"><i
+          class="fas fa-arrow-circle-left"></i>
+        Volver</button>
+      <button type="button" class="btn btn-success" style="float: right;"
+        routerLink="/historial-mascota/{{mascota.identificador}}/crear-entrada" title="Crear nueva entrada"><i
+          class="fas fa-plus-circle"></i>
+        Nueva entrada</button>
+      <hr>
+      <h1>Historial de {{ mascota.nombre }}</h1>
+      <hr>
+      <div *ngIf="totalEntradas > 0">
+        <div class="entradas" *ngFor="let entrada of entradasFiltradas">
+          <div class="card bg-light mb-3">
+            <div class="card-header cabecera-entrada" style="font-size: 10pt;">
+              <div class="fecha-creacion">{{ entrada.creacionStr }}</div>
+              <div class="botonera-entrada">
+                <button type="button" class="btn btn-danger" title="Eliminar entrada" *ngIf="identity.rol != 'cliente'"
+                  (click)="eliminarEntrada(entrada.id_entrada)"><i class="fas fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-warning" title="Modificar entrada"
+                  *ngIf="identity.rol != 'cliente'"
+                  routerLink="/historial-mascota/{{mascota.identificador}}/modificar-entrada/{{entrada.id_entrada}}"><i
+                    class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-dark" title="Más información"
+                  routerLink="//historial-mascota/{{mascota.identificador}}/entrada/{{entrada.id_entrada}}"><i
+                    class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- <h5 class="card-title">Light card title</h5> -->
+              <p class="card-text" [innerHtml]="entrada.descripcion"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="entradas" *ngIf="totalEntradas == 0">
+        <div class="card-entradas-vacia justify-content-center">
+          <span>Todavía no tienes ninguna cita.</span>
+        </div>
+      </div>
+
+      <p-paginator [rows]="rows" [totalRecords]="totalEntradas" (onPageChange)="paginate($event)"
+        *ngIf="totalEntradas > 0"></p-paginator>
+    </div>
+  </div>
+</div>

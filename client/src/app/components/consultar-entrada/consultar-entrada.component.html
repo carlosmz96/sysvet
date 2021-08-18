@@ -1,0 +1,37 @@
+<p-toast></p-toast>
+
+<app-navegacion></app-navegacion>
+
+<div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded crear-entrada">
+    <div class="card-body" style="text-align: justify;">
+      <form #editEntryForm="ngForm" class="formulario-modificar-entrada" ngNativeValidate>
+        <h1>Consulta de entrada</h1>
+        <hr>
+        <p class="info" style="margin-bottom: 0em;">Mascota: <a routerLink="/datos-mascota/{{mascota.identificador}}">{{
+            mascota.nombre }}</a></p>
+        <p class="info" *ngIf="!entrada.dni_modificacion">Creada por <a routerLink="/usuario/{{autor.dni}}">{{
+            autor.nombre }} {{ autor.apellidos }}</a> {{ entrada.creacionStr }}</p>
+        <p class="info" *ngIf="entrada.dni_modificacion">Editada por <a routerLink="/usuario/{{editor.dni}}">{{
+            editor.nombre }} {{ editor.apellidos }}</a> {{ entrada.modificacionStr }}</p>
+        <!-- <p-editor [(ngModel)]="entrada.descripcion" name="descripcion" [style]="{'height':'250px'}" [readonly]="true"
+          title="Descripción de la entrada">
+          <ng-template pTemplate="header">
+
+          </ng-template>
+        </p-editor> -->
+        <div class="card bg-light mb-3">
+          <div class="card-body">
+            <!-- <h5 class="card-title">Light card title</h5> -->
+            <p class="card-text" [innerHtml]="entrada.descripcion"></p>
+          </div>
+        </div>
+        <hr>
+        <div class="botonera">
+          <button type="button" class="btn btn-danger" (click)="goBack()"><i class="fas fa-arrow-circle-left"
+              style="margin-right: 0.1em;"></i> Volver</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

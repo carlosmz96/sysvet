@@ -239,24 +239,12 @@
   .espaciado-icono {
     text-align: center;
   }
-  /* .izq {
-    margin-right: 1em;
-  } */
-}
-
-@media (max-width: 522px) {
-  /* .izq {
-    margin-right: 0.3em;
-  } */
 }
 
 @media (max-width: 460px) {
   .espaciado-icono {
     text-align: center;
   }
-  /* .izq {
-    margin-right: 0em;
-  } */
 }
 
 .izq {

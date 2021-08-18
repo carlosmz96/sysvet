@@ -18,6 +18,7 @@ import { ConfirmationService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { PickListModule } from 'primeng/picklist';
+import { PaginatorModule } from 'primeng/paginator';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -43,6 +44,10 @@ import { ServiciosComponent } from './components/servicios/servicios.component';
 import { ListadoServiciosComponent } from './components/listado-servicios/listado-servicios.component';
 import { AltaServicioComponent } from './components/alta-servicio/alta-servicio.component';
 import { ModificarServicioComponent } from './components/modificar-servicio/modificar-servicio.component';
+import { HistorialMascotaComponent } from './components/historial-mascota/historial-mascota.component';
+import { CrearEntradaComponent } from './components/crear-entrada/crear-entrada.component';
+import { ModificarEntradaComponent } from './components/modificar-entrada/modificar-entrada.component';
+import { ConsultarEntradaComponent } from './components/consultar-entrada/consultar-entrada.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +72,11 @@ import { ModificarServicioComponent } from './components/modificar-servicio/modi
     ServiciosComponent,
     ListadoServiciosComponent,
     AltaServicioComponent,
-    ModificarServicioComponent
+    ModificarServicioComponent,
+    HistorialMascotaComponent,
+    CrearEntradaComponent,
+    ModificarEntradaComponent,
+    ConsultarEntradaComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +94,8 @@ import { ModificarServicioComponent } from './components/modificar-servicio/modi
     ConfirmDialogModule,
     CalendarModule,
     DialogModule,
-    PickListModule
+    PickListModule,
+    PaginatorModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

@@ -8,7 +8,7 @@ body {
 }
 
 h1 {
-  font-size: 1.8em;
+  font-size: 16pt;
 }
 
 a {
@@ -71,10 +71,10 @@ form {
 }
 
 @media (min-width: 992px) {
-  .modificar-usuario, .modificar-mascota {
+  .modificar-usuario, .modificar-mascota, .crear-entrada {
     width: 50em;
   }
-  .alta-mascota, .nueva-cita, .alta-servicio, .modificar-servicio {
+  .alta-mascota, .nueva-cita, .alta-servicio, .modificar-servicio, .historial-mascota {
     width: 60em;
   }
 }

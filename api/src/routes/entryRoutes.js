@@ -14,6 +14,7 @@ api.get('/historial/:id', md_auth.ensureAuth, EntryController.listarEntradas);
 api.get('/entradas/:id', md_auth.ensureAuth, EntryController.consultarEntrada);
 api.put('/modificar-entrada/:id', md_auth.ensureAuth, EntryController.modificarEntrada);
 api.delete('/eliminar-entrada/:id', md_auth.ensureAuth, EntryController.eliminarEntrada);
+api.get('/entradasByIds/:ids', md_auth.ensureAuth, EntryController.obtenerDescripcionesEntradas);
 
 // Se exporta la api de rutas de entrada
 module.exports = api;

@@ -148,10 +148,35 @@ async function eliminarEntrada(req, res) {
     });
 }
 
+/**
+ * Método encargado de obtener todos los datos documentales de las entradas
+ * @param {*} req Consulta para obtener las descripciones
+ * @param {*} res Respuesta generada tras la consulta
+ */
+async function obtenerDescripcionesEntradas(req, res) {
+    const idsEntradas = req.params.ids;
+
+    const array = idsEntradas.split(",");
+
+    await EntradaDocumental.find({ _id: array }, (err, docs) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al obtener las descripciones de las entradas.' });
+        } else {
+            if (!docs) {
+                res.status(404).send({ message: 'No se han encontrado las descripciones de las entradas.' });
+            } else {
+                res.status(200).send({ docs });
+            }
+        }
+    });
+
+}
+
 module.exports = {
     crearEntrada,
     listarEntradas,
     consultarEntrada,
     modificarEntrada,
-    eliminarEntrada
+    eliminarEntrada,
+    obtenerDescripcionesEntradas
 }

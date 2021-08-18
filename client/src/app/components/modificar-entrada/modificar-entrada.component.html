@@ -1,0 +1,25 @@
+<p-toast></p-toast>
+
+<app-navegacion></app-navegacion>
+
+<div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded crear-entrada">
+    <div class="card-body" style="text-align: justify;">
+      <form #editEntryForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificar-entrada" ngNativeValidate>
+        <h1>Edición de entrada</h1>
+        <hr>
+        <p>Mascota: <a routerLink="/datos-mascota/{{mascota.identificador}}">{{ mascota.nombre }}</a></p>
+        <p-editor [(ngModel)]="entrada.descripcion" name="descripcion" [style]="{'height':'250px'}"
+          title="Descripción de la entrada">
+        </p-editor>
+        <hr>
+        <div class="botonera">
+          <button type="button" class="btn btn-danger" (click)="goBack()"><i class="fas fa-arrow-circle-left"
+              style="margin-right: 0.1em;"></i> Volver</button>
+          <button type="submit" class="btn btn-success"><i class="fas fa-check-circle" style="margin-right: 0.1em;"></i>
+            Modificar entrada</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
