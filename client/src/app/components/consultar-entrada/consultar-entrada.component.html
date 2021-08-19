@@ -2,7 +2,7 @@
 
 <app-navegacion></app-navegacion>
 
-<div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
+<div class="container">
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded crear-entrada">
     <div class="card-body" style="text-align: justify;">
       <form #editEntryForm="ngForm" class="formulario-modificar-entrada" ngNativeValidate>

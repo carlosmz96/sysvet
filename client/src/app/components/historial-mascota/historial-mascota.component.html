@@ -9,13 +9,14 @@
 
 <app-navegacion></app-navegacion>
 
-<div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
+<div class="container">
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded historial-mascota">
     <div class="card-body" style="text-align: justify;">
       <button type="button" class="btn btn-danger" (click)="goBack()" title="Volver"><i
           class="fas fa-arrow-circle-left"></i>
         Volver</button>
       <button type="button" class="btn btn-success" style="float: right;"
+        *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'"
         routerLink="/historial-mascota/{{mascota.identificador}}/crear-entrada" title="Crear nueva entrada"><i
           class="fas fa-plus-circle"></i>
         Nueva entrada</button>
@@ -50,6 +51,9 @@
         <div class="card-entradas-vacia justify-content-center">
           <span>Todavía no tienes ninguna cita.</span>
         </div>
+      </div>
+      <div *ngIf="totalEntradas == null">
+        <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
       </div>
 
       <p-paginator [rows]="rows" [totalRecords]="totalEntradas" (onPageChange)="paginate($event)"

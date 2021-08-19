@@ -19,6 +19,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { PickListModule } from 'primeng/picklist';
 import { PaginatorModule } from 'primeng/paginator';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -95,7 +97,9 @@ import { ConsultarEntradaComponent } from './components/consultar-entrada/consul
     CalendarModule,
     DialogModule,
     PickListModule,
-    PaginatorModule
+    PaginatorModule,
+    ProgressBarModule,
+    ProgressSpinnerModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

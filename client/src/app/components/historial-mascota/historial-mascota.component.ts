@@ -24,7 +24,7 @@ export class HistorialMascotaComponent implements OnInit {
   public entradas: Entrada[] = [];
   public descripciones: EntradaDocumental[] = [];
   public entradasFiltradas: Entrada[] = [];
-  public totalEntradas: number = 0;
+  public totalEntradas: any = null;
   public rows: number = 5;
 
   constructor(
@@ -104,20 +104,22 @@ export class HistorialMascotaComponent implements OnInit {
             entrada.modificacionStr = this.formatearFecha(entrada.fecha_modificacion);
           });
 
-          this.entradaService.obtenerDescripciones(idsEntradas).subscribe(
-            response => {
-              this.descripciones = response.docs as EntradaDocumental[];
+          if(idsEntradas.length != 0){
+            this.entradaService.obtenerDescripciones(idsEntradas).subscribe(
+              response => {
+                this.descripciones = response.docs as EntradaDocumental[];
 
-              this.organizarEntradas();
-              // ordenación de mayor a menor
-              this.entradas.sort((a: Entrada, b: Entrada) => b.id_entrada - a.id_entrada);
-              // se añaden a entradas filtradas
-              this.primeraPagina();
-            },
-            error => {
-              this.addErrorMessage(error.error.message);
-            }
-          )
+                this.organizarEntradas();
+                // ordenación de mayor a menor
+                this.entradas.sort((a: Entrada, b: Entrada) => b.id_entrada - a.id_entrada);
+                // se añaden a entradas filtradas
+                this.primeraPagina();
+              },
+              error => {
+                this.addErrorMessage(error.error.message);
+              }
+            );
+          }
         },
         error => {
           this.addErrorMessage(error.error.message);

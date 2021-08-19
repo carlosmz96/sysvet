@@ -19,8 +19,9 @@
           <button type="button" class="btn btn-danger" (click)="goBack()" title="Volver"><i
               class="fas fa-arrow-circle-left"></i>
             Volver</button>
-          <button type="button" class="btn btn-dark" style="float: right;" routerLink="/historial-mascota/{{mascota.identificador}}"
-            title="Historial de la mascota"><i class="fas fa-file-medical-alt"></i> Historial</button>
+          <button type="button" class="btn btn-dark" style="float: right;"
+            routerLink="/historial-mascota/{{mascota.identificador}}" title="Historial de la mascota"><i
+              class="fas fa-file-medical-alt"></i> Historial</button>
         </div>
         <hr>
         <div class="form-group row">
@@ -188,6 +189,9 @@
       <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario" ngNativeValidate>
         <button type="button" class="btn btn-danger" (click)="goBack()" title="Volver"><i
             class="fas fa-arrow-circle-left" style="margin-right: 0.1em;"></i> Volver</button>
+        <button type="button" class="btn btn-dark" style="float: right;"
+          routerLink="/historial-mascota/{{mascota.identificador}}" title="Historial de la mascota"><i
+            class="fas fa-file-medical-alt"></i> Historial</button>
         <hr>
         <div class="form-group row">
           <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
@@ -315,12 +319,18 @@
         <hr>
         <div class="form-group">
           <label for="observaciones"><strong>Observaciones</strong></label>
-          <p-editor [(ngModel)]="mascotaDocumental.observaciones" name="observaciones" [style]="{'height':'250px'}"
+          <!-- <p-editor [(ngModel)]="mascotaDocumental.observaciones" name="observaciones" [style]="{'height':'250px'}"
             [readonly]="true" title="Observaciones">
             <ng-template pTemplate="header">
 
             </ng-template>
-          </p-editor>
+          </p-editor> -->
+          <div class="card bg-light mb-3">
+            <div class="card-body">
+              <!-- <h5 class="card-title">Light card title</h5> -->
+              <p class="card-text" [innerHtml]="mascotaDocumental.observaciones"></p>
+            </div>
+          </div>
         </div>
       </form>
     </div>

@@ -196,3 +196,8 @@ a:hover {
     width: 21rem !important;
   }
 }
+
+/* BARRA DE PROGRESO */
+.p-progressbar .p-progressbar-value {
+  background: #63a868;
+}
