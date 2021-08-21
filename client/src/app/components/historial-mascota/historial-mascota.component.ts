@@ -214,7 +214,6 @@ export class HistorialMascotaComponent implements OnInit {
     this.entradasFiltradas = [];
 
     const inicio = pag * this.rows;
-    console.log(inicio)
 
     for (let i = inicio; i < inicio + this.rows; i++) {
       if (this.entradas[i] != undefined) {

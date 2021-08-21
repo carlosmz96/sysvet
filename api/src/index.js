@@ -14,6 +14,7 @@ const citaRoutes = require('./routes/citaRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const vetServRoutes = require('./routes/vetServRoutes');
 const entryRoutes = require('./routes/entryRoutes');
+const postRoutes = require('./routes/postRoutes');
 dotenv.config();
 
 // Configuraciones
@@ -38,6 +39,7 @@ app.use('/api', citaRoutes);
 app.use('/api', serviceRoutes);
 app.use('/api', vetServRoutes);
 app.use('/api', entryRoutes);
+app.use('/api', postRoutes);
 
 // Iniciar el servidor
 app.listen(app.get('port'), () => {

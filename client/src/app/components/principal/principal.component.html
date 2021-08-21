@@ -1,59 +1,146 @@
+<p-confirmDialog #cd [style]="{width: '20em'}" [closable]="false">
+  <ng-template pTemplate="footer">
+    <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
+    <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
+  </ng-template>
+</p-confirmDialog>
+
+<!-- NUEVA PUBLICACIÓN -->
+<p-dialog header="Nueva publicación" [(visible)]="crearPost" [modal]="true" [style]="{width: '50em'}"
+  [draggable]="false" [resizable]="false">
+  <div class="form-group">
+    <label for="titulo"><strong>Título</strong></label>
+    <input type="text" class="form-control" id="titulo" [(ngModel)]="publicacion.titulo">
+  </div>
+  <div class="form-group">
+    <label for="descripcion"><strong>Descripción</strong></label>
+    <p-editor [(ngModel)]="publicacion.descripcion" name="descripcion" [style]="{'height':'250px'}" title="Descripción">
+    </p-editor>
+  </div>
+  <div class="botonera-new-post">
+    <button type="button" class="btn btn-success" (click)="crearPublicacion()"><i class="fas fa-check-circle"></i>
+      Publicar</button>
+  </div>
+</p-dialog>
+
+<!-- CONSULTA PUBLICACIÓN -->
+<p-dialog header="Publicación" [(visible)]="verPost" [modal]="true" [style]="{width: '50em'}" [draggable]="false"
+  [resizable]="false">
+  <div class="consulta-info-pub">Publicado por <a
+      routerLink="/usuario/{{ publicacion.dni_creacion }}">{{publicacion.autor}}</a> - {{ publicacion.creacionStr }}
+  </div>
+  <div class="card bg-light mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{publicacion.titulo}}</h5>
+      <hr>
+      <p class="card-text" [innerHtml]="publicacion.descripcion"></p>
+    </div>
+  </div>
+  <div class="consulta-info-pub" *ngIf="publicacion.dni_modificacion">Editado por <a
+      routerLink="/usuario/{{ publicacion.dni_modificacion }}">{{ publicacion.editor }}</a> - {{
+    publicacion.modificacionStr }}</div>
+  <div class="botonera">
+    <button type="button" class="btn btn-danger" *ngIf="identity.rol != 'cliente'"
+      (click)="eliminarPublicacion(publicacion.id_publicacion)"><i class="fas fa-trash-alt"></i></button>
+    <button type="button" class="btn btn-warning izq" *ngIf="identity.rol != 'cliente'" (click)="editarPublicacion()"><i
+        class="fas fas fa-edit"></i></button>
+    <button type="button" class="btn btn-dark izq" (click)="compartirPublicacion()"><i class="fas fa-share-alt"></i>
+      Compartir</button>
+  </div>
+</p-dialog>
+
+<!-- MODIFICAR PUBLICACIÓN -->
+<p-dialog header="Modificar publicación" [(visible)]="editarPost" [modal]="true" [style]="{width: '50em'}"
+  [draggable]="false" [resizable]="false">
+  <div class="form-group">
+    <label for="titulo"><strong>Título</strong></label>
+    <input type="text" class="form-control" id="titulo" [(ngModel)]="publicacion.titulo">
+  </div>
+  <div class="form-group">
+    <label for="descripcion"><strong>Descripción</strong></label>
+    <p-editor [(ngModel)]="descripcion" name="descripcion" [style]="{'height':'250px'}" title="Descripción">
+    </p-editor>
+  </div>
+  <div class="botonera-new-post">
+    <button type="button" class="btn btn-success" (click)="modificarPublicacion()"><i class="fas fa-check-circle"></i>
+      Modificar</button>
+  </div>
+</p-dialog>
+
+<!-- COMPARTIR PUBLICACIÓN -->
+<p-dialog header="Compartir publicación" [(visible)]="sharePost" [modal]="true" [style]="{width: '40em'}"
+  [draggable]="false" [resizable]="false">
+  <div class="redes-sociales">
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{url}}&quote={{publicacion.titulo}}" target="_blank"
+      title="Compartir en Facebook">
+      <img src="../../../assets/images/facebook logo.png" alt="Logo de Facebook" class="imagen-logo">
+    </a>
+    <!-- Linkedin -->
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{url}}" target="_blank" title="Compartir en Linkedin">
+      <img src="../../../assets/images/linkedin logo.png" alt="Logo de Linkedin" class="logo-izq imagen-logo">
+    </a>
+    <!-- Telegram -->
+    <a href="https://t.me/share/url?url={{url}}&text={{publicacion.titulo}}" target="_blank"
+      title="Compartir en Telegram">
+      <img src="../../../assets/images/telegram logo.png" alt="Logo de Telegram" class="logo-izq imagen-logo">
+    </a>
+    <!-- Twitter -->
+    <a href="https://twitter.com/intent/tweet?text={{publicacion.titulo}}&url={{url}}" target="_blank"
+      title="Compartir en Twitter">
+      <img src="../../../assets/images/twitter logo.png" alt="Logo de Twitter" class="logo-izq imagen-logo">
+    </a>
+    <!-- Whatsapp -->
+    <a href="https://wa.me/?text={{publicacion.titulo}} ({{url}})" target="_blank"
+      title="Compartir en Whatsapp">
+      <img src="../../../assets/images/whatsapp logo.png" alt="Logo de Whatsapp" class="logo-izq imagen-logo">
+    </a>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>
+
 <app-navegacion></app-navegacion>
 
 <div class="container">
-    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body" style="text-align: justify;">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ullamcorper iaculis neque ac euismod.
-                Quisque cursus ornare ligula at efficitur. Integer non suscipit justo. Suspendisse eleifend varius
-                tellus vel luctus. Curabitur accumsan leo dictum urna semper finibus. Nulla fringilla pellentesque
-                cursus. Suspendisse accumsan molestie bibendum. Aliquam tellus dolor, aliquam et vehicula in, varius
-                a
-                enim. Donec justo nibh, volutpat non suscipit vitae, lacinia et augue. Proin erat ex, vulputate ac
-                pellentesque vel, viverra et sem.</p>
-
-            <p>Phasellus vel nisi nisi. Vivamus mauris libero, congue vitae lobortis eget, mollis eu magna. Praesent
-                porta nisi neque, nec venenatis nisi suscipit vitae. Suspendisse vehicula suscipit mauris tincidunt
-                porttitor. Etiam congue, neque ut egestas scelerisque, risus enim tincidunt lacus, ut molestie velit
-                turpis ut elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ullamcorper purus at
-                risus elementum lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus tortor
-                sit
-                amet nisl dictum, vitae aliquam tellus scelerisque.</p>
-
-            <p>Curabitur maximus risus ex, id gravida augue ultricies eget. Duis sit amet malesuada magna. Integer
-                at
-                nisl ut augue fermentum iaculis at vel urna. Quisque ipsum magna, vulputate eget nulla in, gravida
-                varius sapien. Cras facilisis congue diam nec rutrum. Vestibulum ante ipsum primis in faucibus orci
-                luctus et ultrices posuere cubilia curae; Pellentesque porttitor odio nec aliquam mollis. Nulla
-                faucibus
-                urna nec nibh feugiat blandit. Mauris faucibus elementum justo ultricies ullamcorper. Aenean erat
-                justo,
-                pellentesque quis nisl nec, faucibus scelerisque risus. Nullam venenatis massa et est imperdiet,
-                vitae
-                iaculis orci congue. Curabitur facilisis odio quis metus sodales vulputate. Donec rutrum dui luctus
-                metus dictum, non cursus enim porttitor.</p>
-
-            <p>Praesent consectetur leo eu placerat sollicitudin. Phasellus suscipit consectetur dui, at
-                pellentesque
-                dolor iaculis eu. Pellentesque cursus neque nec metus porttitor, at gravida lacus semper. Vestibulum
-                blandit, massa in pharetra hendrerit, sem nunc congue metus, eget hendrerit odio augue et odio.
-                Proin
-                mattis a enim sit amet fermentum. Proin sit amet mauris condimentum, porta urna ut, accumsan justo.
-                Ut
-                eget ligula ullamcorper, hendrerit felis ut, interdum tortor. In quis diam in lacus egestas mattis
-                eu
-                nec metus.</p>
-
-            <p>Ut rhoncus sem vel velit pretium commodo vel in augue. Cras finibus turpis nisl, ut porta mi sagittis
-                non. Donec scelerisque erat sed urna finibus posuere. Suspendisse a nulla lacus. Ut pharetra mauris
-                et
-                purus ullamcorper commodo mollis ornare nisl. Nunc hendrerit eleifend turpis, vel finibus lectus
-                lobortis vitae. Maecenas sollicitudin, tellus quis malesuada ullamcorper, ipsum velit placerat nunc,
-                eu
-                euismod ligula magna quis felis. Pellentesque vitae tincidunt mauris, nec varius enim. Nullam ex
-                nulla,
-                blandit gravida egestas et, pulvinar quis mauris. Mauris sit amet mattis est. Sed vitae elit vitae
-                augue
-                commodo ultrices mollis id dolor. Vestibulum tincidunt semper odio nec malesuada.</p>
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body" style="text-align: justify;">
+      <div class="header-publicaciones">
+        <h2>Publicaciones</h2>
+        <button type="button" class="btn btn-success new-post" *ngIf="identity.rol != 'cliente'"
+          (click)="nuevaPublicacion()"><i class="fas fa-plus"></i></button>
+      </div>
+      <hr>
+      <div *ngIf="totalPublicaciones > 0">
+        <div class="publicaciones" *ngFor="let publicacion of publicacionesFiltradas">
+          <div class="card bg-light mb-3">
+            <div class="card-header cabecera-publicacion" style="font-size: 10pt;">
+              <div class="info-publicacion"><a routerLink="/usuario/{{ publicacion.dni_creacion }}">{{ publicacion.autor
+                  }}</a> | {{ publicacion.creacionStr }}</div>
+              <div class="botonera-publicacion">
+                <button type="button" class="btn btn-dark" title="Más información"
+                  (click)="consultarPublicacion(publicacion)"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{publicacion.titulo}}</h5>
+              <hr>
+              <p class="card-text" [innerHtml]="publicacion.descripcion"></p>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="publicaciones" *ngIf="totalPublicaciones == 0">
+        <div class="card-publicaciones-vacia justify-content-center">
+          <span>No existen publicaciones.</span>
+        </div>
+      </div>
+      <div *ngIf="totalPublicaciones == null">
+        <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+      </div>
+
+      <p-paginator [rows]="rows" [totalRecords]="totalPublicaciones" (onPageChange)="paginate($event)"
+        *ngIf="totalPublicaciones > 0"></p-paginator>
     </div>
+  </div>
 </div>

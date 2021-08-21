@@ -21,7 +21,7 @@
           class="fas fa-plus-circle"></i>
         Nueva entrada</button>
       <hr>
-      <h1>Historial de {{ mascota.nombre }}</h1>
+      <h2>Historial de {{ mascota.nombre }}</h2>
       <hr>
       <div *ngIf="totalEntradas > 0">
         <div class="entradas" *ngFor="let entrada of entradasFiltradas">

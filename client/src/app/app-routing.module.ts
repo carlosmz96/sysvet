@@ -1,3 +1,4 @@
+import { NologinGuard } from './nologin.guard';
 import { ConsultarEntradaComponent } from './components/consultar-entrada/consultar-entrada.component';
 import { ModificarEntradaComponent } from './components/modificar-entrada/modificar-entrada.component';
 import { CrearEntradaComponent } from './components/crear-entrada/crear-entrada.component';
@@ -43,7 +44,7 @@ const routes: Routes = [
   {
     path: 'index',
     component: PrincipalComponent,
-    canActivate: [AuthGuard]
+    canActivate: [NologinGuard]
   },
   {
     path: 'recordar-clave',

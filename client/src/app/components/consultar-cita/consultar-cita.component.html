@@ -6,6 +6,10 @@
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded nueva-cita">
     <div class="card-body" style="text-align: justify;">
 
+      <h2>Consulta de cita</h2>
+
+      <hr>
+
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="propietario"><strong>Propietario</strong></label>
@@ -60,6 +64,8 @@
         <label for="motivo"><strong>Motivo</strong></label>
         <textarea class="form-control" id="motivo" rows="3" disabled>{{cita.motivo}}</textarea>
       </div>
+
+      <hr>
 
       <button type="button" class="btn btn-danger boton" (click)="goBack()" title="Volver"><i class="fas fa-arrow-circle-left"
           style="margin-right: 0.1em;"></i> Volver</button>

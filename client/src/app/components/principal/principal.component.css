@@ -1,0 +1,86 @@
+h2 {
+  margin-top: 0.3em;
+  display: inline-block;
+  /* align-self: center; */
+}
+
+.new-post {
+  float: right;
+}
+
+.card-publicaciones-vacia {
+  display: flex;
+  padding: 1em;
+  align-items: center;
+  background: rgb(240, 240, 240);
+  border-radius: 0.25rem;
+  border: none;
+  margin-top: 0.5em;
+}
+
+.info-publicacion {
+  float: left;
+  margin-top: 0.4em;
+}
+
+.botonera-publicacion {
+  float: right;
+}
+
+.botonera-publicacion .btn {
+  padding: 0.1em 0.4em 0.1em 0.4em;
+  margin-left: 0.3em;
+}
+
+.consulta-info-pub {
+  margin-bottom: 1em;
+}
+
+.botonera {
+  float: right;
+  margin-top: 0.5em;
+}
+
+.izq {
+  margin-left: 0.5em;
+}
+
+.botonera-new-post {
+  float: right;
+  margin-top: 1em;
+}
+
+.card-text {
+  margin-bottom: -1em !important;
+}
+
+.redes-sociales {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.imagen-logo {
+  filter: brightness(85%);
+  cursor: pointer;
+}
+
+.imagen-logo:hover {
+  filter: brightness(100%);
+}
+
+.logo-izq {
+  margin-left: 1em;
+}
+
+@media (min-width: 462px) {
+  .imagen-logo {
+    width: 70px;
+  }
+}
+
+@media (max-width: 461px) {
+  .imagen-logo {
+    width: 15%;
+  }
+}
