@@ -3,7 +3,7 @@ import { Entrada } from './../../models/Entrada';
 import { EntradaService } from './../../services/entrada.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Historial } from './../../models/Historial';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MascotaService } from './../../services/mascota.service';
 import { UsuarioService } from './../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
@@ -33,6 +33,7 @@ export class HistorialMascotaComponent implements OnInit {
     private entradaService: EntradaService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private router: Router,
     private route: ActivatedRoute,
     private location: Location
   ) {
@@ -57,6 +58,12 @@ export class HistorialMascotaComponent implements OnInit {
           this.mascota = response.pet;
         },
         error => {
+          if (error.status == 401) {
+            localStorage.clear();
+            this.router.navigate(['login']).then(() => {
+              window.location.reload();
+            });
+          }
           this.addErrorMessage(error.error.message);
         }
       )

@@ -69,6 +69,12 @@ export class CrearEntradaComponent implements OnInit {
         this.mascota = response.pet;
       },
       error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
         this.addErrorMessage(error.error.message);
       }
     );

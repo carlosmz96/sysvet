@@ -3,7 +3,7 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { sequelize } = require('../database/db');
 const Historial = require('./Historial');
-const Usuario = require('./Usuario');
+const Veterinario = require('./Veterinario');
 
 const Entrada = sequelize.define('Entrada', {
     id_entrada: {
@@ -33,7 +33,7 @@ const Entrada = sequelize.define('Entrada', {
         type: DataTypes.STRING(9),
         allowNull: true,
         references: {
-            model: Usuario,
+            model: Veterinario,
             key: 'dni'
         }
     },
@@ -41,7 +41,7 @@ const Entrada = sequelize.define('Entrada', {
         type: DataTypes.STRING(9),
         allowNull: false,
         references: {
-            model: Usuario,
+            model: Veterinario,
             key: 'dni'
         }
     }

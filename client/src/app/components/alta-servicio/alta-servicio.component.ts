@@ -48,6 +48,12 @@ export class AltaServicioComponent implements OnInit {
         this.router.navigate(['listado-servicios']);
       },
       error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
         this.addErrorMessage(error.error.message);
       }
     );

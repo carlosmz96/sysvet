@@ -39,6 +39,14 @@ export class ListadoServiciosComponent implements OnInit {
     this.servicioService.listarServicios().subscribe(
       response => {
         this.servicios = response.servicios as Servicio[];
+      },
+      error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
       }
     );
   }

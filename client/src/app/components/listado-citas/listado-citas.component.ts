@@ -43,6 +43,14 @@ export class ListadoCitasComponent implements OnInit {
         this.citas.forEach(cita => {
           cita.fechaStr = this.formatearFecha(cita.fecha);
         });
+      },
+      error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
       }
     );
   }

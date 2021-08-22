@@ -27,6 +27,14 @@ export class ListadoUsuariosComponent implements OnInit {
     this.usuarioService.listarUsuarios().subscribe(
       users => {
         this.usuarios = users.users as Usuario[];
+      },
+      error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
       }
     );
 

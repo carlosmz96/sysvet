@@ -74,6 +74,12 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         },
         error => {
+          if (error.status == 401) {
+            localStorage.clear();
+            this.router.navigate(['login']).then(() => {
+              window.location.reload();
+            });
+          }
           this.addErrorMessage('Error al obtener todos los datos del usuario.');
         }
       );

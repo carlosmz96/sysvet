@@ -28,6 +28,14 @@ export class ListadoMascotasComponent implements OnInit {
     this.mascotaService.listarMascotas().subscribe(
       pets => {
         this.mascotas = pets.pets as Mascota[];
+      },
+      error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
       }
     );
   }

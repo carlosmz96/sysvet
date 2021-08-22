@@ -219,6 +219,12 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
         this.invalidarFechas();
       },
       error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
         this.addErrorMessage(error.error.message);
       }
     );

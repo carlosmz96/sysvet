@@ -67,6 +67,12 @@ export class ModificarServicioComponent implements OnInit {
         this.servicio = response.servicio;
       },
       error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
         this.addErrorMessage(error.error.message);
       }
     );

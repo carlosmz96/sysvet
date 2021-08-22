@@ -4,6 +4,7 @@ import { PublicacionService } from './../../services/publicacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Publicacion } from './../../models/Publicacion';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-principal',
@@ -29,7 +30,8 @@ export class PrincipalComponent implements OnInit {
     private usuarioService: UsuarioService,
     private publicacionService: PublicacionService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {
     this.identity = this.usuarioService.getIdentity();
     this.publicacion = new Publicacion(0, new Date(), '', new Date(), '', null, '', null, '', '', '');
@@ -64,6 +66,12 @@ export class PrincipalComponent implements OnInit {
         this.primeraPagina();
       },
       error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
         this.addErrorMessage(error.error.message);
       }
     );
@@ -255,7 +263,7 @@ export class PrincipalComponent implements OnInit {
   public validarCampos(): boolean {
     let valido = true;
 
-    if(this.publicacion.titulo == '') {
+    if (this.publicacion.titulo == '') {
       valido = false;
       this.addErrorMessage('El título está vacío.');
     }

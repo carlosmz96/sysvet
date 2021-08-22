@@ -284,6 +284,14 @@ export class DatosMascotaComponent implements OnInit {
         this.usuarios = users.users as Usuario[];
         this.propietarios = this.usuarios.filter(usuario => usuario.rol == 'cliente' || usuario.rol == 'administrador');
         this.veterinarios = this.usuarios.filter(usuario => usuario.rol == 'veterinario');
+      },
+      error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
       }
     );
   }

@@ -18,14 +18,14 @@ exports.ensureAuth = function(req, res, next){
 
         try {
             const payload = jwt.decode(token, process.env.SECRET_KEY);
-            if(payload.exp <= moment.unix()){
-                return res.status(401).send({message: 'El token ha expirado.'});
-            }
+            // if(payload.exp <= moment.unix()){
+            //     return res.status(401).send({message: 'El token ha expirado.'});
+            // }
             req.user = payload;
             next();
         } catch(ex) {
             console.log(ex);
-            return res.status(404).send({message: 'El token no es válido.'});
+            return res.status(401).send({message: 'El token ha expirado.'});
         }
     }
 }

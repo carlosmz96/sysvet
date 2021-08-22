@@ -3,6 +3,7 @@ import { Servicio } from './../../models/Servicio';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, TreeNode } from 'primeng/api';
 import { ServicioService } from './../../services/servicio.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-servicios',
@@ -16,7 +17,8 @@ export class ServiciosComponent implements OnInit {
 
   constructor(
     private servicioService: ServicioService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {
     this.servicioDocumental = new ServicioDocumental(0, '');
   }
@@ -48,6 +50,12 @@ export class ServiciosComponent implements OnInit {
         });
       },
       error => {
+        if (error.status == 401) {
+          localStorage.clear();
+          this.router.navigate(['login']).then(() => {
+            window.location.reload();
+          });
+        }
         this.addErrorMessage(error.error.message);
       }
     )
