@@ -14,6 +14,7 @@ export class RecordarClaveComponent implements OnInit {
   public title: string = 'SYSVET';
   public usuario: Usuario;
   public identity: any = false; // usuario logueado
+  public captcha: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -25,7 +26,7 @@ export class RecordarClaveComponent implements OnInit {
     this.identity = this.usuarioService.getIdentity();
 
     // si el usuario ya está logueado, redirecciona a index
-    if(this.identity) {
+    if (this.identity) {
       this.router.navigate(['index']);
     }
   }
@@ -43,43 +44,51 @@ export class RecordarClaveComponent implements OnInit {
    * 2. Envia un correo al email del usuario con un enlace
    */
   public onSubmitEmail(): void {
-    this.usuarioService.recordarContrasena(this.usuario).subscribe(
-      response => {
-        const user = response.user;
+    if (this.captcha) {
+      this.usuarioService.recordarContrasena(this.usuario).subscribe(
+        response => {
+          const user = response.user;
 
-        if(!user.email) {
-          this.addErrorMessage('Error al enviar el correo.');
-        }else{
-          this.addSuccessMessage('Se ha enviado un enlace a tu correo electrónico, por favor, revísalo.');
+          if (!user.email) {
+            this.addErrorMessage('Error al enviar el correo.');
+          } else {
+            this.addSuccessMessage('Se ha enviado un enlace a tu correo electrónico, por favor, revísalo.');
+          }
+        },
+        error => {
+          this.addErrorMessage(error.error.message);
         }
-      },
-      error => {
-        this.addErrorMessage(error.error.message);
-      }
-    )
+      );
+    } else {
+      this.addErrorMessage('Debes de completar el captcha.');
+    }
   }
 
   /**
    * Método encargado de redireccionar a login
    */
-   public goLogin(): void {
+  public goLogin(): void {
     this.router.navigate(['login']);
+  }
+
+  public validaEnvio(): void {
+    this.captcha = true;
   }
 
   /**
    * Método encargado de mostrar una notificación con un mensaje de error
    * @param msg Mensaje pasado por parámetro
    */
-   public addErrorMessage(msg: string): void {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  public addErrorMessage(msg: string): void {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
   }
 
   /**
    * Método encargado de mostrar una notificación con un mensaje de éxito
    * @param msg Mensaje pasado por parámetro
    */
-   public addSuccessMessage(msg: string): void {
-    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
+  public addSuccessMessage(msg: string): void {
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: msg });
   }
 
 }

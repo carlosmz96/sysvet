@@ -115,6 +115,9 @@
                     <div class="espec" *ngFor="let es of especializaciones">
                       {{ es.nombre }}
                     </div>
+                    <div class="espec" *ngIf="especializaciones.length == 0">
+                      No tiene especializaciones
+                    </div>
                   </div>
                 </div>
               </form>

@@ -21,6 +21,10 @@
           placeholder="Introduce tu correo electrónico" maxlength="60" title="Correo electrónico" required>
       </div>
 
+      <div class="text-center">
+        <p-captcha siteKey="6LfVPR0cAAAAAGREqV1ViThEBKi8fqQySH65IJIQ" (onResponse)="validaEnvio()" initCallback="loadCaptcha" style="display: inline-block; text-align: center;"></p-captcha>
+      </div>
+
       <div class="d-grid gap-2">
         <button type="submit" class="btn btn-success btn-block" title="Enviar">Enviar</button>
       </div>

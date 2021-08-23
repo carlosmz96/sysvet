@@ -25,7 +25,6 @@ export class ServiciosComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerServicios();
-    console.log(this.services.sort((a: Servicio, b: Servicio) => a.nombre.localeCompare(b.nombre)));
   }
 
   /**

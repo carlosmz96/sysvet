@@ -205,15 +205,17 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         });
 
-        // obtenemos todos los servicios que tenga asociados el veterinario
-        this.servicioService.listarServiciosByIds(idsServicios).subscribe(
-          response => {
-            this.especializaciones = response.servicios as Servicio[];
-          },
-          error => {
-            this.addErrorMessage(error.error.message);
-          }
-        );
+        if (idsServicios.length != 0) {
+          // obtenemos todos los servicios que tenga asociados el veterinario
+          this.servicioService.listarServiciosByIds(idsServicios).subscribe(
+            response => {
+              this.especializaciones = response.servicios as Servicio[];
+            },
+            error => {
+              this.addErrorMessage(error.error.message);
+            }
+          );
+        }
       },
       error => {
         this.addErrorMessage(error.error.message);

@@ -21,6 +21,7 @@ import { PickListModule } from 'primeng/picklist';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CaptchaModule } from 'primeng/captcha';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -99,7 +100,8 @@ import { ConsultarEntradaComponent } from './components/consultar-entrada/consul
     PickListModule,
     PaginatorModule,
     ProgressBarModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    CaptchaModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

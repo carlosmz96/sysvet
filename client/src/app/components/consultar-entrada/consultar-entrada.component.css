@@ -10,3 +10,7 @@
 .info {
   font-size: 11pt;
 }
+
+.card-text {
+  margin-bottom: -1em !important;
+}
