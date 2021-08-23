@@ -19,24 +19,16 @@ async function altaServicio(req, res) {
         if (!servicio) {
             res.status(404).send({ message: 'No se ha creado el servicio.' });
         } else {
-            await Servicio.findOne({ where: { codigo: params.codigo } }).then(async function (servicioObtenido) {
-                if (!servicioObtenido) {
-                    res.status(404).send({ message: 'No se ha encontrado el servicio.' });
+            await ServicioDocumental.create({ _id: servicio.id_servicio, descripcion: params.descripcion }, (err, doc) => {
+                if (err) {
+                    res.status(500).send({ message: 'Error al establecer la descripción del servicio.' });
                 } else {
-                    await ServicioDocumental.create({ _id: servicioObtenido.id_servicio, descripcion: params.descripcion }, (err, doc) => {
-                        if (err) {
-                            res.status(500).send({ message: 'Error al establecer la descripción del servicio.' });
-                        } else {
-                            if (!doc) {
-                                res.status(404).send({ message: 'No se ha establecido la descripción del servicio.' });
-                            } else {
-                                res.status(200).send({ servicio, doc });
-                            }
-                        }
-                    });
+                    if (!doc) {
+                        res.status(404).send({ message: 'No se ha establecido la descripción del servicio.' });
+                    } else {
+                        res.status(200).send({ servicio, doc });
+                    }
                 }
-            }).catch(() => {
-                res.status(500).send({ message: 'Error al obtener el servicio.' });
             });
         }
     }).catch(() => {
@@ -190,7 +182,7 @@ async function consultarServiciosByIds(req, res) {
 
     await Servicio.findAll({
         where: {
-            id_servicio : array
+            id_servicio: array
         }
     }).then(function (servicios) {
         if (!servicios) {

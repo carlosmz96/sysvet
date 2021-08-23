@@ -142,7 +142,8 @@ async function bajaMascota(req, res) {
                 res.status(500).send({ message: 'Error al dar de baja los datos documentales de la mascota.' });
             });
         }
-    }).catch(() => {
+    }).catch((err) => {
+        console.error(err)
         res.status(500).send({ message: 'Error al dar de baja a la mascota.' });
     });
 }

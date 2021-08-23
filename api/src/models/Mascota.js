@@ -82,7 +82,7 @@ const Mascota = sequelize.define('Mascota', {
         type: DataTypes.STRING(9),
         allowNull: true,
         references: {
-            model: Usuario,
+            model: Veterinario,
             key: 'dni'
         }
     },
@@ -90,7 +90,7 @@ const Mascota = sequelize.define('Mascota', {
         type: DataTypes.STRING(9),
         allowNull: false,
         references: {
-            model: Usuario,
+            model: Veterinario,
             key: 'dni'
         }
     }

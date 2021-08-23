@@ -60,7 +60,7 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
   ) {
     this.identity = this.usuarioService.getIdentity();
 
-    this.cita = new Cita('', '', '', '', new Date(), '', 0, '', '', '');
+    this.cita = new Cita('', '', '', '', new Date(), '', 0, '', '', 'S');
 
     if (this.identity.rol != 'veterinario') {
       this.obtenerUsuario();

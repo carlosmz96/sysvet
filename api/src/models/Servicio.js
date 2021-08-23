@@ -7,7 +7,7 @@ const Servicio = sequelize.define('Servicio', {
     id_servicio: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrementIdentity: true
+        autoIncrement: true
     },
     codigo: {
         type: DataTypes.STRING(10),

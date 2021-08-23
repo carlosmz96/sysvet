@@ -74,6 +74,7 @@ async function altaUsuario(req, res) {
                     res.status(200).send({ user });
                 }
             }).catch((err) => {
+                console.error(err)
                 res.status(500).send({ message: 'Error al dar de alta al usuario.' });
             });
         } else {
@@ -271,7 +272,7 @@ async function bajaUsuario(req, res) {
                             } else {
                                 res.status(200).send({ user: userDeleted });
                             }
-                        }).catch((err) => {
+                        }).catch(() => {
                             res.status(500).send({ message: 'Error al dar de baja al usuario.' });
                         });
                     }

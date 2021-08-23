@@ -32,7 +32,8 @@ async function crearEntrada(req, res) {
                 }
             });
         }
-    }).catch(() => {
+    }).catch((err) => {
+        console.error(err)
         res.status(500).send({ message: 'Error al crear la entrada.' });
     });
 }

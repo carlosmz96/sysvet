@@ -13,10 +13,15 @@ async function nuevaCita(req, res) {
     const params = req.body;
     const fecha = new Date(params.fecha).valueOf();
     const fechaActual = new Date().valueOf();
+    let idCita = '';
 
     if ((fecha > fechaActual) && (params.mascota && params.propietario && params.fecha)) {
 
-        const idCita = new Date().getTime().toString();
+        if (!params.id_cita) {
+            idCita = new Date().getTime().toString();
+        } else {
+            idCita = params.id_cita;
+        }
 
         await Cita.findOne({ where: { fecha: params.fecha, activa: 'S' } }).then(async function (cita) {
             if (!cita) {
@@ -27,13 +32,14 @@ async function nuevaCita(req, res) {
                     fecha: params.fecha,
                     servicio: params.servicio,
                     veterinario: params.veterinario,
-                    activa: 'S'
+                    activa: params.activa
                 }).then(async function (cita) {
                     if (!cita) {
                         res.status(404).send({ message: 'No se ha creado la cita.' });
                     } else {
                         await CitaDocumento.create({ _id: idCita, motivo: params.motivo }, (err, doc) => {
                             if (err) {
+                                console.error(err);
                                 res.status(500).send({ message: 'Error al establecer el motivo de la cita.' });
                             } else {
                                 if (!doc) {
@@ -45,6 +51,7 @@ async function nuevaCita(req, res) {
                         });
                     }
                 }).catch((err) => {
+                    console.log(err);
                     res.status(500).send({ message: 'Error al crear una cita.' });
                 });
             } else {
@@ -137,10 +144,11 @@ async function listarCitasPropietario(req, res) {
  */
 async function anularCita(req, res) {
     const params = req.body;
+    const idCita = req.params.id;
 
     await Cita.update({ activa: 'N' }, {
         where: {
-            id_cita: params.id_cita
+            id_cita: idCita
         }
     }).then(function (citaCanceled) {
         if (!citaCanceled) {
@@ -148,7 +156,8 @@ async function anularCita(req, res) {
         } else {
             res.status(200).send({ cita: citaCanceled });
         }
-    }).catch(() => {
+    }).catch((err) => {
+        console.error(err);
         res.status(500).send({ message: 'Error al anular la cita.' });
     });;
 }
@@ -159,18 +168,19 @@ async function anularCita(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function eliminarCita(req, res) {
+    const idCita = req.params.id;
     const params = req.body;
 
     if (params.activa == 'N') {
         await Cita.destroy({
             where: {
-                id_cita: params.id_cita
+                id_cita: idCita
             }
         }).then(async function (citaDeleted) {
             if (!citaDeleted) {
                 res.status(404).send({ message: 'No se ha podido eliminar la cita.' });
             } else {
-                await CitaDocumento.deleteOne({ _id: params.id_cita }, (err, docDel) => {
+                await CitaDocumento.deleteOne({ _id: idCita }, (err, docDel) => {
                     if (err) {
                         res.status(500).send({ message: 'Error al intentar eliminar la cita.' });
                     } else {
@@ -183,6 +193,7 @@ async function eliminarCita(req, res) {
                 });
             }
         }).catch((err) => {
+            console.error(err)
             res.status(500).send({ message: 'Error al eliminar la cita.' });
         });
     } else {
