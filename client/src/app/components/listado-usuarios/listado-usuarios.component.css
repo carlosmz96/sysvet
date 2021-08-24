@@ -1,51 +1,91 @@
 .p-inputtext {
-    width: -webkit-fill-available;
+  width: -webkit-fill-available;
 }
 
-.rowmedia, .rowsmall {
-    display: none;
+.rowmedia, .rowsmall, .rowsupersmall {
+  display: none;
 }
 
 /* Columna de la tabla para consultar */
+
 tr th:last-of-type {
-    width: 85px;
+  width: 85px;
 }
+
 .consultar:hover {
-    color: #72bd78;
+  color: #72bd78;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .container {
+    max-width: 920px;
+  }
 }
 
 @media (min-width: 601px) and (max-width: 767px) {
-    .container {
-        max-width: 90% !important;
-    }
-    .acordeon {
-        display: table-cell !important;
-    }
-    .rowmedia {
-        display: table-row !important;
-    }
-    .colapellidos, .colrol {
-        display: none;
-    }
-    tr th:nth-of-type(3) {
-        display: none;
-    }
-    tr td:nth-of-type(3) {
-        display: none;
-    }
+  .container {
+    max-width: 100% !important;
+  }
+  .acordeon {
+    display: table-cell !important;
+  }
+  .rowmedia {
+    display: table-row !important;
+  }
+  .colrol {
+    display: none;
+  }
+  tr th:nth-of-type(3) {
+    display: none;
+  }
+  tr td:nth-of-type(3) {
+    display: none;
+  }
+  tr th:nth-of-type(4) {
+    display: none;
+  }
+  tr td:nth-of-type(4) {
+    display: none;
+  }
 }
 
-@media screen and (max-width: 600px) {
-    .acordeon {
-        display: table-cell !important;
-    }
-    .rowsmall {
-        display: table-row !important;
-    }
-    tr th:nth-of-type(2), th:nth-of-type(3), th:nth-of-type(5) {
-        display: none;
-    }
-    tr td:nth-of-type(2), td:nth-of-type(3), td:nth-of-type(5) {
-        display: none;
-    }
+@media (min-width: 426px) and (max-width: 600px) {
+  .card-body {
+    width: 100%;
+  }
+  .acordeon {
+    display: table-cell !important;
+  }
+  .rowsmall {
+    display: table-row !important;
+  }
+  tr th:nth-of-type(3), th:nth-of-type(4), th:nth-of-type(5) {
+    display: none;
+  }
+  tr td:nth-of-type(3), td:nth-of-type(4), td:nth-of-type(5) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .acordeon {
+    display: table-cell !important;
+  }
+  .rowsupersmall {
+    display: table-row !important;
+  }
+  tr th:nth-of-type(3), th:nth-of-type(4), th:nth-of-type(5), th:nth-of-type(6) {
+    display: none;
+  }
+  tr td:nth-of-type(3), td:nth-of-type(4), td:nth-of-type(5), td:nth-of-type(6) {
+    display: none;
+  }
+}
+
+:host ::ng-deep .row-activo {
+  background-color: rgb(223, 255, 226) !important;
+}
+
+:host ::ng-deep .row-inactivo {
+  background-color: rgb(255, 216, 216) !important;
 }

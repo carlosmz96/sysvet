@@ -29,6 +29,7 @@ export class ModificarUsuarioComponent implements OnInit {
   public asociados: Servicio[] = []; // asociados al veterinario
   public asociadosAux: Servicio[] = []; // array auxiliar de asociados
   public serviciosAsociados: VeterinarioServicio[] = []; // lista de relaciones entre veterinarios y servicios
+  public activo: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -72,6 +73,13 @@ export class ModificarUsuarioComponent implements OnInit {
    * Método encargado de guardar los datos editados del usuario
    */
   public onSubmit(): void {
+    // estado del usuario
+    if (this.activo) {
+      this.usuario.activo = "S";
+    } else {
+      this.usuario.activo = "N";
+    }
+
     // si se ha elegido una foto, se guarda
     if (this.nuevaFoto) {
       this.subirFotoPerfil(this.url + 'subir-foto-perfil/' + this.usuario.dni, [], this.foto).then(
@@ -240,8 +248,18 @@ export class ModificarUsuarioComponent implements OnInit {
       response => {
         this.usuario = response.user;
         this.usuario.pass = "";
+        this.usuario.num_colegiado = response.vet.num_colegiado;
+
+        // comprobación de imagen del usuario
         if (this.usuario.foto == null) {
           this.usuario.foto = 'default-image.png';
+        }
+
+        // obtención del estado del usuario
+        if (this.usuario.activo == "S") {
+          this.activo = true;
+        } else {
+          this.activo = false;
         }
       },
       error => {

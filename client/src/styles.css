@@ -205,3 +205,11 @@ a:hover {
 .p-progressbar .p-progressbar-value {
   background: #63a868;
 }
+
+/* SWITCH BUTTON */
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #63a868;
+}
+.p-inputswitch.p-inputswitch-checked:hover .p-inputswitch-slider:hover {
+  background: #63a868;
+}

@@ -31,6 +31,10 @@
                 placeholder="Buscar..." class="p-column-filter" title="Buscar por rol">
             </th>
             <th>
+              <input pInputText type="text" (input)="dtusers.filter(getValueInput($event.target), 'activo', 'contains')"
+                placeholder="Buscar..." class="p-column-filter" title="Buscar por activo (S/N)">
+            </th>
+            <th>
 
             </th>
           </tr>
@@ -45,11 +49,13 @@
             </th>
             <th pSortableColumn="rol" title="Ordenar por rol">Rol <p-sortIcon field="rol"></p-sortIcon>
             </th>
+            <th pSortableColumn="activo" title="Ordenar por activo">Activo<p-sortIcon field="activo"></p-sortIcon>
+            </th>
             <th>Acción</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-usuario let-expanded="expanded">
-          <tr>
+          <tr [ngClass]="{'row-inactivo': usuario.activo === 'N'}">
             <td class="acordeon" style="display: none;">
               <button type="button" pButton pRipple [pRowToggler]="usuario"
                 class="p-button-text p-button-rounded p-button-plain"
@@ -59,6 +65,12 @@
             <td>{{usuario.nombre}}</td>
             <td>{{usuario.apellidos}}</td>
             <td>{{usuario.rol}}</td>
+            <td *ngIf="usuario.activo == 'S'">
+              Si
+            </td>
+            <td *ngIf="usuario.activo == 'N'">
+              No
+            </td>
             <td>
               <i class="fas fa-lg fa-eye consultar" title="Consultar usuario" routerLink="/usuario/{{usuario.dni}}"
                 style="display: block; text-align: center; cursor: pointer;"></i>
@@ -69,13 +81,26 @@
           <tr class="rowmedia">
             <td colspan="5">
               <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
+              <p class="colapellidos"><strong>Apellidos: </strong>{{usuario.apellidos}}</p>
             </td>
           </tr>
           <tr class="rowsmall">
-            <td colspan="3">
-              <p class="coldni"><strong>Dni: </strong>{{usuario.dni}}</p>
+            <td colspan="4">
               <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
+              <p class="colapellidos"><strong>Apellidos: </strong>{{usuario.apellidos}}</p>
               <p class="colrol"><strong>Rol: </strong>{{usuario.rol}}</p>
+            </td>
+          </tr>
+          <tr class="rowsupersmall">
+            <td colspan="3">
+              <p class="colnombre"><strong>Nombre: </strong>{{usuario.nombre}}</p>
+              <p class="colapellidos"><strong>Apellidos: </strong>{{usuario.apellidos}}</p>
+              <p class="colrol"><strong>Rol: </strong>{{usuario.rol}}</p>
+              <p class="colactivo">
+                <strong>Activo: </strong>
+                <span *ngIf="usuario.activo == 'S'">Si</span>
+                <span *ngIf="usuario.activo == 'N'">No</span>
+              </p>
             </td>
           </tr>
         </ng-template>

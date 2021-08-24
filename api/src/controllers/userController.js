@@ -108,7 +108,11 @@ async function iniciarSesion(req, res) {
                         token: jwt.crearToken(user)
                     })
                 } else {
-                    res.status(200).send({ user });
+                    if (user.activo == "N") {
+                        res.status(403).send({ message: 'Tu cuenta está inactiva.' });
+                    } else {
+                        res.status(200).send({ user });
+                    }
                 }
             } else {
                 res.status(404).send({ message: 'Contraseña incorrecta.' })
@@ -127,11 +131,33 @@ async function iniciarSesion(req, res) {
 async function consultarUsuario(req, res) {
     const userDni = req.params.dni;
 
-    await Usuario.findOne({ where: { dni: userDni } }).then(function (user) {
+    await Usuario.findOne({ where: { dni: userDni } }).then(async function (user) {
         if (!user) {
             res.status(404).send({ message: 'No se ha podido encontrar al usuario.' });
         } else {
-            res.status(200).send({ user });
+            if (user.rol == 'veterinario') {
+                await Veterinario.findOne({ where: { dni: userDni } }).then(function (vet) {
+                    if (!vet) {
+                        res.status(404).send({ message: 'No se ha podido encontrar al veterinario.' });
+                    } else{
+                        res.status(200).send({ user, vet });
+                    }
+                }).catch(() => {
+                    res.status(500).send({ message: 'Error al consultar el veterinario.' });
+                });
+            } else if (user.rol == 'cliente') {
+                await Propietario.findOne({ where: { dni: userDni } }).then(function (pro) {
+                    if (!pro) {
+                        res.status(404).send({ message: 'No se ha podido encontrar al propietario.' });
+                    } else{
+                        res.status(200).send({ user, pro });
+                    }
+                }).catch(() => {
+                    res.status(500).send({ message: 'Error al consultar el propietario.' });
+                });
+            } else {
+                res.status(200).send({ user });
+            }
         }
     }).catch(() => {
         res.status(500).send({ message: 'Error al consultar el usuario.' });
@@ -191,7 +217,8 @@ async function modificarUsuario(req, res) {
         email: update.email,
         rol: update.rol,
         telefono: update.telefono,
-        direccion: update.direccion
+        direccion: update.direccion,
+        activo: update.activo
     }, { where: { dni: userDni } }).then(async function (userUpdated) {
         if (!userUpdated) {
             res.status(404).send({ message: 'No se ha podido actualizar el usuario.' });

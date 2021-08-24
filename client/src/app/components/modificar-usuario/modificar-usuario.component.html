@@ -16,6 +16,19 @@
         <h2>Editar datos</h2>
         <p>En este apartado podrás modificar tus datos personales, incluyendo tu contraseña y foto de perfil.</p>
         <hr>
+        <div class="form-group row" *ngIf="identity.rol == 'administrador'">
+          <label for="estado" class="col-sm-4 col-form-label"><strong>Usuario activo</strong></label>
+          <div class="col-sm-8">
+            <p-inputSwitch [(ngModel)]="activo" name="activo"></p-inputSwitch>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="usuario.rol == 'veterinario' && identity.rol != 'cliente'">
+          <label for="num_colegiado" class="col-sm-4 col-form-label"><strong>Nº colegiado</strong></label>
+          <div class="col-sm-8">
+            <input type="text" #num_colegiado="ngModel" name="num_colegiado" id="num_colegiado" [(ngModel)]="usuario.num_colegiado"
+              class="form-control" maxlength="4" title="Número de colegiado" disabled required>
+          </div>
+        </div>
         <div class="form-group row">
           <label for="nombre" class="col-sm-4 col-form-label"><strong>Nombre</strong></label>
           <div class="col-sm-8">
