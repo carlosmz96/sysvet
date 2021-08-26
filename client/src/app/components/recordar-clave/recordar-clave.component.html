@@ -1,9 +1,12 @@
 <p-toast></p-toast>
 
-<div>
-  <h1 class="title">
-    <a (click)="goLogin()" style="color: white; cursor: pointer;" title="Página principal">{{title}}</a>
-  </h1>
+<div class="logo">
+  <!-- <h1 class="title">
+    <a style="color: white; text-decoration: none;">{{title}}</a>
+  </h1> -->
+  <a routerLink="/">
+    <img src="../../../assets/images/logo completo.png" alt="Logo de sysvet" class="logo-sysvet">
+  </a>
 </div>
 
 <div class="card mx-auto shadow p-3 mb-5 bg-white rounded recordar-clave" style="margin-top: 3%;">

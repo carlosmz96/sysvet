@@ -8,17 +8,17 @@
       <form #newPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-alta-mascota" ngNativeValidate>
         <h2>Alta mascota</h2>
         <div style="margin-bottom: 0.5em;">
-          <p>Por favor, rellena todos los campos obligatorios (*) para poder
+          <p>Por favor, rellena todos los campos para poder
             registrar una nueva mascota en el sistema.</p>
         </div>
         <hr>
         <div class="form-group row">
-          <label for="nombre" class="col-sm-2 col-form-label"><strong>* Nombre</strong></label>
+          <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
           <div class="col-sm-4">
             <input type="text" #nombre="ngModel" name="nombre" id="nombre" [(ngModel)]="mascota.nombre"
               class="form-control" placeholder="Nombre de la mascota" maxlength="25" required>
           </div>
-          <label for="identificador" class="col-sm-2 col-form-label"><strong>* Identificador</strong></label>
+          <label for="identificador" class="col-sm-2 col-form-label"><strong>Identificador</strong></label>
           <div class="col-sm-4">
             <input type="text" #identificador="ngModel" name="identificador" id="identificador"
               (keypress)="($event.charCode >= 48 && $event.charCode <= 57)" [(ngModel)]="mascota.identificador"
@@ -26,38 +26,38 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="especie" class="col-sm-2 col-form-label"><strong>* Especie</strong></label>
+          <label for="especie" class="col-sm-2 col-form-label"><strong>Especie</strong></label>
           <div class="col-sm-4">
             <input type="text" #especie="ngModel" name="especie" id="especie" [(ngModel)]="mascota.especie"
               class="form-control" placeholder="Especie de la mascota" maxlength="20" required>
           </div>
-          <label for="raza" class="col-sm-2 col-form-label"><strong>* Raza</strong></label>
+          <label for="raza" class="col-sm-2 col-form-label"><strong>Raza</strong></label>
           <div class="col-sm-4">
             <input type="text" #raza="ngModel" name="raza" id="raza" [(ngModel)]="mascota.raza" class="form-control"
               placeholder="Raza de la mascota" maxlength="40" required>
           </div>
         </div>
         <div class="form-group row">
-          <label for="sexo" class="col-sm-2 col-form-label"><strong>* Sexo</strong></label>
+          <label for="sexo" class="col-sm-2 col-form-label"><strong>Sexo</strong></label>
           <select class="form-control custom-select col mr-3 ml-3" #sexo="ngModel" name="sexo" id="sexo"
             [(ngModel)]="mascota.sexo" required>
             <option value="" disabled selected>Selecciona el sexo</option>
             <option value="M">Macho</option>
             <option value="H">Hembra</option>
           </select>
-          <label for="color" class="col-sm-2 col-form-label"><strong>* Color</strong></label>
+          <label for="color" class="col-sm-2 col-form-label"><strong>Color</strong></label>
           <div class="col-sm-4">
             <input type="text" #color="ngModel" name="color" id="color" [(ngModel)]="mascota.color" class="form-control"
               placeholder="Color de la mascota" maxlength="20" required>
           </div>
         </div>
         <div class="form-group row">
-          <label for="edad" class="col-sm-2 col-form-label"><strong>* Edad</strong></label>
+          <label for="edad" class="col-sm-2 col-form-label"><strong>Edad</strong></label>
           <div class="col-sm-4">
             <input type="text" #edad="ngModel" name="edad" id="edad" [(ngModel)]="mascota.edad" class="form-control"
               placeholder="Edad de la mascota" maxlength="25" required>
           </div>
-          <label for="altura" class="col-sm-2 col-form-label"><strong>* Altura</strong></label>
+          <label for="altura" class="col-sm-2 col-form-label"><strong>Altura</strong></label>
           <div class="col-sm-4">
             <div class="input-group">
               <input type="number" step="0.01" #altura="ngModel" name="altura" id="altura" [(ngModel)]="mascota.altura"
@@ -71,7 +71,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="peso" class="col-sm-2 col-form-label"><strong>* Peso</strong></label>
+          <label for="peso" class="col-sm-2 col-form-label"><strong>Peso</strong></label>
           <div class="col-sm-4">
             <div class="input-group">
               <input type="number" step="0.01" #peso="ngModel" name="peso" id="peso" [(ngModel)]="mascota.peso"
@@ -83,7 +83,7 @@
               </div>
             </div>
           </div>
-          <label for="esterilizado" class="col-sm-2 mr-0 col-form-label"><strong>* Esterilizado</strong></label>
+          <label for="esterilizado" class="col-sm-2 mr-0 col-form-label"><strong>Esterilizado</strong></label>
           <select class="form-control custom-select col ml-3 mr-3" #esterilizado="ngModel" name="esterilizado"
             id="esterilizado" [(ngModel)]="mascota.esterilizado" required>
             <option value="" disabled selected>Selecciona esterilizado</option>

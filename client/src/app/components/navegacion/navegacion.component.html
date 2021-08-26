@@ -6,7 +6,10 @@
 
 <nav class="navbar navbar-expand-lg" style="margin-bottom: 2em; position: sticky; top: 0; z-index: 1;">
   <div class="container">
-    <a class="navbar-brand" (click)="goHome()" style="cursor: pointer;" title="Página principal">{{ title }}</a>
+    <!-- <a class="navbar-brand" (click)="goHome()" style="cursor: pointer;" title="Página principal">{{ title }}</a> -->
+    <a (click)="goHome()" style="cursor: pointer;" title="Página principal">
+      <img src="../../../assets/images/logo barra pequeño.png" alt="Logo de sysvet" height="50px">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
