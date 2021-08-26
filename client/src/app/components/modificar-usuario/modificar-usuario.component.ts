@@ -248,7 +248,9 @@ export class ModificarUsuarioComponent implements OnInit {
       response => {
         this.usuario = response.user;
         this.usuario.pass = "";
-        this.usuario.num_colegiado = response.vet.num_colegiado;
+        if (this.usuario.rol == 'veterinario') {
+          this.usuario.num_colegiado = response.vet.num_colegiado;
+        }
 
         // comprobación de imagen del usuario
         if (this.usuario.foto == null) {
