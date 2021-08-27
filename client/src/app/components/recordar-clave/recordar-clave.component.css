@@ -8,3 +8,18 @@
   max-width: 25em;
   width: 100%;
 }
+
+@media (max-width: 600px) {
+  .info {
+    margin-top: 1em;
+  }
+}
+
+.info {
+  margin-bottom: 1em;
+}
+
+.celda {
+  padding: 0 0 0 1em;
+  text-indent: -0.9em;
+}

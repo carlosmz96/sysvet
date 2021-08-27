@@ -103,7 +103,6 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       this.cita.fecha = this.fechaCompleta;
       this.cita.servicio = this.servicio.id_servicio;
       this.cita.veterinario = this.veterinario.dni;
-      console.log(this.cita)
 
       this.citaService.nuevaCita(this.cita).subscribe(
         response => {
@@ -404,8 +403,6 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       this.vetServService.listarVeterinariosPorEspecialidad(this.servicio.id_servicio).subscribe(
         response => {
           const relaciones = response.relaciones as VeterinarioServicio[];
-
-          console.log(relaciones)
 
           let dnis = '';
           relaciones.forEach(rel => {

@@ -1,8 +1,10 @@
+import { DataService } from 'src/app/services/data.service';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from '../../models/Usuario';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-registro',
@@ -15,11 +17,15 @@ export class RegistroComponent implements OnInit {
   public usuario_registro: Usuario;
   public rePass: string = ""; // repite contraseña
 
+  public message: string = '';
+  public subscription: Subscription = new Subscription();
+
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
     private elementRef: ElementRef,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dataService: DataService
   ) {
     this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '', '');
     this.identity = this.usuarioService.getIdentity();
@@ -31,6 +37,7 @@ export class RegistroComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subscription = this.dataService.currentMessage.subscribe(msg => this.message = msg);
     this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
@@ -48,9 +55,8 @@ export class RegistroComponent implements OnInit {
             if (!user.dni) {
               this.addErrorMessage('Error al registrarse');
             } else {
-              this.addSuccessMessage('Te has registrado correctamente');
-              this.usuario_registro = new Usuario('', '', '', '', '', 'cliente', '', '', '', '', '', '');
-              this.rePass = "";
+              this.dataService.changeMessage('Te has registrado correctamente');
+              this.router.navigate(['login']);
             }
           },
           error => {

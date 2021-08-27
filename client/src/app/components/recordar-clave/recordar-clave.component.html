@@ -11,12 +11,10 @@
 
 <div class="card mx-auto shadow p-3 mb-5 bg-white rounded recordar-clave" style="margin-top: 3%;">
   <div class="card-body">
-    <div class="goBack form-row form-group">
-      <i class="fas fa-arrow-left fa-lg col-auto" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i>
-      <div class="d-flex justify-content-center">
-        <span class="col-auto">Por favor, introduce tu correo electrónico.</span>
-      </div>
-    </div>
+    <table class="info">
+      <td><i class="fas fa-arrow-left fa-lg col-sm-1" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i></td>
+      <td class="celda"><span class="col-sm-11">Por favor, introduce tu correo electrónico.</span></td>
+    </table>
 
     <form #emailForm="ngForm" (ngSubmit)="onSubmitEmail()" class="formulario-recuerda-clave" ngNativeValidate>
       <div class="form-group">

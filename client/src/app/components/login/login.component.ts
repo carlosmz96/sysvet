@@ -1,6 +1,8 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from '../../models/Usuario';
 
@@ -9,13 +11,17 @@ import { Usuario } from '../../models/Usuario';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   public title = 'SYSVET';
   public usuario: Usuario;
   public identity: any = false; // usuario logueado
   public token: any = null; // token generado tras el login
 
+  public message: string = '';
+  public subscription: Subscription = new Subscription();
+
   constructor(
+    private dataService: DataService,
     private usuarioService: UsuarioService,
     private elementRef: ElementRef,
     private router: Router,
@@ -26,9 +32,20 @@ export class LoginComponent implements OnInit {
     this.token = this.usuarioService.getToken();
 
     // si el usuario ya está logueado, redirecciona a index
-    if(this.identity) {
+    if (this.identity) {
       this.router.navigate(['index']);
     }
+
+    // obtiene los mensajes
+    this.subscription = this.dataService.currentMessage.subscribe(msg => this.message = msg);
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.message != 'default message') {
+        this.addSuccessMessage(this.message);
+      }
+    });
   }
 
   /**
@@ -96,16 +113,16 @@ export class LoginComponent implements OnInit {
    * Método encargado de mostrar una notificación con un mensaje de error
    * @param msg Mensaje pasado por parámetro
    */
-   public addErrorMessage(msg: string): void {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+  public addErrorMessage(msg: string): void {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
   }
 
   /**
    * Método encargado de mostrar una notificación con un mensaje de éxito
    * @param msg Mensaje pasado por parámetro
    */
-   public addSuccessMessage(msg: string): void {
-    this.messageService.add({severity: 'success', summary: 'Éxito', detail: msg});
+  public addSuccessMessage(msg: string): void {
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: msg });
   }
 
 }
