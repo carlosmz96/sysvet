@@ -26,12 +26,12 @@
                 aria-controls="pills-home" aria-selected="true" title="Datos del usuario">Datos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" *ngIf="identity.rol != 'administrador'"
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" *ngIf="usuario.rol != 'administrador'"
                 href="#mis-mascotas" role="tab" aria-controls="pills-profile" aria-selected="false"
                 title="Mascotas del usuario">Mascotas</a>
             </li>
             <li class="nav-item"
-              *ngIf="identity.rol != 'veterinario' && identity.rol != 'administrador' && identity.dni == usuario.dni">
+              *ngIf="usuario.rol != 'administrador'">
               <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-citas" role="tab"
                 aria-controls="pills-profile" aria-selected="false" title="Citas del usuario">Citas</a>
             </li>
@@ -50,11 +50,11 @@
                 style="border-color: #cccccc"></div>
               <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#mis-datos" role="tab"
                 aria-controls="v-mis-datos" aria-selected="true" title="Datos del usuario">Datos</a>
-              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" *ngIf="identity.rol != 'administrador'"
+              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" *ngIf="usuario.rol != 'administrador'"
                 href="#mis-mascotas" role="tab" aria-controls="v-mis-mascotas" aria-selected="false"
                 title="Mascotas del usuario">Mascotas</a>
               <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill"
-                *ngIf="identity.rol != 'veterinario' && identity.rol != 'administrador' && identity.dni == usuario.dni"
+              *ngIf="usuario.rol != 'administrador'"
                 href="#mis-citas" role="tab" aria-controls="v-mis-citas" aria-selected="false"
                 title="Citas del usuario">Citas</a>
             </div>
