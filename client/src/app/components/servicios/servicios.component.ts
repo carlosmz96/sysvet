@@ -1,7 +1,7 @@
 import { ServicioDocumental } from './../../models/ServicioDocumental';
 import { Servicio } from './../../models/Servicio';
 import { Component, OnInit } from '@angular/core';
-import { MessageService, TreeNode } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ServicioService } from './../../services/servicio.service';
 import { Router } from '@angular/router';
 
@@ -14,6 +14,7 @@ export class ServiciosComponent implements OnInit {
   public servicios: Servicio[] = [];
   public servicioDocumental: ServicioDocumental;
   public services: any[] = [];
+  public totalServices: any = null;
 
   constructor(
     private servicioService: ServicioService,
@@ -34,6 +35,7 @@ export class ServiciosComponent implements OnInit {
     this.servicioService.listarServicios().subscribe(
       response => {
         this.servicios = response.servicios;
+        this.totalServices = this.servicios.length;
         this.servicios.forEach(servicio => {
           this.servicioService.obtenerDescripcionServicio(servicio.id_servicio!).subscribe(
             response => {

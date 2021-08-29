@@ -8,11 +8,16 @@
       <h2>Servicios</h2>
       <p>Todos los servicios que ofrece la clínica veterinaria.</p>
       <hr>
-      <p-accordion *ngFor="let servicio of services">
-        <p-accordionTab header="{{servicio.nombre}}">
-          <div [innerHtml]="servicio.descripcion"></div>
-        </p-accordionTab>
-      </p-accordion>
+      <div *ngIf="totalServices > 0">
+        <p-accordion *ngFor="let servicio of services">
+          <p-accordionTab header="{{servicio.nombre}}">
+            <div [innerHtml]="servicio.descripcion"></div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+      <div *ngIf="totalServices == null">
+        <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+      </div>
     </div>
   </div>
 </div>
