@@ -30,7 +30,8 @@
                 *ngIf="usuario.rol != 'administrador' || identity.rol != 'administrador'" href="#mis-mascotas"
                 role="tab" aria-controls="pills-profile" aria-selected="false" title="Mascotas del usuario">Mascotas</a>
             </li>
-            <li class="nav-item" *ngIf="usuario.rol != 'administrador' || identity.rol != 'administrador'">
+            <li class="nav-item"
+              *ngIf="(usuario.rol != 'administrador' && usuario.rol != 'veterinario') || (identity.rol != 'administrador' && identity.rol != 'veterinario')">
               <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#mis-citas" role="tab"
                 aria-controls="pills-profile" aria-selected="false" title="Citas del usuario">Citas</a>
             </li>
@@ -54,8 +55,9 @@
                 role="tab" aria-controls="v-mis-mascotas" aria-selected="false"
                 title="Mascotas del usuario">Mascotas</a>
               <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill"
-                *ngIf="usuario.rol != 'administrador' || identity.rol != 'administrador'" href="#mis-citas" role="tab"
-                aria-controls="v-mis-citas" aria-selected="false" title="Citas del usuario">Citas</a>
+                *ngIf="(usuario.rol != 'administrador' && usuario.rol != 'veterinario') || (identity.rol != 'administrador' && identity.rol != 'veterinario')"
+                href="#mis-citas" role="tab" aria-controls="v-mis-citas" aria-selected="false"
+                title="Citas del usuario">Citas</a>
             </div>
           </div>
         </div>

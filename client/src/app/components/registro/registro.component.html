@@ -9,12 +9,14 @@
 <div class="card mx-auto shadow p-3 mb-5 bg-white rounded registro" style="margin-top: 3%;">
   <div class="card-body">
     <table class="info">
-      <td><i class="fas fa-arrow-left fa-lg col-sm-1" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i></td>
+      <td><i class="fas fa-arrow-left fa-lg col-sm-1" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i>
+      </td>
       <td class="celda"><span class="col-sm-11">Rellena el siguiente formulario para poder
-        registrarte.</span></td>
+          registrarte.</span></td>
     </table>
 
-    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" ngNativeValidate>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" autocomplete="off"
+      ngNativeValidate>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="nombre"><strong>Nombre</strong></label>
