@@ -47,17 +47,21 @@ export class CrearEntradaComponent implements OnInit {
    * Método encargado de crear una nueva entrada
    */
   public onSubmit(): void {
-    this.entrada.id_historial = this.idHistorial;
-    this.entrada.dni_creacion = this.identity.dni;
+    if (this.entrada.descripcion != '' && this.entrada.descripcion != null) {
+      this.entrada.id_historial = this.idHistorial;
+      this.entrada.dni_creacion = this.identity.dni;
 
-    this.entradaService.crearEntrada(this.entrada).subscribe(
-      response => {
-        this.router.navigate(['historial-mascota', this.idMascota]);
-      },
-      error => {
-        this.addErrorMessage(error.error.message);
-      }
-    )
+      this.entradaService.crearEntrada(this.entrada).subscribe(
+        response => {
+          this.router.navigate(['historial-mascota', this.idMascota]);
+        },
+        error => {
+          this.addErrorMessage(error.error.message);
+        }
+      )
+    } else {
+      this.addErrorMessage('La entrada está vacía');
+    }
   }
 
   /**
@@ -83,7 +87,7 @@ export class CrearEntradaComponent implements OnInit {
   /**
    * Método encargado de obtener el historial de la mascota
    */
-   public obtenerHistorial(): void {
+  public obtenerHistorial(): void {
     if (this.idMascota != "") {
       this.mascotaService.obtenerHistorial(this.idMascota).subscribe(
         response => {
@@ -100,7 +104,7 @@ export class CrearEntradaComponent implements OnInit {
   /**
    * Método encargado de volver a la página anteriormente visitada
    */
-   public goBack(): void {
+  public goBack(): void {
     this.location.back();
   }
 

@@ -5,7 +5,7 @@
 <div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded crear-entrada">
     <div class="card-body" style="text-align: justify;">
-      <form #newEntryForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-crear-entrada" ngNativeValidate>
+      <form #newEntryForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-crear-entrada">
         <h2>Nueva entrada</h2>
         <hr>
         <p>Mascota: <a routerLink="/datos-mascota/{{mascota.identificador}}">{{ mascota.nombre }}</a></p>

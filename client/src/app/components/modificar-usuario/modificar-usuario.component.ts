@@ -394,6 +394,19 @@ export class ModificarUsuarioComponent implements OnInit {
   }
 
   /**
+   * Método encargado de comprobar que la tecla pulsada es un número
+   * @param event Evento de pulsación
+   * @returns TRUE/FALSE
+   */
+  public soloNumeros(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Método encargado de redireccionar a perfil usuario
    */
   public goPerfil(): void {

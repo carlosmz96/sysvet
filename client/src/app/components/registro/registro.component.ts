@@ -45,30 +45,71 @@ export class RegistroComponent implements OnInit {
    * Método encargado de registrar a un usuario en la aplicación
    */
   public onSubmitRegister(): void {
-    if (this.validarDni(this.usuario_registro.dni)) {
-      if (this.usuario_registro.pass == this.rePass) {
-        this.usuarioService.altaUsuario(this.usuario_registro).subscribe(
-          response => {
-            const user = response.user;
-            this.usuario_registro = user;
+    if (this.validarCampos()) {
+      if (this.validarDni(this.usuario_registro.dni)) {
+        if (this.usuario_registro.pass == this.rePass) {
+          this.usuarioService.altaUsuario(this.usuario_registro).subscribe(
+            response => {
+              const user = response.user;
+              this.usuario_registro = user;
 
-            if (!user.dni) {
-              this.addErrorMessage('Error al registrarse');
-            } else {
-              this.dataService.changeMessage('Te has registrado correctamente');
-              this.router.navigate(['login']);
+              if (!user.dni) {
+                this.addErrorMessage('Error al registrarse');
+              } else {
+                this.dataService.changeMessage('Te has registrado correctamente');
+                this.router.navigate(['login']);
+              }
+            },
+            error => {
+              this.addErrorMessage(error.error.message);
             }
-          },
-          error => {
-            this.addErrorMessage(error.error.message);
-          }
-        );
+          );
+        } else {
+          this.addErrorMessage('La contraseña debe coincidir');
+        }
       } else {
-        this.addErrorMessage('La contraseña debe coincidir');
+        this.addErrorMessage('El dni no es válido.');
       }
-    } else {
-      this.addErrorMessage('El dni no es válido.');
     }
+  }
+
+  /**
+   * Método encargado de validar el formulario
+   * @returns TRUE/FALSE
+   */
+  public validarCampos(): boolean {
+    let esValido = true;
+
+    if (this.usuario_registro.nombre == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Nombre' está vacío")
+    }
+    if (this.usuario_registro.apellidos == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Apellidos' está vacío")
+    }
+    if (this.usuario_registro.dni == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'DNI' está vacío")
+    }
+    if (this.usuario_registro.email == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Correo electrónico' está vacío")
+    }
+    if (this.usuario_registro.pass == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Contraseña' está vacío")
+    }
+    if (this.rePass == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Repite la contraseña' está vacío")
+    }
+    if (this.usuario_registro.rol == 'veterinario' && this.usuario_registro.num_colegiado == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Número de colegiado' está vacío")
+    }
+
+    return esValido;
   }
 
   /**
@@ -122,6 +163,19 @@ export class RegistroComponent implements OnInit {
     }
 
     return esValido;
+  }
+
+  /**
+   * Método encargado de comprobar que la tecla pulsada es un número
+   * @param event Evento de pulsación
+   * @returns TRUE/FALSE
+   */
+  public soloNumeros(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 
 }

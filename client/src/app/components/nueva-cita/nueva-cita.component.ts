@@ -382,6 +382,16 @@ export class NuevaCitaComponent implements OnInit, OnDestroy {
       cont++;
     }
 
+    if (!this.servicio) {
+      this.addErrorMessage("El campo 'Servicio' es obligatorio.");
+      cont++;
+    }
+
+    if (!this.veterinario) {
+      this.addErrorMessage("El campo 'Veterinario' es obligatorio.");
+      cont++;
+    }
+
     if (!this.cita.motivo) {
       this.addErrorMessage("El campo 'Motivo' es obligatorio.");
       cont++;

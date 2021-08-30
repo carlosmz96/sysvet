@@ -37,26 +37,51 @@ export class AltaServicioComponent implements OnInit {
    * Método encargado de dar de alta un nuevo servicio
    */
   public onSubmit(): void {
-    const data = {
-      "codigo": this.servicio.codigo,
-      "nombre": this.servicio.nombre,
-      "descripcion": this.servicioDocumental.descripcion
+    if (this.validarCampos()) {
+      const data = {
+        "codigo": this.servicio.codigo,
+        "nombre": this.servicio.nombre,
+        "descripcion": this.servicioDocumental.descripcion
+      }
+
+      this.servicioService.altaServicio(data).subscribe(
+        response => {
+          this.router.navigate(['listado-servicios']);
+        },
+        error => {
+          if (error.status == 401) {
+            localStorage.clear();
+            this.router.navigate(['login']).then(() => {
+              window.location.reload();
+            });
+          }
+          this.addErrorMessage(error.error.message);
+        }
+      );
+    }
+  }
+
+  /**
+   * Método encargado para validar los campos del formulario
+   * @returns TRUE/FALSE
+   */
+  public validarCampos(): boolean {
+    let esValido = true;
+
+    if (this.servicio.codigo == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Código' está vacío");
+    }
+    if (this.servicio.nombre == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Nombre' está vacío");
+    }
+    if (this.servicioDocumental.descripcion == '' || this.servicioDocumental.descripcion == null) {
+      esValido = false;
+      this.addErrorMessage("El campo 'Descripción' está vacío");
     }
 
-    this.servicioService.altaServicio(data).subscribe(
-      response => {
-        this.router.navigate(['listado-servicios']);
-      },
-      error => {
-        if (error.status == 401) {
-          localStorage.clear();
-          this.router.navigate(['login']).then(() => {
-            window.location.reload();
-          });
-        }
-        this.addErrorMessage(error.error.message);
-      }
-    );
+    return esValido;
   }
 
   /**

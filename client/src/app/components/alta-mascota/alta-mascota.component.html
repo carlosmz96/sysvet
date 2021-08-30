@@ -5,7 +5,7 @@
 <div class="container">
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded alta-mascota">
     <div class="card-body" style="text-align: justify;">
-      <form #newPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-alta-mascota" ngNativeValidate>
+      <form #newPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-alta-mascota">
         <h2>Alta mascota</h2>
         <div style="margin-bottom: 0.5em;">
           <p>Por favor, rellena todos los campos para poder
@@ -22,7 +22,7 @@
           <div class="col-sm-4">
             <input type="text" #identificador="ngModel" name="identificador" id="identificador"
               (keypress)="($event.charCode >= 48 && $event.charCode <= 57)" [(ngModel)]="mascota.identificador"
-              class="form-control" placeholder="Identificador de la mascota" maxlength="10" required>
+              class="form-control" placeholder="Identificador de la mascota" maxlength="10" (keypress)="soloNumeros($event)" required>
           </div>
         </div>
         <div class="form-group row">

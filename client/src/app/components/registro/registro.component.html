@@ -15,8 +15,7 @@
           registrarte.</span></td>
     </table>
 
-    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" autocomplete="off"
-      ngNativeValidate>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" autocomplete="off">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="nombre"><strong>Nombre</strong></label>
@@ -82,7 +81,7 @@
                 de colegiado</strong></label>
             <input type="text" #num_colegiado="ngModel" name="num_colegiado" id="num_colegiado"
               [(ngModel)]="usuario_registro.num_colegiado" class="form-control" placeholder="Número de colegiado"
-              maxlength="4" title="Número de colegiado" required>
+              maxlength="4" title="Número de colegiado" (keypress)="soloNumeros($event)" required>
           </div>
         </div>
       </div>

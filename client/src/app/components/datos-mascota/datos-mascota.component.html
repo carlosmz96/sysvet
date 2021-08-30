@@ -14,7 +14,7 @@
 <div class="container" *ngIf="identity.rol == 'administrador' || identity.rol == 'veterinario'">
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-mascota">
     <div class="card-body" style="text-align: justify;">
-      <form #dataPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-mascota" ngNativeValidate>
+      <form #dataPetForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-mascota">
         <div class="top-data">
           <button type="button" class="btn btn-danger" (click)="goBack()" title="Volver"><i
               class="fas fa-arrow-circle-left"></i>
@@ -186,7 +186,7 @@
 <div class="container" *ngIf="identity.rol == 'cliente'">
   <div class="card mx-auto shadow p-3 mb-5 bg-white rounded modificar-mascota">
     <div class="card-body" style="text-align: justify;">
-      <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario" ngNativeValidate>
+      <form #editUserForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-modificacion-usuario">
         <button type="button" class="btn btn-danger" (click)="goBack()" title="Volver"><i
             class="fas fa-arrow-circle-left" style="margin-right: 0.1em;"></i> Volver</button>
         <button type="button" class="btn btn-dark" style="float: right;"

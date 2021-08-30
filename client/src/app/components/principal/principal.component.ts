@@ -265,11 +265,11 @@ export class PrincipalComponent implements OnInit {
 
     if (this.publicacion.titulo == '') {
       valido = false;
-      this.addErrorMessage('El título está vacío.');
+      this.addErrorMessage("El campo 'Título' está vacío");
     }
     if (this.publicacion.descripcion == '' || this.publicacion.descripcion == null) {
       valido = false;
-      this.addErrorMessage('La descripción está vacía.');
+      this.addErrorMessage("El campo 'Descripción' está vacío");
     }
 
     return valido;

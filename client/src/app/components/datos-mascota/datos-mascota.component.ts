@@ -114,80 +114,82 @@ export class DatosMascotaComponent implements OnInit {
    * Método encargado de guardar los datos editados de la mascota
    */
   public onSubmit(): void {
-    // si se ha elegido una foto, se guarda
-    if (this.nuevaFoto) {
-      this.subirFotoPerfil(this.url + 'subir-foto-mascota/' + this.mascota.identificador, [], this.foto).then(
-        (result: any) => {
-          this.mascota.imagen = result.image;
-          this.fotoCambiada = true;
-          this.sinErrores = true;
-          this.addSuccessMessage('Imagen de la mascota subida correctamente.');
-          this.nuevaFoto = false;
-        }
-      ).catch(error => {
-        this.sinErrores = false;
-        this.addErrorMessage('Fichero demasiado pesado. El tamaño máximo es 1Mb.');
-      });
-    }
-
-    // actualizamos propietario y veterinario asignado a mascota
-    if (this.propietario != null) {
-      this.mascota.propietario = this.propietario.dni;
-    } else {
-      this.mascota.propietario = null;
-    }
-    if (this.veterinario != null) {
-      this.mascota.veterinario = this.veterinario.dni;
-    } else {
-      this.mascota.veterinario = null;
-    }
-
-    // se actualiza el dni del usuario que modifica la mascota
-    if (this.identity != null) {
-      this.mascota.dni_modificacion = this.identity.dni;
-    }
-
-    // se actualiza el resto de datos
-    this.mascotaService.modificarMascota(this.mascota).subscribe(
-      response => {
-        if (!response.pet) {
-          this.addErrorMessage(response.message);
-          this.sinErrores = false;
-        } else {
-          this.mascota = response.pet;
-          // si la foto ha sido cambiada y no hay errores
-          if (this.fotoCambiada && this.sinErrores) {
-            this.fotoCambiada = false;
-          } else {
+    if (this.validarCampos()) {
+      // si se ha elegido una foto, se guarda
+      if (this.nuevaFoto) {
+        this.subirFotoPerfil(this.url + 'subir-foto-mascota/' + this.mascota.identificador, [], this.foto).then(
+          (result: any) => {
+            this.mascota.imagen = result.image;
+            this.fotoCambiada = true;
             this.sinErrores = true;
+            this.addSuccessMessage('Imagen de la mascota subida correctamente.');
+            this.nuevaFoto = false;
           }
+        ).catch(error => {
+          this.sinErrores = false;
+          this.addErrorMessage('Fichero demasiado pesado. El tamaño máximo es 1Mb.');
+        });
+      }
 
-          if (this.sinErrores) {
-            this.addSuccessMessage('Se han actualizado los datos con éxito.');
+      // actualizamos propietario y veterinario asignado a mascota
+      if (this.propietario != null) {
+        this.mascota.propietario = this.propietario.dni;
+      } else {
+        this.mascota.propietario = null;
+      }
+      if (this.veterinario != null) {
+        this.mascota.veterinario = this.veterinario.dni;
+      } else {
+        this.mascota.veterinario = null;
+      }
+
+      // se actualiza el dni del usuario que modifica la mascota
+      if (this.identity != null) {
+        this.mascota.dni_modificacion = this.identity.dni;
+      }
+
+      // se actualiza el resto de datos
+      this.mascotaService.modificarMascota(this.mascota).subscribe(
+        response => {
+          if (!response.pet) {
+            this.addErrorMessage(response.message);
+            this.sinErrores = false;
+          } else {
+            this.mascota = response.pet;
+            // si la foto ha sido cambiada y no hay errores
+            if (this.fotoCambiada && this.sinErrores) {
+              this.fotoCambiada = false;
+            } else {
+              this.sinErrores = true;
+            }
+
+            if (this.sinErrores) {
+              this.addSuccessMessage('Se han actualizado los datos con éxito.');
+              this.sinErrores = false;
+            }
+          }
+        },
+        error => {
+          this.addErrorMessage(error.error.message);
+        }
+      );
+
+      this.mascotaDocumental.identificador = this.mascota.identificador;
+
+      // se actualizan los datos documentales de la mascota
+      this.mascotaService.modificarObservacionesMascota(this.mascotaDocumental).subscribe(
+        response => {
+          if (response.pet) {
+            this.mascotaDocumental = response.pet;
+          } else {
             this.sinErrores = false;
           }
+        },
+        error => {
+          this.addErrorMessage(error.error.message);
         }
-      },
-      error => {
-        this.addErrorMessage(error.error.message);
-      }
-    );
-
-    this.mascotaDocumental.identificador = this.mascota.identificador;
-
-    // se actualizan los datos documentales de la mascota
-    this.mascotaService.modificarObservacionesMascota(this.mascotaDocumental).subscribe(
-      response => {
-        if (response.pet) {
-          this.mascotaDocumental = response.pet;
-        } else {
-          this.sinErrores = false;
-        }
-      },
-      error => {
-        this.addErrorMessage(error.error.message);
-      }
-    );
+      );
+    }
   }
 
   /**
@@ -294,6 +296,74 @@ export class DatosMascotaComponent implements OnInit {
         }
       }
     );
+  }
+
+  /**
+   * Método encargado de comprobar la validez del formulario
+   * @returns TRUE/FALSE
+   */
+  public validarCampos(): boolean {
+    let esValido = true;
+
+    if (this.mascota.nombre == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Nombre' está vacío");
+    }
+    if (this.mascota.identificador == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Identificador' está vacío");
+    } else if (this.mascota.identificador.length < 10) {
+      esValido = false;
+      this.addErrorMessage("El identificador de la mascota debe estar formado por 10 números")
+    }
+    if (this.mascota.especie == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Especie' está vacío");
+    }
+    if (this.mascota.raza == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Raza' está vacío");
+    }
+    if (this.mascota.sexo == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Sexo' está vacío");
+    }
+    if (this.mascota.color == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Color' está vacío");
+    }
+    if (this.mascota.edad == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Edad' está vacío");
+    }
+    if (this.mascota.altura == 0) {
+      esValido = false;
+      this.addErrorMessage("El campo 'Altura' no puede ser 0");
+    } else if (this.mascota.altura == null) {
+      esValido = false;
+      this.addErrorMessage("El campo 'Altura' no puede estar vacío");
+    }
+    if (this.mascota.peso == 0) {
+      esValido = false;
+      this.addErrorMessage("El campo 'Peso' no puede ser 0");
+    } else if (this.mascota.peso == null) {
+      esValido = false;
+      this.addErrorMessage("El campo 'Peso' no puede estar vacío");
+    }
+    if (this.mascota.esterilizado == '') {
+      esValido = false;
+      this.addErrorMessage("El campo 'Esterilizado' está vacío");
+    }
+    if (this.propietario == null) {
+      esValido = false;
+      this.addErrorMessage("El campo 'Propietario' está vacío");
+    }
+    if (this.veterinario == null) {
+      esValido = false;
+      this.addErrorMessage("El campo 'Veterinario' está vacío");
+    }
+
+    return esValido;
   }
 
   /**
