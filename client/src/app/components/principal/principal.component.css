@@ -1,7 +1,6 @@
 h2 {
   margin-top: 0.3em;
   display: inline-block;
-  /* align-self: center; */
 }
 
 .new-post {
@@ -36,15 +35,6 @@ h2 {
   margin-bottom: 1em;
 }
 
-.botonera {
-  float: right;
-  margin-top: 0.5em;
-}
-
-.izq {
-  margin-left: 0.5em;
-}
-
 .botonera-new-post {
   float: right;
   margin-top: 1em;
@@ -52,35 +42,4 @@ h2 {
 
 .card-text {
   margin-bottom: -1em !important;
-}
-
-.redes-sociales {
-  text-align: center;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.imagen-logo {
-  filter: brightness(85%);
-  cursor: pointer;
-}
-
-.imagen-logo:hover {
-  filter: brightness(100%);
-}
-
-.logo-izq {
-  margin-left: 1em;
-}
-
-@media (min-width: 462px) {
-  .imagen-logo {
-    width: 70px;
-  }
-}
-
-@media (max-width: 461px) {
-  .imagen-logo {
-    width: 15%;
-  }
 }

@@ -1,5 +1,5 @@
 import { PublicacionDocumental } from './../../models/PublicacionDocumental';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { PublicacionService } from './../../services/publicacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Publicacion } from './../../models/Publicacion';
@@ -15,22 +15,16 @@ export class PrincipalComponent implements OnInit {
   public identity: any;
   public publicaciones: Publicacion[] = [];
   public publicacion: Publicacion;
-  public descripcion: string = '';
   public descripciones: PublicacionDocumental[] = [];
   public publicacionesFiltradas: Publicacion[] = [];
   public totalPublicaciones: any = null;
   public rows: number = 5;
-  public verPost: boolean = false;
   public crearPost: boolean = false;
-  public editarPost: boolean = false;
-  public sharePost: boolean = false;
-  public url: string = window.location.href.toString();
 
   constructor(
     private usuarioService: UsuarioService,
     private publicacionService: PublicacionService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
     private router: Router
   ) {
     this.identity = this.usuarioService.getIdentity();
@@ -186,50 +180,6 @@ export class PrincipalComponent implements OnInit {
   }
 
   /**
-   * Método encargado de hacer visible el dialogo de consulta
-   */
-  public consultarPublicacion(pub: Publicacion): void {
-    this.verPost = true;
-
-    this.publicacionService.consultarPublicacion(pub.id_publicacion).subscribe(
-      response => {
-        this.publicacion = response.publicacion;
-        this.publicacion.titulo = response.doc.titulo;
-        this.publicacion.descripcion = response.doc.descripcion;
-
-        // formateo de fechas
-        this.publicacion.creacionStr = this.formatearFecha(this.publicacion.fecha_creacion);
-        this.publicacion.modificacionStr = this.formatearFecha(this.publicacion.fecha_modificacion);
-
-        // obtención de autor y editor
-        this.obtenerAutorPublicacion(this.publicacion);
-        if (this.publicacion.dni_modificacion) {
-          this.obtenerEditorPublicacion(this.publicacion);
-        }
-      },
-      error => {
-        this.addErrorMessage(error.error.message)
-      }
-    );
-  }
-
-  /**
-   * Método encargado de obtener el nombre del editor por dni
-   * @param dni DNI del usuario a consultar
-   * @returns Nombre del usuario
-   */
-  public obtenerEditorPublicacion(pub: Publicacion): void {
-    this.usuarioService.consultarUsuario(pub.dni_modificacion!).subscribe(
-      response => {
-        pub.editor = response.user.nombre;
-      },
-      error => {
-        this.addErrorMessage(error.error.message);
-      }
-    );
-  }
-
-  /**
    * Método encargado de mostrar el diálogo para crear una nueva publicación
    */
   public nuevaPublicacion(): void {
@@ -273,62 +223,6 @@ export class PrincipalComponent implements OnInit {
     }
 
     return valido;
-  }
-
-  /**
-   * Método encargado de mostrar el diálogo para modificar una publicación
-   */
-  public editarPublicacion(): void {
-    this.editarPost = true;
-    this.descripcion = this.publicacion.descripcion;
-  }
-
-  /**
-   * Método encargado de modificar una publicación
-   */
-  public modificarPublicacion(): void {
-    if (this.validarCampos()) {
-      this.publicacion.dni_modificacion = this.identity.dni;
-      this.publicacion.descripcion = this.descripcion;
-      this.publicacionService.modificarPublicacion(this.publicacion).subscribe(
-        response => {
-          this.addSuccessMessage('Publicación modificada con éxito.');
-          this.editarPost = false;
-          this.verPost = false;
-          this.obtenerPublicaciones();
-        },
-        error => {
-          this.addErrorMessage(error.error.message);
-        }
-      );
-    }
-  }
-
-  /**
-   * Método encargado de eliminar una publicacion
-   */
-  public eliminarPublicacion(id: number): void {
-    this.confirmationService.confirm({
-      message: '¿Estás seguro?',
-      accept: () => {
-        this.publicacionService.eliminarPublicacion(id).subscribe(
-          response => {
-            this.obtenerPublicaciones();
-            this.verPost = false;
-          },
-          error => {
-            this.addErrorMessage(error.error.message);
-          }
-        );
-      }
-    });
-  }
-
-  /**
-   * Método encargado de mostrar el diálogo para compartir una publicación
-   */
-  public compartirPublicacion(): void {
-    this.sharePost = true;
   }
 
   /**

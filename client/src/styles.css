@@ -78,7 +78,7 @@ form {
   .modificar-usuario, .modificar-mascota, .crear-entrada {
     width: 50em;
   }
-  .alta-mascota, .nueva-cita, .alta-servicio, .modificar-servicio, .historial-mascota {
+  .alta-mascota, .nueva-cita, .alta-servicio, .modificar-servicio, .historial-mascota, .consultar-publicacion {
     width: 60em;
   }
 }

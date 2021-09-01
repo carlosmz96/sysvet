@@ -52,6 +52,7 @@ import { HistorialMascotaComponent } from './components/historial-mascota/histor
 import { CrearEntradaComponent } from './components/crear-entrada/crear-entrada.component';
 import { ModificarEntradaComponent } from './components/modificar-entrada/modificar-entrada.component';
 import { ConsultarEntradaComponent } from './components/consultar-entrada/consultar-entrada.component';
+import { ConsultarPublicacionComponent } from './components/consultar-publicacion/consultar-publicacion.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ConsultarEntradaComponent } from './components/consultar-entrada/consul
     HistorialMascotaComponent,
     CrearEntradaComponent,
     ModificarEntradaComponent,
-    ConsultarEntradaComponent
+    ConsultarEntradaComponent,
+    ConsultarPublicacionComponent
   ],
   imports: [
     BrowserModule,

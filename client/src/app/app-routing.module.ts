@@ -1,3 +1,4 @@
+import { ConsultarPublicacionComponent } from './components/consultar-publicacion/consultar-publicacion.component';
 import { NologinGuard } from './nologin.guard';
 import { ConsultarEntradaComponent } from './components/consultar-entrada/consultar-entrada.component';
 import { ModificarEntradaComponent } from './components/modificar-entrada/modificar-entrada.component';
@@ -142,6 +143,11 @@ const routes: Routes = [
   {
     path: 'servicios',
     component: ServiciosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'publicacion/:id',
+    component: ConsultarPublicacionComponent,
     canActivate: [AuthGuard]
   },
   {

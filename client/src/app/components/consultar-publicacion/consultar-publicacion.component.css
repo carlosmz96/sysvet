@@ -1,0 +1,62 @@
+.consulta-info-pub {
+  margin-bottom: 1em;
+}
+
+.botonera {
+  float: right;
+  margin-top: 0.3em;
+}
+
+.boton-derecha {
+  float: right;
+}
+
+.izq {
+  margin-left: 0.5em;
+}
+
+.card-text {
+  margin-bottom: -1em !important;
+}
+
+.redes-sociales {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.imagen-logo {
+  filter: brightness(85%);
+  cursor: pointer;
+}
+
+.imagen-logo:hover {
+  filter: brightness(100%);
+}
+
+.logo-izq {
+  margin-left: 1em;
+}
+
+@media (min-width: 462px) {
+  .imagen-logo {
+    width: 70px;
+  }
+}
+
+@media (max-width: 461px) {
+  .imagen-logo {
+    width: 15%;
+  }
+}
+
+@media (max-width: 600px) {
+  .titulo {
+    margin-top: 0.5em;
+  }
+}
+
+.botonera-new-post {
+  float: right;
+  margin-top: 1em;
+}

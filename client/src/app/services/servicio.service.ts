@@ -60,7 +60,7 @@ export class ServicioService {
     const params = JSON.stringify(service_to_update);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.token });
 
-    return this.httpClient.put(this.url + 'modificar-servicio/' + service_to_update.identificador, params, { headers: headers });
+    return this.httpClient.put(this.url + 'modificar-servicio/' + service_to_update.id_servicio, params, { headers: headers });
   }
 
   /**

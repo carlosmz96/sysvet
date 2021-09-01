@@ -1,10 +1,3 @@
-<p-confirmDialog #cd [style]="{width: '20em'}" [closable]="false">
-  <ng-template pTemplate="footer">
-    <button type="button" (click)="cd.accept()" class="btn btn-success"><i class="pi pi-check"></i> Si</button>
-    <button type="button" (click)="cd.reject()" class="btn btn-danger"><i class="pi pi-times"></i> No</button>
-  </ng-template>
-</p-confirmDialog>
-
 <!-- NUEVA PUBLICACIÓN -->
 <p-dialog header="Nueva publicación" [(visible)]="crearPost" [modal]="true" [style]="{width: '50em'}"
   [draggable]="false" [resizable]="false">
@@ -20,81 +13,6 @@
   <div class="botonera-new-post">
     <button type="button" class="btn btn-success" (click)="crearPublicacion()"><i class="fas fa-check-circle"></i>
       Publicar</button>
-  </div>
-</p-dialog>
-
-<!-- CONSULTA PUBLICACIÓN -->
-<p-dialog header="Publicación" [(visible)]="verPost" [modal]="true" [style]="{width: '50em'}" [draggable]="false"
-  [resizable]="false">
-  <div class="consulta-info-pub">Publicado por <a
-      routerLink="/usuario/{{ publicacion.dni_creacion }}">{{publicacion.autor}}</a> - {{ publicacion.creacionStr }}
-  </div>
-  <div class="card bg-light mb-3">
-    <div class="card-body">
-      <h5 class="card-title">{{publicacion.titulo}}</h5>
-      <hr>
-      <p class="card-text" [innerHtml]="publicacion.descripcion"></p>
-    </div>
-  </div>
-  <div class="consulta-info-pub" *ngIf="publicacion.dni_modificacion">Editado por <a
-      routerLink="/usuario/{{ publicacion.dni_modificacion }}">{{ publicacion.editor }}</a> - {{
-    publicacion.modificacionStr }}</div>
-  <div class="botonera">
-    <button type="button" class="btn btn-danger" *ngIf="identity.rol != 'cliente'"
-      (click)="eliminarPublicacion(publicacion.id_publicacion)"><i class="fas fa-trash-alt"></i></button>
-    <button type="button" class="btn btn-warning izq" *ngIf="identity.rol != 'cliente'" (click)="editarPublicacion()"><i
-        class="fas fas fa-edit"></i></button>
-    <button type="button" class="btn btn-dark izq" (click)="compartirPublicacion()"><i class="fas fa-share-alt"></i>
-      Compartir</button>
-  </div>
-</p-dialog>
-
-<!-- MODIFICAR PUBLICACIÓN -->
-<p-dialog header="Modificar publicación" [(visible)]="editarPost" [modal]="true" [style]="{width: '50em'}"
-  [draggable]="false" [resizable]="false">
-  <div class="form-group">
-    <label for="titulo"><strong>Título</strong></label>
-    <input type="text" class="form-control" id="titulo" [(ngModel)]="publicacion.titulo">
-  </div>
-  <div class="form-group">
-    <label for="descripcion"><strong>Descripción</strong></label>
-    <p-editor [(ngModel)]="descripcion" name="descripcion" [style]="{'height':'250px'}" title="Descripción">
-    </p-editor>
-  </div>
-  <div class="botonera-new-post">
-    <button type="button" class="btn btn-success" (click)="modificarPublicacion()"><i class="fas fa-check-circle"></i>
-      Modificar</button>
-  </div>
-</p-dialog>
-
-<!-- COMPARTIR PUBLICACIÓN -->
-<p-dialog header="Compartir publicación" [(visible)]="sharePost" [modal]="true" [style]="{width: '40em'}"
-  [draggable]="false" [resizable]="false">
-  <div class="redes-sociales">
-    <!-- Facebook -->
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{url}}&quote={{publicacion.titulo}}" target="_blank"
-      title="Compartir en Facebook">
-      <img src="../../../assets/images/facebook logo.png" alt="Logo de Facebook" class="imagen-logo">
-    </a>
-    <!-- Linkedin -->
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{url}}" target="_blank" title="Compartir en Linkedin">
-      <img src="../../../assets/images/linkedin logo.png" alt="Logo de Linkedin" class="logo-izq imagen-logo">
-    </a>
-    <!-- Telegram -->
-    <a href="https://t.me/share/url?url={{url}}&text={{publicacion.titulo}}" target="_blank"
-      title="Compartir en Telegram">
-      <img src="../../../assets/images/telegram logo.png" alt="Logo de Telegram" class="logo-izq imagen-logo">
-    </a>
-    <!-- Twitter -->
-    <a href="https://twitter.com/intent/tweet?text={{publicacion.titulo}}&url={{url}}" target="_blank"
-      title="Compartir en Twitter">
-      <img src="../../../assets/images/twitter logo.png" alt="Logo de Twitter" class="logo-izq imagen-logo">
-    </a>
-    <!-- Whatsapp -->
-    <a href="https://wa.me/?text={{publicacion.titulo}} ({{url}})" target="_blank"
-      title="Compartir en Whatsapp">
-      <img src="../../../assets/images/whatsapp logo.png" alt="Logo de Whatsapp" class="logo-izq imagen-logo">
-    </a>
   </div>
 </p-dialog>
 
@@ -119,7 +37,7 @@
                   }}</a> | {{ publicacion.creacionStr }}</div>
               <div class="botonera-publicacion">
                 <button type="button" class="btn btn-dark" title="Más información"
-                  (click)="consultarPublicacion(publicacion)"><i class="fas fa-eye"></i></button>
+                  routerLink="/publicacion/{{publicacion.id_publicacion}}"><i class="fas fa-eye"></i></button>
               </div>
             </div>
             <div class="card-body">
