@@ -74,7 +74,7 @@ async function consultarMascota(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function consultarMascotas(req, res) {
-    await Mascota.findAll().then(function (pets) {
+    await Mascota.findAll({ order: [['fecha_creacion', 'DESC']] }).then(function (pets) {
         if (!pets) {
             res.status(404).send({ message: 'No se ha podido encontrar la lista de mascotas.' });
         } else {

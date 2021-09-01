@@ -170,13 +170,14 @@ async function consultarUsuario(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function consultarUsuarios(req, res) {
-    await Usuario.findAll().then(function (users) {
+    await Usuario.findAll( { order: [['fecha_creacion', 'DESC']] } ).then(function (users) {
         if (!users) {
             res.status(404).send({ message: 'No se ha podido encontrar la lista de usuarios.' });
         } else {
             res.status(200).send({ users });
         }
-    }).catch(() => {
+    }).catch((err) => {
+        console.error(err)
         res.status(500).send({ message: 'Error al consultar la lista de usuarios.' });
     });
 }

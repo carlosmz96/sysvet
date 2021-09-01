@@ -69,7 +69,7 @@ async function nuevaCita(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function listarCitas(req, res) {
-    await Cita.findAll().then(function (citas) {
+    await Cita.findAll({ order: [['fecha_creacion', 'DESC']] }).then(function (citas) {
         if (!citas) {
             res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {
@@ -107,7 +107,7 @@ async function consultarCita(req, res) {
 async function listarCitasMascota(req, res) {
     const petId = req.params.idMascota;
 
-    await Cita.findAll({ where: { mascota: petId, activa: 'S' } }).then(function (citas) {
+    await Cita.findAll({ where: { mascota: petId, activa: 'S' }, order: [['fecha_creacion', 'DESC']] }).then(function (citas) {
         if (!citas) {
             res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {
@@ -126,7 +126,7 @@ async function listarCitasMascota(req, res) {
 async function listarCitasPropietario(req, res) {
     const dniPropietario = req.params.dni;
 
-    await Cita.findAll({ where: { propietario: dniPropietario, activa: 'S' } }).then(function (citas) {
+    await Cita.findAll({ where: { propietario: dniPropietario, activa: 'S' }, order: [['fecha_creacion', 'DESC']] }).then(function (citas) {
         if (!citas) {
             res.status(404).send({ message: 'No se han podido encontrar las citas.' });
         } else {

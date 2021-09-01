@@ -42,7 +42,7 @@ async function altaServicio(req, res) {
  * @param {*} res Respuesta generada tras la consulta
  */
 async function consultarServicios(req, res) {
-    await Servicio.findAll().then(function (servicios) {
+    await Servicio.findAll({ order: [['fecha_creacion', 'DESC']] }).then(function (servicios) {
         if (!servicios) {
             res.status(404).send({ message: 'No se han encontrado los servicios.' });
         } else {
