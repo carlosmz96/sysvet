@@ -16,7 +16,9 @@
           <label for="codigo" class="col-sm-2 col-form-label"><strong>Código</strong></label>
           <div class="col-sm-3">
             <input type="text" #codigo="ngModel" name="codigo" id="codigo" [(ngModel)]="servicio.codigo"
-              class="form-control" placeholder="Código del servicio" maxlength="10" required>
+              class="form-control" placeholder="Código del servicio" maxlength="10"
+              onkeyup="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
+              required>
           </div>
           <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
           <div class="col-sm-5">
