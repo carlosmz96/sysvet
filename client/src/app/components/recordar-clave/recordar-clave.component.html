@@ -1,34 +1,40 @@
 <p-toast></p-toast>
 
-<div class="logo">
-  <!-- <h1 class="title">
+<body id="outoflog">
+
+  <div class="logo">
+    <!-- <h1 class="title">
     <a style="color: white; text-decoration: none;">{{title}}</a>
   </h1> -->
-  <a routerLink="/">
-    <img src="../../../assets/images/logo completo.png" alt="Logo de sysvet" class="logo-sysvet">
-  </a>
-</div>
-
-<div class="card mx-auto shadow p-3 mb-5 bg-white rounded recordar-clave" style="margin-top: 3%;">
-  <div class="card-body">
-    <table class="info">
-      <td><i class="fas fa-arrow-left fa-lg col-sm-1" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i></td>
-      <td class="celda"><span class="col-sm-11">Por favor, introduce tu correo electrónico.</span></td>
-    </table>
-
-    <form #emailForm="ngForm" (ngSubmit)="onSubmitEmail()" class="formulario-recuerda-clave" ngNativeValidate>
-      <div class="form-group">
-        <input type="email" #email="ngModel" name="email" [(ngModel)]="usuario.email" class="form-control"
-          placeholder="Introduce tu correo electrónico" maxlength="60" title="Correo electrónico" required>
-      </div>
-
-      <div class="text-center">
-        <p-captcha siteKey="6LfVPR0cAAAAAGREqV1ViThEBKi8fqQySH65IJIQ" (onResponse)="validaEnvio()" initCallback="loadCaptcha" style="display: inline-block; text-align: center;"></p-captcha>
-      </div>
-
-      <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-success btn-block" title="Enviar">Enviar</button>
-      </div>
-    </form>
+    <a routerLink="/">
+      <img src="../../../assets/images/logo completo.png" alt="Logo de sysvet" class="logo-sysvet">
+    </a>
   </div>
-</div>
+
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded recordar-clave" style="margin-top: 3%;">
+    <div class="card-body">
+      <table class="info">
+        <td><i class="fas fa-arrow-left fa-lg col-sm-1" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i>
+        </td>
+        <td class="celda"><span class="col-sm-11">Por favor, introduce tu correo electrónico.</span></td>
+      </table>
+
+      <form #emailForm="ngForm" (ngSubmit)="onSubmitEmail()" class="formulario-recuerda-clave" ngNativeValidate>
+        <div class="form-group">
+          <input type="email" #email="ngModel" name="email" [(ngModel)]="usuario.email" class="form-control"
+            placeholder="Introduce tu correo electrónico" maxlength="60" title="Correo electrónico" required>
+        </div>
+
+        <div class="text-center">
+          <p-captcha siteKey="6LfVPR0cAAAAAGREqV1ViThEBKi8fqQySH65IJIQ" (onResponse)="validaEnvio()"
+            initCallback="loadCaptcha" style="display: inline-block; text-align: center;"></p-captcha>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-success btn-block" title="Enviar">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>

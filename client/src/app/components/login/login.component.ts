@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
    * Método que se ejecuta al iniciar el componente
    */
   ngOnInit(): void {
-    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
+    // this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
   /**

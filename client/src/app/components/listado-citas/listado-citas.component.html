@@ -55,7 +55,7 @@
             </th>
             <th pSortableColumn="fechaStr" title="Ordenar por fecha">Fecha <p-sortIcon field="fechaStr"></p-sortIcon>
             </th>
-            <th pSortableColumn="activa" title="Ordenar por estado (activo)">Activa <p-sortIcon field="activa">
+            <th pSortableColumn="activa" title="Ordenar por estado (pendiente)">Pendiente <p-sortIcon field="activa">
               </p-sortIcon>
             </th>
             <th title="Acciones">Acciones</th>
@@ -78,7 +78,7 @@
               <div class="espaciado-icono">
                 <i class="fas fa-lg fa-eye consultar izq" routerLink="/cita/{{cita.id_cita}}" title="Consultar cita"
                   style="cursor: pointer;"></i>
-                <i class="far fa-lg fa-calendar-times consultar" title="Anular cita" (click)="anularCita(cita)"
+                <i class="far fa-lg fa-calendar-times consultar" title="Finalizar cita" (click)="anularCita(cita)"
                   style="cursor: pointer;"></i>
               </div>
             </td>
@@ -105,8 +105,8 @@
               <p class="colpropietario"><strong>Propietario: </strong><a routerLink="/usuario/{{cita.propietario}}"
                   title="Consultar propietario">{{cita.propietario}}</a></p>
               <p class="colfecha"><strong>Fecha: </strong>{{cita.fechaStr}}</p>
-              <p class="colactiva" *ngIf="cita.activa == 'S'"><strong>Activa: </strong>Si</p>
-              <p class="colactiva" *ngIf="cita.activa == 'N'"><strong>Activa: </strong>No</p>
+              <p class="colactiva" *ngIf="cita.activa == 'S'"><strong>Pendiente: </strong>Si</p>
+              <p class="colactiva" *ngIf="cita.activa == 'N'"><strong>Pendiente: </strong>No</p>
             </td>
           </tr>
         </ng-template>

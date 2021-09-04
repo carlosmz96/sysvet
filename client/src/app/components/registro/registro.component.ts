@@ -38,7 +38,7 @@ export class RegistroComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.dataService.currentMessage.subscribe(msg => this.message = msg);
-    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
+    // this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
   /**

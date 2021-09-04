@@ -7,6 +7,42 @@ body {
   overflow-y: auto;
 }
 
+/* .outoflog {
+  background-color: #000;
+  background-image: url(/assets/images/fondo1.jpg);
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+} */
+
+@-webkit-keyframes changeBckg {
+  0% {  background-image: url(/assets/images/fondo1.jpg); }
+  25% {  background-image: url(/assets/images/fondo2.jpg); }
+  50% {  background-image: url(/assets/images/fondo3.jpg); }
+  75% {  background-image: url(/assets/images/fondo4.jpg); }
+  100% {  background-image: url(/assets/images/fondo5.jpg); }
+}
+
+@keyframes changeBckg {
+  0% {  background-image: url(/assets/images/fondo1.jpg); }
+  25% {  background-image: url(/assets/images/fondo2.jpg); }
+  50% {  background-image: url(/assets/images/fondo3.jpg); }
+  75% {  background-image: url(/assets/images/fondo4.jpg); }
+  100% {  background-image: url(/assets/images/fondo5.jpg); }
+}
+
+#outoflog {
+  /* background-color: #000; */
+  -webkit-animation: changeBckg 40s ease infinite alternate;
+  animation: changeBckg 40s ease infinite alternate;
+  background-repeat: repeat;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+}
+
 h1 {
   font-size: 2em;
 }

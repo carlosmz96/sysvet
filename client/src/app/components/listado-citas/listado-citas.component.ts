@@ -87,12 +87,12 @@ export class ListadoCitasComponent implements OnInit {
    */
   public anularCita(cita: any): void {
     this.confirmationService.confirm({
-      message: '¿Estás seguro de querer anular la cita?',
+      message: '¿Estás seguro de querer finalizar la cita?',
       accept: () => {
         this.citaService.anularCita(cita).subscribe(
           response => {
             this.obtenerCitas();
-            this.addSuccessMessage('Se ha anulado la cita correctamente.');
+            this.addSuccessMessage('Se ha finalizado la cita correctamente.');
           },
           error => {
             this.addErrorMessage(error.error.message);

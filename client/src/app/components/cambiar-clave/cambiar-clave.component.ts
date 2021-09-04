@@ -52,7 +52,7 @@ export class CambiarClaveComponent implements OnInit {
       this.expirado = true;
     }
 
-    this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
+    // this.elementRef.nativeElement.ownerDocument.body.style.background = 'rgb(153, 224, 153)';
   }
 
   /**

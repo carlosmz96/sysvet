@@ -1,32 +1,36 @@
 <p-toast></p-toast>
 
-<div class="logo">
-  <img src="../../../assets/images/logo completo.png" alt="Logo de sysvet" class="logo-sysvet">
-</div>
+<body id="outoflog">
 
-<div class="card mx-auto shadow p-3 mb-5 bg-white rounded login" style="margin-top: 3%;">
-  <div class="card-body">
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-login" ngNativeValidate>
-      <div class="form-group">
-        <label for="dni"><strong>DNI</strong></label>
-        <input type="text" #dni="ngModel" name="dni" id="dni" [(ngModel)]="usuario.dni" class="form-control"
-          placeholder="Introduce tu dni" maxlength="9" title="DNI" required>
-      </div>
-      <div class="form-group">
-        <label for="password"><strong>Contraseña</strong></label>
-        <input type="password" #password="ngModel" name="password" id="password" [(ngModel)]="usuario.pass"
-          class="form-control" placeholder="Introduce tu contraseña" title="Contraseña" required>
-      </div>
-      <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-success btn-block" title="Iniciar sesión">Iniciar sesión</button>
-        <div class="d-flex justify-content-center" style="margin: 0.3em;">
-          <a routerLink="recordar-clave" class="text-center" style="text-decoration: none;" (click)="goRecordarClave()"
-            title="¿Olvidaste tu contraseña?">¿Olvidaste tu
-            contraseña?</a>
-        </div>
-        <button class="btn btn-success btn-block" type="button" (click)="goRegister()"
-          title="Regístrate">Regístrate</button>
-      </div>
-    </form>
+  <div class="logo">
+    <img src="../../../assets/images/logo completo.png" alt="Logo de sysvet" class="logo-sysvet">
   </div>
-</div>
+
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded login" style="margin-top: 3%;">
+    <div class="card-body">
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="formulario-login" ngNativeValidate>
+        <div class="form-group">
+          <label for="dni"><strong>DNI</strong></label>
+          <input type="text" #dni="ngModel" name="dni" id="dni" [(ngModel)]="usuario.dni" class="form-control"
+            placeholder="Introduce tu dni" maxlength="9" title="DNI" required>
+        </div>
+        <div class="form-group">
+          <label for="password"><strong>Contraseña</strong></label>
+          <input type="password" #password="ngModel" name="password" id="password" [(ngModel)]="usuario.pass"
+            class="form-control" placeholder="Introduce tu contraseña" title="Contraseña" required>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-success btn-block" title="Iniciar sesión">Iniciar sesión</button>
+          <div class="d-flex justify-content-center" style="margin: 0.3em;">
+            <a routerLink="recordar-clave" class="text-center" style="text-decoration: none;"
+              (click)="goRecordarClave()" title="¿Olvidaste tu contraseña?">¿Olvidaste tu
+              contraseña?</a>
+          </div>
+          <button class="btn btn-success btn-block" type="button" (click)="goRegister()"
+            title="Regístrate">Regístrate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>

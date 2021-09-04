@@ -1,95 +1,99 @@
 <p-toast></p-toast>
 
-<div class="logo">
-  <a routerLink="/">
-    <img src="../../../assets/images/logo completo.png" alt="Logo de sysvet" class="logo-sysvet">
-  </a>
-</div>
+<body id="outoflog">
 
-<div class="card mx-auto shadow p-3 mb-5 bg-white rounded registro" style="margin-top: 3%;">
-  <div class="card-body">
-    <table class="info">
-      <td><i class="fas fa-arrow-left fa-lg col-sm-1" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i>
-      </td>
-      <td class="celda"><span class="col-sm-11">Rellena el siguiente formulario para poder
-          registrarte.</span></td>
-    </table>
-
-    <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" autocomplete="off">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="nombre"><strong>Nombre</strong></label>
-          <input type="text" #nombre="ngModel" name="nombre" id="nombre" [(ngModel)]="usuario_registro.nombre"
-            class="form-control" placeholder="Introduce tu nombre" maxlength="25" title="Nombre" required>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="apellidos"><strong>Apellidos</strong></label>
-          <input type="text" #apellidos="ngModel" name="apellidos" id="apellidos"
-            [(ngModel)]="usuario_registro.apellidos" class="form-control" placeholder="Introduce tus apellidos"
-            maxlength="50" title="Apellidos" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="dni"><strong>DNI</strong></label>
-          <input type="text" #dni="ngModel" name="dni" id="dni" [(ngModel)]="usuario_registro.dni" class="form-control"
-            placeholder="Introduce tu dni" maxlength="9" title="DNI"
-            onkeyup="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
-            required>
-        </div>
-        <div class="form-group col-md-9">
-          <label for="email"><strong>Correo electrónico</strong></label>
-          <input type="email" #email="ngModel" name="email" id="email" [(ngModel)]="usuario_registro.email"
-            class="form-control" placeholder="Introduce tu correo electrónico" maxlength="60" title="Correo electrónico"
-            required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="password"><strong>Contraseña</strong></label>
-          <input type="password" #password="ngModel" name="password" id="password" [(ngModel)]="usuario_registro.pass"
-            class="form-control" placeholder="Introduce una contraseña" title="Contraseña" required>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="password2"><strong>Repite la contraseña</strong></label>
-          <input type="password" #password2="ngModel" name="password2" id="password2" [(ngModel)]="rePass"
-            class="form-control" placeholder="Introduce de nuevo la contraseña" title="Repetición de contraseña"
-            required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <label style="margin-right: 1.5em;"><strong>Registrarse como</strong></label>
-        </div>
-        <div class="form-group col-md-3">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente"
-              [(ngModel)]="usuario_registro.rol" value="cliente" title="Cliente">
-            <label class="form-check-label" for="opcionCliente">Cliente</label>
-          </div>
-        </div>
-        <div class="form-group col-md-3">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionVeterinario"
-              [(ngModel)]="usuario_registro.rol" value="veterinario" title="Veterinario">
-            <label class="form-check-label" for="opcionVeterinario">Veterinario</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-row" *ngIf="usuario_registro.rol == 'veterinario'">
-        <div class="form-group col-auto">
-          <div class="form-inline">
-            <label for="num_colegiado" class="col-form-label" style="margin-right: 1.5em;"><strong>Número
-                de colegiado</strong></label>
-            <input type="text" #num_colegiado="ngModel" name="num_colegiado" id="num_colegiado"
-              [(ngModel)]="usuario_registro.num_colegiado" class="form-control" placeholder="Número de colegiado"
-              maxlength="4" title="Número de colegiado" (keypress)="soloNumeros($event)" required>
-          </div>
-        </div>
-      </div>
-      <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-success btn-block" title="Regístrate">Regístrate</button>
-      </div>
-    </form>
+  <div class="logo">
+    <a routerLink="/">
+      <img src="../../../assets/images/logo completo.png" alt="Logo de sysvet" class="logo-sysvet">
+    </a>
   </div>
-</div>
+
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded registro" style="margin-top: 3%;">
+    <div class="card-body">
+      <table class="info">
+        <td><i class="fas fa-arrow-left fa-lg col-sm-1" style="cursor: pointer;" (click)="goLogin()" title="Volver"></i>
+        </td>
+        <td class="celda"><span class="col-sm-11">Rellena el siguiente formulario para poder
+            registrarte.</span></td>
+      </table>
+
+      <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="formulario-register" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="nombre"><strong>Nombre</strong></label>
+            <input type="text" #nombre="ngModel" name="nombre" id="nombre" [(ngModel)]="usuario_registro.nombre"
+              class="form-control" placeholder="Introduce tu nombre" maxlength="25" title="Nombre" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="apellidos"><strong>Apellidos</strong></label>
+            <input type="text" #apellidos="ngModel" name="apellidos" id="apellidos"
+              [(ngModel)]="usuario_registro.apellidos" class="form-control" placeholder="Introduce tus apellidos"
+              maxlength="50" title="Apellidos" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="dni"><strong>DNI</strong></label>
+            <input type="text" #dni="ngModel" name="dni" id="dni" [(ngModel)]="usuario_registro.dni"
+              class="form-control" placeholder="Introduce tu dni" maxlength="9" title="DNI"
+              onkeyup="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
+              required>
+          </div>
+          <div class="form-group col-md-9">
+            <label for="email"><strong>Correo electrónico</strong></label>
+            <input type="email" #email="ngModel" name="email" id="email" [(ngModel)]="usuario_registro.email"
+              class="form-control" placeholder="Introduce tu correo electrónico" maxlength="60"
+              title="Correo electrónico" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="password"><strong>Contraseña</strong></label>
+            <input type="password" #password="ngModel" name="password" id="password" [(ngModel)]="usuario_registro.pass"
+              class="form-control" placeholder="Introduce una contraseña" title="Contraseña" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="password2"><strong>Repite la contraseña</strong></label>
+            <input type="password" #password2="ngModel" name="password2" id="password2" [(ngModel)]="rePass"
+              class="form-control" placeholder="Introduce de nuevo la contraseña" title="Repetición de contraseña"
+              required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label style="margin-right: 1.5em;"><strong>Registrarse como</strong></label>
+          </div>
+          <div class="form-group col-md-3">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionCliente"
+                [(ngModel)]="usuario_registro.rol" value="cliente" title="Cliente">
+              <label class="form-check-label" for="opcionCliente">Cliente</label>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" #rol="ngModel" name="rol" id="opcionVeterinario"
+                [(ngModel)]="usuario_registro.rol" value="veterinario" title="Veterinario">
+              <label class="form-check-label" for="opcionVeterinario">Veterinario</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row" *ngIf="usuario_registro.rol == 'veterinario'">
+          <div class="form-group col-auto">
+            <div class="form-inline">
+              <label for="num_colegiado" class="col-form-label" style="margin-right: 1.5em;"><strong>Número
+                  de colegiado</strong></label>
+              <input type="text" #num_colegiado="ngModel" name="num_colegiado" id="num_colegiado"
+                [(ngModel)]="usuario_registro.num_colegiado" class="form-control" placeholder="Número de colegiado"
+                maxlength="4" title="Número de colegiado" (keypress)="soloNumeros($event)" required>
+            </div>
+          </div>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-success btn-block" title="Regístrate">Regístrate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
