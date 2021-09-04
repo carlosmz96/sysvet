@@ -141,9 +141,9 @@ export class HistorialMascotaComponent implements OnInit {
   public organizarEntradas(): void {
     this.entradas.forEach(entrada => {
       entrada.descripcion = this.obtenerDescripcion(entrada.id_entrada);
-      if (entrada.descripcion.length > 500) {
-        entrada.descripcion = entrada.descripcion.substring(0, 500) + '...';
-      }
+      // if (entrada.descripcion.length > 500) {
+      //   entrada.descripcion = entrada.descripcion.substring(0, 500) + '...';
+      // }
     });
   }
 

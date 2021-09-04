@@ -249,3 +249,11 @@ a:hover {
 .p-inputswitch.p-inputswitch-checked:hover .p-inputswitch-slider:hover {
   background: #63a868;
 }
+
+/* IMAGENES DE TARJETAS */
+.card-text img {
+  max-width: 100%;
+}
+p img {
+  max-width: 100%;
+}
