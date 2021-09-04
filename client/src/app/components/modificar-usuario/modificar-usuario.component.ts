@@ -65,7 +65,7 @@ export class ModificarUsuarioComponent implements OnInit {
       // obtención de todos los servicios del sistema
       this.listarServicios();
       // obtención de todos los servicios asociados al veterinario
-      this.obtenerServiciosAsociados();
+      // this.obtenerServiciosAsociados();
     }
   }
 
@@ -285,6 +285,8 @@ export class ModificarUsuarioComponent implements OnInit {
         this.servicios = response.servicios as Servicio[];
         // ordena los servicios por orden alfabético
         this.servicios.sort((a: Servicio, b: Servicio) => a.nombre.localeCompare(b.nombre));
+        // obtiene los servicios asociados
+        this.obtenerServiciosAsociados();
       },
       error => {
         this.addErrorMessage(error.error.message);
@@ -299,6 +301,7 @@ export class ModificarUsuarioComponent implements OnInit {
     this.vetServService.listarEspecializacionesVeterinario(this.dniUsuario).subscribe(
       response => {
         this.serviciosAsociados = response.servicios as VeterinarioServicio[];
+        console.log('obtenerServicios')
 
         // reparte los servicios entre las dos listas
         this.repartirServicios();
@@ -314,6 +317,7 @@ export class ModificarUsuarioComponent implements OnInit {
    */
   public repartirServicios(): void {
     // añade todos los servicios que tenga asociados a la lista de asociados
+    console.log('repartirServicios')
     this.servicios.forEach(servicio => {
       if (this.incluyeServicio(servicio.id_servicio!)) {
         this.asociados.push(servicio);
